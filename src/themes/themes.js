@@ -10,20 +10,6 @@ const theme = createTheme({
     },
   },
   components: {
-    MuiSwitch: {
-      styleOverrides: {
-        switchBase: {
-          "&$checked": {
-            "& + $track": {
-              backgroundColor: "#01579be6 !important",
-            },
-            "& $thumb": {
-              backgroundColor: "#01579be6 !important",
-            },
-          },
-        },
-      },
-    },
     MuiMenu: {
       styleOverrides: {
         paper: {
@@ -110,6 +96,7 @@ const theme = createTheme({
           display: "flex",
           flexDirection: "row",
           color: "#01579B",
+          backgroundColor: "#EDF6FF",
         },
         label: {
           overflowWrap: "break-word",

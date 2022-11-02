@@ -10,7 +10,18 @@
   align-items: center;
 }
 
-.switch-text {
+#enabled-text {
   color: #01579b;
-  font-size: 15px;
+  font-size: 17px;
+  margin-left: 10px;
+}
+
+#disabled-text {
+  color: grey;
+  font-size: 17px;
+  margin-left: 10px;
+}
+
+.css-1ifl4or-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+  color: #01579b !important;
 }
