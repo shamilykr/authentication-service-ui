@@ -13,6 +13,7 @@ import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
+import Toggle from "../../components/toggle/Toggle";
 
 const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
@@ -63,6 +64,19 @@ const Users: React.FC = () => {
             columnName="groups"
             defaultSize={6}
           />
+        </div>
+      ),
+      headerAlign: "left",
+      sortable: false,
+    },
+    {
+      field: "access",
+      headerName: "Access",
+      headerClassName: "user-list-header",
+      flex: 0.19,
+      renderCell: (params) => (
+        <div className="access-column">
+          <Toggle toggleCheck="enabled" />
         </div>
       ),
       headerAlign: "left",

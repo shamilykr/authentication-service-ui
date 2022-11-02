@@ -10,6 +10,20 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          "&$checked": {
+            "& + $track": {
+              backgroundColor: "#01579be6 !important",
+            },
+            "& $thumb": {
+              backgroundColor: "#01579be6 !important",
+            },
+          },
+        },
+      },
+    },
     MuiMenu: {
       styleOverrides: {
         paper: {
