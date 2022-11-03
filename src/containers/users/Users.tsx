@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
-import { Avatar } from "@mui/material";
+import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,8 @@ import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
 import Toggle from "../../components/toggle/Toggle";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
+
+let ACCESS = "pending";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
@@ -87,7 +89,7 @@ const Users: React.FC = () => {
       flex: 0.19,
       renderCell: (params) => (
         <div className="access-column">
-          <Toggle toggleCheck="enabled" />
+          <CheckAccess />
         </div>
       ),
       headerAlign: "left",
@@ -133,6 +135,24 @@ const GetFullName = (props: any) => {
         <div className="email">{row.email}</div>
       </div>
     </>
+  );
+};
+
+const CheckAccess = () => {
+  return (
+    <div className="toggle">
+      {ACCESS === "enabled" && (
+        <div className="switch">
+          <Toggle defaultChecked={true} text="Enabled" />
+        </div>
+      )}
+      {ACCESS === "disabled" && (
+        <div className="switch">
+          <Toggle defaultChecked={false} text="Disabled" />
+        </div>
+      )}
+      {ACCESS === "pending" && <Chip label="Invite Sent" className="pending" />}
+    </div>
   );
 };
 

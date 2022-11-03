@@ -1,28 +1,20 @@
-import { Chip, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import "./styles.css";
 
 interface ToggleProps {
-  toggleCheck: string;
+  defaultChecked: boolean;
+  text: string;
 }
 
-const Toggle: React.FC<ToggleProps> = ({ toggleCheck }) => {
+const Toggle: React.FC<ToggleProps> = ({ defaultChecked, text }) => {
   return (
     <div className="toggle">
-      {toggleCheck === "enabled" && (
-        <div className="switch">
-          <Switch defaultChecked sx={{ color: "#01579B !important" }} />
-          <div id="enabled-text">Enabled</div>
+      <div className="switch">
+        <Switch defaultChecked={defaultChecked} />
+        <div id={defaultChecked === true ? "enabled-text" : "disabled-text"}>
+          {text}
         </div>
-      )}
-      {toggleCheck === "disabled" && (
-        <div className="switch">
-          <Switch />
-          <div id="disabled-text">Disabled</div>
-        </div>
-      )}
-      {toggleCheck === "pending" && (
-        <Chip label="Invite Sent" className="pending" />
-      )}
+      </div>
     </div>
   );
 };
