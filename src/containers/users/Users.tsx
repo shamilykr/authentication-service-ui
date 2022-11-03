@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar } from "@mui/material";
@@ -14,8 +14,11 @@ import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
 import Toggle from "../../components/toggle/Toggle";
+import { UserPermissionsAtom } from "../../states/permissionsStates";
 
 const Users: React.FC = () => {
+  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
 
   const navigate = useNavigate();
@@ -38,6 +41,14 @@ const Users: React.FC = () => {
   const onAdd = () => {
     navigate(`/home/users/add`);
   };
+
+  useEffect(() => {
+    userPermissions.map((item: any) => {
+      if (item?.name.includes("create-user")) {
+        setAddVerified(true);
+      }
+    });
+  }, []);
 
   const columns: GridColumns = [
     {
@@ -101,6 +112,9 @@ const Users: React.FC = () => {
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
         handleRowClick={onUserClick}
+        editPermission="edit-user"
+        deletePermission="delete-user"
+        isAddVerified={!isAddVerified}
       />
     </>
   );
