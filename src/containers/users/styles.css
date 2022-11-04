@@ -47,6 +47,12 @@
   margin-left:15px;
 }
 
+.invited-switch {
+  display: flex;
+  align-items: center;
+  margin-left:37px;
+}
+
 #enabled-text {
   font-size: 17px;
   margin-left: 10px;

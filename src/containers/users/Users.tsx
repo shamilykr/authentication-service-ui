@@ -168,7 +168,9 @@ const CheckAccess = (props: any) => {
           <div id="disabled-text">Inactive</div>
         </div>
       )}
-      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "105px", borderRadius: "5px", fontWeight:"600", marginLeft:"38px !important"}} />}
+      <div className="invited-switch">
+      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "107px", borderRadius: "5px", fontWeight:"600"}} />}
+      </div>
     </div>
   );
 };
