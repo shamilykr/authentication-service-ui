@@ -20,7 +20,6 @@ const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-
   const navigate = useNavigate();
 
   useMutation(DELETE_USER, {
@@ -169,7 +168,7 @@ const CheckAccess = (props: any) => {
           <div id="disabled-text">Inactive</div>
         </div>
       )}
-      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "105px", borderRadius: "5px", fontWeight:"600", marginLeft:"42px !important"}} />}
+      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "105px", borderRadius: "5px", fontWeight:"600", marginLeft:"38px !important"}} />}
     </div>
   );
 };
