@@ -16,8 +16,6 @@ import "./components/create-edit-user/styles.css";
 import Toggle from "../../components/toggle/Toggle";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 
-let ACCESS = "pending";
-
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
@@ -83,13 +81,13 @@ const Users: React.FC = () => {
       sortable: false,
     },
     {
-      field: "access",
-      headerName: "Access",
+      field: "status",
+      headerName: "Status",
       headerClassName: "user-list-header",
       flex: 0.19,
       renderCell: (params) => (
         <div className="access-column">
-          <CheckAccess />
+          <CheckAccess {...params} />
         </div>
       ),
       headerAlign: "left",
@@ -138,20 +136,21 @@ const GetFullName = (props: any) => {
   );
 };
 
-const CheckAccess = () => {
+const CheckAccess = (props: any) => {
+  const { row } = props;
   return (
     <div className="toggle">
-      {ACCESS === "enabled" && (
+      {row.status === "ACTIVE" && (
         <div className="switch">
-          <Toggle defaultChecked={true} text="Enabled" />
+          <Toggle defaultChecked={true} text="Active" />
         </div>
       )}
-      {ACCESS === "disabled" && (
+      {row.status === "INACTIVE" && (
         <div className="switch">
-          <Toggle defaultChecked={false} text="Disabled" />
+          <Toggle defaultChecked={false} text="Inactive" />
         </div>
       )}
-      {ACCESS === "pending" && <Chip label="Invite Sent" className="pending" />}
+      {row.status === "INVITED" && <Chip label="Invited" className="pending" />}
     </div>
   );
 };
