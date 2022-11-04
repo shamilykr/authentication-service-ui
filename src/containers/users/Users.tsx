@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import CircleIcon from '@mui/icons-material/Circle';
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -13,7 +14,6 @@ import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
-import Toggle from "../../components/toggle/Toggle";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 
 const Users: React.FC = () => {
@@ -83,14 +83,13 @@ const Users: React.FC = () => {
     {
       field: "status",
       headerName: "Status",
-      headerClassName: "user-list-header",
-      flex: 0.19,
+      flex: 0.2,
       renderCell: (params) => (
         <div className="access-column">
           <CheckAccess {...params} />
         </div>
       ),
-      headerAlign: "left",
+      headerAlign: "center",
       sortable: false,
     },
   ];
@@ -142,15 +141,35 @@ const CheckAccess = (props: any) => {
     <div className="toggle">
       {row.status === "ACTIVE" && (
         <div className="switch">
-          <Toggle defaultChecked={true} text="Active" />
+          <Chip
+          icon={<CircleIcon sx={{width:"9px", color:"#00800069 !important", marginLeft: "18px !important"}} />}
+          sx={{
+            marginLeft: "24px !important",
+            borderRadius: "5px !important",
+            backgroundColor: "#0080003d !important",
+            width: "21px",
+            height: "21px",
+          }}
+          />
+          <div id="enabled-text">Active</div>
         </div>
       )}
       {row.status === "INACTIVE" && (
         <div className="switch">
-          <Toggle defaultChecked={false} text="Inactive" />
+           <Chip
+          icon={<CircleIcon sx={{width:"9px", color:"#80000052 !important", marginLeft: "18px !important"}} />}
+          sx={{
+            marginLeft: "24px !important",
+            borderRadius: "5px !important",
+            backgroundColor: "#80000036 !important",
+            width: "21px",
+            height: "21px",
+          }}
+          />
+          <div id="disabled-text">Inactive</div>
         </div>
       )}
-      {row.status === "INVITED" && <Chip label="Invited" className="pending" />}
+      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "105px", borderRadius: "5px", fontWeight:"600", marginLeft:"42px !important"}} />}
     </div>
   );
 };
