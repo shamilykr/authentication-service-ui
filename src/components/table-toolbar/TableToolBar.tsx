@@ -29,7 +29,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
             variant="contained"
             id="add-button"
             onClick={onAdd}
-            disabled={isAddVerified}
+            // disabled={isAddVerified}
           >
             {buttonLabel}
           </Button>

@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { ReactEventHandler, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import CircleIcon from '@mui/icons-material/Circle';
+import CircleIcon from "@mui/icons-material/Circle";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Tooltip } from "@mui/material";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -136,40 +138,82 @@ const GetFullName = (props: any) => {
 
 const CheckAccess = (props: any) => {
   const { row } = props;
+
+  const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    const inviteLink = `${process.env.REACT_APP_BASE_URL}/confirmpassword?token="${props.row.inviteToken}"`;
+    navigator.clipboard.writeText(inviteLink);
+  };
   return (
     <div className="toggle">
       {row.status === "ACTIVE" && (
         <div className="switch">
           <Chip
-          icon={<CircleIcon sx={{width:"9px", color:"#00800069 !important", marginLeft: "18px !important"}} />}
-          sx={{
-            marginLeft: "24px !important",
-            borderRadius: "5px !important",
-            backgroundColor: "#0080003d !important",
-            width: "21px",
-            height: "21px",
-          }}
+            icon={
+              <CircleIcon
+                sx={{
+                  width: "9px",
+                  color: "#00800069 !important",
+                  marginLeft: "18px !important",
+                }}
+              />
+            }
+            sx={{
+              marginLeft: "24px !important",
+              borderRadius: "5px !important",
+              backgroundColor: "#0080003d !important",
+              width: "21px",
+              height: "21px",
+            }}
           />
           <div id="enabled-text">Active</div>
         </div>
       )}
       {row.status === "INACTIVE" && (
         <div className="switch">
-           <Chip
-          icon={<CircleIcon sx={{width:"9px", color:"#80000052 !important", marginLeft: "18px !important"}} />}
-          sx={{
-            marginLeft: "24px !important",
-            borderRadius: "5px !important",
-            backgroundColor: "#80000036 !important",
-            width: "21px",
-            height: "21px",
-          }}
+          <Chip
+            icon={
+              <CircleIcon
+                sx={{
+                  width: "9px",
+                  color: "#80000052 !important",
+                  marginLeft: "18px !important",
+                }}
+              />
+            }
+            sx={{
+              marginLeft: "24px !important",
+              borderRadius: "5px !important",
+              backgroundColor: "#80000036 !important",
+              width: "21px",
+              height: "21px",
+            }}
           />
           <div id="disabled-text">Inactive</div>
         </div>
       )}
       <div className="invited-switch">
-      {row.status === "INVITED" && <Chip label="Invited" className="pending" sx={{height: "36px", width: "107px", borderRadius: "5px", fontWeight:"600"}} />}
+        {row.status === "INVITED" && (
+          <>
+            <Chip
+              label="Invited"
+              className="pending"
+              sx={{
+                height: "36px",
+                width: "107px",
+                borderRadius: "5px",
+                fontWeight: "600",
+              }}
+            />
+            <Tooltip
+              title="Copy Invite Link"
+              onClick={onCopyInviteLink}
+              sx={{ cursor: "pointer" }}
+            >
+              <ContentCopyIcon fontSize="small" htmlColor="#01579B" />
+            </Tooltip>
+          </>
+        )}
       </div>
     </div>
   );

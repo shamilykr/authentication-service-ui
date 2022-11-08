@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useRecoilState } from "recoil";
 
@@ -10,9 +10,12 @@ import "./styles.css";
 import LoginPassword from "./loginPassword";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 import { currentUserAtom } from "../../states/loginStates";
+import PasswordConfirmation from "./PasswordConfirmation";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { path } = useParams();
+  console.log(path);
 
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
@@ -42,6 +45,11 @@ const Login: React.FC = () => {
     });
   };
 
+  const getInputFields = () => {
+    if (true) return <LoginPassword onSubmitForm={onSubmitForm} />;
+    else return <PasswordConfirmation onSubmitForm={onSubmitForm} />;
+  };
+
   return (
     <div className="login-page">
       <div className="left">
@@ -49,6 +57,7 @@ const Login: React.FC = () => {
       </div>
       <div className="input-container">
         <LoginPassword onSubmitForm={onSubmitForm} />
+        {/* <PasswordConfirmation onSubmitForm={onSubmitForm} /> */}
       </div>
     </div>
   );
