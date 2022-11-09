@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_GROUPS = gql`
-  query getGroups {
-    getGroups {
+  query getGroups($value: String) {
+    getGroups(input: { search: { or: { name: { contains: $value } } } }) {
       id
       name
       roles {
@@ -22,6 +22,18 @@ export const GET_GROUP = gql`
     getGroup(id: $id) {
       id
       name
+      users {
+        id
+        email
+        phone
+        firstName
+        middleName
+        lastName
+      }
+      roles {
+        id
+        name
+      }
     }
   }
 `;

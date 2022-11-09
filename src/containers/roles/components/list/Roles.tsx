@@ -28,6 +28,10 @@ const Roles: React.FC = () => {
     },
     fetchPolicy: "network-only",
   });
+
+  const setItemList = (data: any) => {
+    setRoleList(data.getRoles);
+  };
   const columns: GridColumns = [
     {
       field: "name",
@@ -63,10 +67,6 @@ const Roles: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
-  const onRoleClick = (params: GridRowParams) => {
-    navigate(`./${params.id}`);
-  };
-
   useEffect(() => {
     userPermissions.map((item: any) => {
       if (item?.name.includes("create-roles")) {
@@ -83,11 +83,12 @@ const Roles: React.FC = () => {
         text="All Roles"
         buttonLabel="Add Role"
         searchLabel="Search Role"
+        setItemList={setItemList}
+        entity="Role"
         deleteMutation={DELETE_ROLE}
         refetchQuery={GET_ROLES}
         onAdd={onAddRole}
         onEdit={onEditRole}
-        handleRowClick={onRoleClick}
         editPermission="edit-roles"
         deletePermission="delete-roles"
         isAddVerified={!isAddVerified}

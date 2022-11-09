@@ -1,5 +1,5 @@
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
 import {
   Outlet,
   Navigate,
@@ -11,6 +11,7 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useSetRecoilState } from "recoil";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import {
@@ -28,12 +29,15 @@ import { LOGO_URL } from "../../config";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
+import { GET_USERS } from "../users/services/queries";
+import { allUsersAtom } from "../../states/userStates";
 import { currentUserAtom } from "../../states/loginStates";
 import { stringAvatar, stringToColor } from "../../utils/table";
 import Toast from "../../components/toast";
+import { toastMessageAtom } from "../../states/apiRequestState";
 
 const HomePage = () => {
-  const [message, setMessage] = useState<string>();
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,8 +47,14 @@ const HomePage = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-  const { state: toastMessage } = useLocation();
 
+  const setUsers = useSetRecoilState(allUsersAtom);
+
+  useQuery(GET_USERS, {
+    onCompleted: (data) => {
+      setUsers(data?.getUsers);
+    },
+  });
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   const [logout] = useMutation(LOGOUT, {
@@ -58,14 +68,8 @@ const HomePage = () => {
     logout();
   };
 
-  useEffect(() => {
-    if (toastMessage?.message) {
-      setMessage(toastMessage.message);
-    }
-  }, [toastMessage]);
-
   const onCloseToast = () => {
-    setMessage("");
+    setToastMessage("");
   };
 
   return (
@@ -78,7 +82,7 @@ const HomePage = () => {
           <div className="userdetails">
             <Avatar
               {...stringAvatar(
-                `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
               )}
             />
             <Tooltip title="Account Details">
@@ -101,12 +105,12 @@ const HomePage = () => {
               <MenuItem>
                 <Avatar
                   {...stringAvatar(
-                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                   )}
                   sx={{
                     marginLeft: "0px !important",
                     bgcolor: stringToColor(
-                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`
+                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                     ),
                   }}
                 />
@@ -187,8 +191,8 @@ const HomePage = () => {
             )}
           </div>
           <Toast
-            message={message}
-            isOpen={Boolean(message)}
+            message={toastMessage}
+            isOpen={Boolean(toastMessage)}
             handleClose={onCloseToast}
           />
         </div>

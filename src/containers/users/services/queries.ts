@@ -9,6 +9,7 @@ export const GET_USER = gql`
       firstName
       middleName
       lastName
+      status
       groups {
         id
         name
@@ -23,8 +24,19 @@ export const GET_USER = gql`
 `;
 
 export const GET_USERS = gql`
-  query getUsers {
-    getUsers {
+  query getUsers($value: String) {
+    getUsers(
+      input: {
+        search: {
+          or: {
+            firstName: { contains: $value }
+            middleName: { contains: $value }
+            lastName: { contains: $value }
+            email: { contains: $value }
+          }
+        }
+      }
+    ) {
       id
       email
       firstName

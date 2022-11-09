@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
-import { GET_ROLE_PERMISSIONS } from "../../services/queries";
+import { GET_ROLE } from "../../services/queries";
 import {
   CREATE_ROLE,
   UPDATE_ROLE,
@@ -13,11 +14,19 @@ import "./styles.css";
 import { Permission } from "../../../../types/user";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { FieldValues } from "react-hook-form";
+import {
+  apiRequestAtom,
+  toastMessageAtom,
+} from "../../../../states/apiRequestState";
+import { Role } from "../../../../types/role";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
   const handleClick = (permission: Permission) => {
@@ -32,17 +41,33 @@ const CreateOrEditRole = () => {
     } else setRolePermissions([...rolePermissions, permission]);
   };
 
-  const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE);
-  const [updateRole, { data: updatedRoleData }] = useMutation(UPDATE_ROLE);
+  const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
+    onError: () => {
+      setApiSuccess(false);
+      setToastMessage("The request could not be processed");
+    },
+  });
+  const [updateRole, { data: updatedRoleData }] = useMutation(UPDATE_ROLE, {
+    onError: () => {
+      setApiSuccess(false);
+      setToastMessage("The request could not be processed");
+    },
+  });
   const [updateRolePermissions, { data: updatedRolePermissionsData }] =
-    useMutation(UPDATE_ROLE_PERMISSIONS);
+    useMutation(UPDATE_ROLE_PERMISSIONS, {
+      onError: () => {
+        setApiSuccess(false);
+        setToastMessage("The request could not be processed");
+      },
+    });
 
-  const { loading } = useQuery(GET_ROLE_PERMISSIONS, {
+  const { loading } = useQuery(GET_ROLE, {
     skip: !id,
     variables: { id: id },
     onCompleted: (data) => {
-      const permissions = data?.getRolePermissions?.map(
-        (permission: any) => permission
+      setRole(data?.getRole);
+      const permissions = data?.getRole?.permissions.map(
+        (permission: Permission) => permission
       );
       setRolePermissions([...permissions]);
     },
@@ -57,18 +82,20 @@ const CreateOrEditRole = () => {
             permissions: rolePermissions.map((permission) => permission.id),
           },
         },
-        onCompleted: () =>
-          navigate("/home/roles", {
-            state: { message: "Role has been successfully created" },
-          }),
+        onCompleted: () => {
+          navigate("/home/roles");
+          setApiSuccess(true);
+          setToastMessage("Role has been successfully created");
+        },
       });
   }, [createdRoleData]);
 
   useEffect(() => {
-    if (updatedRoleData && updatedRolePermissionsData)
-      navigate("/home/roles", {
-        state: { message: "Role has been successfully updated" },
-      });
+    if (updatedRoleData && updatedRolePermissionsData) {
+      navigate("/home/roles");
+      setToastMessage("Role has been successfully updated");
+      setApiSuccess(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatedRoleData, updatedRolePermissionsData]);
 
@@ -90,7 +117,13 @@ const CreateOrEditRole = () => {
 
   return (
     <div className="roleContainer">
-      <RoleForm createRole={onCreateRole} editRole={onEditRole} />
+      {!loading && (
+        <RoleForm
+          name={role?.name || ""}
+          createRole={onCreateRole}
+          editRole={onEditRole}
+        />
+      )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
         {!loading && (

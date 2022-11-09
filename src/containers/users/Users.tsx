@@ -51,6 +51,10 @@ const Users: React.FC = () => {
     });
   }, []);
 
+  const setItemList = (data: any) => {
+    setUserList(data.getUsers);
+  };
+
   const columns: GridColumns = [
     {
       field: "firstName",
@@ -66,7 +70,7 @@ const Users: React.FC = () => {
     },
     {
       field: "groups",
-      headerName: "Member Of",
+      headerName: "Groups",
       headerClassName: "user-list-header",
       flex: 0.5,
       renderCell: (params) => (
@@ -105,8 +109,10 @@ const Users: React.FC = () => {
         rows={userList}
         columns={columns}
         text="All Users"
+        setItemList={setItemList}
         onAdd={onAdd}
         onEdit={onEdit}
+        entity="User"
         buttonLabel="Add User"
         searchLabel="Search User"
         deleteMutation={DELETE_USER}
@@ -144,52 +150,33 @@ const CheckAccess = (props: any) => {
     const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
     navigator.clipboard.writeText(inviteLink);
   };
+
   return (
     <div className="toggle">
-      {row.status === "ACTIVE" && (
+      {row.status !== "INVITED" && (
         <div className="switch">
           <Chip
             icon={
               <CircleIcon
-                sx={{
-                  width: "9px",
-                  color: "#00800069 !important",
-                  marginLeft: "18px !important",
-                }}
+                sx={{ width: "9px", marginLeft: "18px !important" }}
+                id={
+                  row.status === "ACTIVE" ? "active-circle" : "inactive-circle"
+                }
               />
             }
             sx={{
               marginLeft: "24px !important",
               borderRadius: "5px !important",
-              backgroundColor: "#0080003d !important",
               width: "21px",
               height: "21px",
             }}
+            id={row.status === "ACTIVE" ? "active" : "inactive"}
           />
-          <div id="enabled-text">Active</div>
-        </div>
-      )}
-      {row.status === "INACTIVE" && (
-        <div className="switch">
-          <Chip
-            icon={
-              <CircleIcon
-                sx={{
-                  width: "9px",
-                  color: "#80000052 !important",
-                  marginLeft: "18px !important",
-                }}
-              />
-            }
-            sx={{
-              marginLeft: "24px !important",
-              borderRadius: "5px !important",
-              backgroundColor: "#80000036 !important",
-              width: "21px",
-              height: "21px",
-            }}
-          />
-          <div id="disabled-text">Inactive</div>
+          {row.status === "ACTIVE" ? (
+            <div id="enabled-text">Active</div>
+          ) : (
+            <div id="enabled-text">Inactive</div>
+          )}
         </div>
       )}
       <div className="invited-switch">

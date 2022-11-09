@@ -9,6 +9,8 @@ const TableToolBar: FC<TableToolBarProps> = ({
   text,
   searchLabel,
   buttonLabel,
+  setItemList,
+  searchQuery,
   isAddVerified,
   onAdd,
 }) => {
@@ -17,7 +19,11 @@ const TableToolBar: FC<TableToolBarProps> = ({
       <legend className="legend-title">{text}</legend>
       <div className="search-button">
         <div className="search">
-          <SearchBar searchLabel={searchLabel} />
+          <SearchBar
+            searchLabel={searchLabel}
+            setItemList={setItemList}
+            searchQuery={searchQuery}
+          />
         </div>
         <div className="toolbar-button">
           <Button

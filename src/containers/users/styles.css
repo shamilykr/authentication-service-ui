@@ -71,7 +71,18 @@
   margin-left: 10px;
 }
 
-#disabled-text {
-  font-size: 17px;
-  margin-left: 10px;
+#active {
+  background-color: #0080003d;
+}
+
+#active-circle {
+  color: #00800069;
+}
+
+#inactive {
+  background-color: #80000036;
+}
+
+#inactive-circle {
+  color: #80000052;
 }

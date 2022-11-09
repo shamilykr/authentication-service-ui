@@ -78,7 +78,6 @@ const UserForm = (props: UserProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
-  const [selectAll, setSelectAll] = useState<boolean>(false);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<
     EntityPermissionsDetails[]
@@ -103,18 +102,15 @@ const UserForm = (props: UserProps) => {
   };
 
   useEffect(() => {
-    if (groupPermissions.length === 0 || selectAll) {
+    if (
+      groupPermissions.length === 0 ||
+      allGroups.length === userGroups.length
+    ) {
       userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
     }
   }, [userGroups]);
-
-  useEffect(() => {
-    if (allGroups.length === userGroups.length) {
-      setSelectAll(true);
-    } else setSelectAll(false);
-  }, [allGroups, userGroups]);
 
   const handlePermissions = async (group: Group) => {
     const response = await apolloClient.query({
@@ -150,6 +146,7 @@ const UserForm = (props: UserProps) => {
       setUser(data?.getUser);
       setUserGroups(data?.getUser.groups);
     },
+    fetchPolicy: "network-only",
   });
 
   useQuery(GET_USER_PERMISSIONS, {
@@ -158,6 +155,7 @@ const UserForm = (props: UserProps) => {
     onCompleted: (data) => {
       setSelectedPermissions(data?.getUserPermissions);
     },
+    fetchPolicy: "network-only",
   });
 
   const methods = useForm({
@@ -191,16 +189,13 @@ const UserForm = (props: UserProps) => {
         allGroups.forEach((group) => {
           handlePermissions(group);
         });
-        setSelectAll(true);
       } else {
-        setSelectAll(false);
         if (group) {
           setUserGroups([...userGroups, group]);
           handlePermissions(group);
         }
       }
     } else {
-      setSelectAll(false);
       if (value === "all") {
         setUserGroups([]);
         setGroupPermissions([]);
@@ -297,10 +292,14 @@ const UserForm = (props: UserProps) => {
 
       <div>
         <Box>
-          <Tabs value={value} onChange={handleTabChange}>
-            <Tab label="Groups" />
-            <Tab label="Permissions" />
-          </Tabs>
+          <Box
+            sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
+          >
+            <Tabs value={value} onChange={handleTabChange}>
+              <Tab label="Groups" />
+              <Tab label="Permissions" />
+            </Tabs>
+          </Box>
           <TabPanel value={value} index={0}>
             <div id="groups-permissions">
               <div id="user-groups">
@@ -309,7 +308,6 @@ const UserForm = (props: UserProps) => {
                   mapList={groupData?.getGroups}
                   currentCheckedItems={userGroups}
                   onChange={handleChange}
-                  selectAll={selectAll}
                 />
               </div>
               <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
