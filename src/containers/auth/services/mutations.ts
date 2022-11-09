@@ -32,6 +32,18 @@ export const SET_PASSWORD = gql`
   }
 `;
 
+export const REFRESH_INVITE_TOKEN = gql`
+  mutation refreshInviteToken($id: ID!) {
+    refreshInviteToken(id: $id) {
+      inviteToken
+      tokenExpiryTime
+      user {
+        id
+      }
+    }
+  }
+`;
+
 export const LOGOUT = gql`
   mutation logout {
     logout
