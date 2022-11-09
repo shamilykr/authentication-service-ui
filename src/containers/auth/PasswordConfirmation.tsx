@@ -31,7 +31,7 @@ const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <FormInputText
-            name="newPassword"
+            name="password"
             label="Enter Password"
             type="text"
             className="textBox"

@@ -6,11 +6,11 @@ const LoginSchema = yup.object({
 });
 
 const ConfirmPasswordSchema = yup.object({
-  newPassword: yup.string().required("Password can not be empty"),
+  password: yup.string().required("Password can not be empty"),
   confirmPassword: yup
     .string()
     .required("Please retype your password.")
-    .oneOf([yup.ref("newPassword")], "Your passwords do not match."),
+    .oneOf([yup.ref("password")], "Your passwords do not match."),
 });
 
 const ForgotPasswordSchema = yup.object({

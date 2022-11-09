@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
@@ -141,7 +141,7 @@ const CheckAccess = (props: any) => {
 
   const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const inviteLink = `${process.env.REACT_APP_BASE_URL}/confirmpassword?token="${props.row.inviteToken}"`;
+    const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
     navigator.clipboard.writeText(inviteLink);
   };
   return (
