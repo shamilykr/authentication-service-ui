@@ -33,7 +33,7 @@ const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
           <FormInputText
             name="password"
             label="Enter Password"
-            type="text"
+            type="password"
             className="textBox"
             autoComplete="off"
           />
