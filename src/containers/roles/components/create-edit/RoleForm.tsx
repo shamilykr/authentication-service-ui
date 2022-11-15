@@ -69,7 +69,7 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
             <div className="page-header">
               <div id="back-page" onClick={onBackNavigation}>
                 <ArrowBackIcon id="arrowicon" />
-                Roles Listing
+                Roles
               </div>
               <div className="create-role">
                 {id ? "Modify Role" : "Create Role"}
