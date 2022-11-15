@@ -24,8 +24,8 @@ const Profile = () => {
 
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>();
-  const [userPermissions, setUserPermissions] = useState<Permission[]>();
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [userPermissions, setUserPermissions] = useState<Permission[]>(); // eslint-disable-next-line
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
 
   useQuery(GET_USER, {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 
 import {
   UPDATE_USER,
@@ -34,17 +34,17 @@ const EditUser: React.FC = () => {
         setCurrentUserDetails(data.updateUser);
       }
     },
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateUserGroups, { error: groupUpdateError }] = useMutation(
     UPDATE_USER_GROUPS,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
@@ -56,9 +56,9 @@ const EditUser: React.FC = () => {
           setUserPermissions(data.updateUserPermissions);
         }
       },
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );

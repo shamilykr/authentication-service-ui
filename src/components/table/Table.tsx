@@ -35,6 +35,7 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  actionFlex,
   setItemList,
   onAdd,
   onEdit,
@@ -49,8 +50,8 @@ const TableList: FC<TableProps> = ({
   entity,
 }) => {
   const [isEditVerified, setEditVerified] = React.useState(true);
-  const [isDeleteVerified, setDeleteVerified] = React.useState(true);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [isDeleteVerified, setDeleteVerified] = React.useState(true); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
@@ -121,7 +122,7 @@ const TableList: FC<TableProps> = ({
       type: "actions",
       headerName: "Actions",
       headerClassName: "table-list-header",
-      flex: 0.3,
+      flex: actionFlex,
       cellClassName: "actions",
       headerAlign: "center",
 

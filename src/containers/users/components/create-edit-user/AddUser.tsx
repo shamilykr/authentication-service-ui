@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
@@ -20,8 +20,8 @@ import {
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [userPermissions, setUserPermissions] = useState<
     GroupPermissionsDetails[]
@@ -31,33 +31,33 @@ const AddUser: React.FC = () => {
   const [createUser, { error: createUserError, data }] = useMutation(
     CREATE_USER,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
   const [updateUserGroups, { error: groupUpdateError }] = useMutation(
     UPDATE_USER_GROUPS,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
   const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
     UPDATE_USER_PERMISSIONS,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
 
   useEffect(() => {
-    if (data) updateUserInfo();
+    if (data) updateUserInfo(); // eslint-disable-next-line
   }, [data]);
 
   const onCreateUser = (

@@ -16,7 +16,8 @@ import "./styles.css";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const PermissionList: React.FC = () => {
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [showAddPermission, setShowAddPermission] = useState(false);
   const [permissionList, setPermissionList] =

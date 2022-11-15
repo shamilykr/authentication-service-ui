@@ -15,12 +15,12 @@ import PasswordConfirmation from "./PasswordConfirmation";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const inviteToken: string | null = searchParams.get("token");
-
+  // eslint-disable-next-line
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
-
+  // eslint-disable-next-line
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
@@ -38,11 +38,11 @@ const Login: React.FC = () => {
       setUserPermissions(user?.permissions);
       setCurrentUserDetails(user);
       navigate("/home/users");
-    }
+    } // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
-    if (passwordCreatedData) navigate("/");
+    if (passwordCreatedData) navigate("/"); // eslint-disable-next-line
   }, [passwordCreatedData]);
 
   const onLogin = (data: FieldValues) => {
@@ -71,6 +71,8 @@ const Login: React.FC = () => {
   return (
     <div className="login-page">
       <div className="left">
+        {" "}
+        {/* eslint-disable-next-line*/}
         <img src={LOGIN_URL} alt="login image" id="login-image" />
       </div>
       <div className="input-container">{getInputFields()}</div>

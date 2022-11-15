@@ -64,8 +64,8 @@ function TabPanel(props: TabPanelProps) {
 const CreateOrEditGroup = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
@@ -84,31 +84,31 @@ const CreateOrEditGroup = () => {
   );
 
   const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [createGroup, { data: createdGroupData }] = useMutation(CREATE_GROUP, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateGroupRoles, { data: updatedGroupRolesData }] = useMutation(
     UPDATE_GROUP_ROLES,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
   const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
     useMutation(UPDATE_GROUP_PERMISSIONS, {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     });
 
@@ -275,7 +275,7 @@ const CreateOrEditGroup = () => {
           },
         },
       });
-    }
+    } // eslint-disable-next-line
   }, [createdGroupData]);
 
   useEffect(() => {
@@ -327,7 +327,7 @@ const CreateOrEditGroup = () => {
       allRoles?.length === roles?.length
     ) {
       roles.forEach((role) => handlePermissions(role));
-    }
+    } // eslint-disable-next-line
   }, [roles]);
 
   const handlePermissions = async (role: Role) => {

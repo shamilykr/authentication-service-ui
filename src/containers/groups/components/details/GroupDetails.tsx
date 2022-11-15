@@ -20,8 +20,8 @@ import {
 const GroupDetails: React.FC = () => {
   const { id } = useParams();
   const [group, setGroup] = useRecoilState(groupDetailsAtom);
-  const [roles, setRoles] = useRecoilState(GroupRolesAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [roles, setRoles] = useRecoilState(GroupRolesAtom); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [permissions, setPermissions] = useRecoilState(GroupPermissionsAtom);
   const navigate = useNavigate();

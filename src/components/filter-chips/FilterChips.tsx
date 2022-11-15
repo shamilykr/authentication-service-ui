@@ -16,8 +16,8 @@ interface FilterChipsProps {
 
 const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
   const { handleClick, selectedPermissions } = props;
-  const [allPermissions, setAllPermissions] = useState<Permission[]>([]);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [allPermissions, setAllPermissions] = useState<Permission[]>([]); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   useQuery(GET_PERMISSIONS, {
     onCompleted: (data) => {

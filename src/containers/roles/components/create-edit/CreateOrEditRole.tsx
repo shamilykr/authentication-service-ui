@@ -23,8 +23,8 @@ import { Role } from "../../../../types/role";
 const CreateOrEditRole = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
@@ -42,22 +42,22 @@ const CreateOrEditRole = () => {
   };
 
   const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateRole, { data: updatedRoleData }] = useMutation(UPDATE_ROLE, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateRolePermissions, { data: updatedRolePermissionsData }] =
     useMutation(UPDATE_ROLE_PERMISSIONS, {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     });
 
@@ -92,7 +92,7 @@ const CreateOrEditRole = () => {
           setApiSuccess(true);
           setToastMessage("Role has been successfully created");
         },
-      });
+      }); // eslint-disable-next-line
   }, [createdRoleData]);
 
   useEffect(() => {

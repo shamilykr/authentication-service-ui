@@ -100,6 +100,7 @@ const Roles: React.FC = () => {
         editPermission="edit-roles"
         deletePermission="delete-roles"
         isAddVerified={!isAddVerified}
+        actionFlex={0.3}
       />
     </>
   );

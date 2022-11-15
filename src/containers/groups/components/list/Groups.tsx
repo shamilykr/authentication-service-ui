@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
@@ -21,8 +21,8 @@ const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
-  const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
@@ -90,11 +90,12 @@ const GroupList: React.FC = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     userPermissions.map((item: any) => {
       if (item?.name.includes("create-groups")) {
         setAddVerified(true);
       }
-    });
+    }); // eslint-disable-next-line
   }, []);
 
   const setItemList = (data: any) => {
@@ -119,6 +120,7 @@ const GroupList: React.FC = () => {
         editPermission="edit-groups"
         deletePermission="delete-groups"
         isAddVerified={!isAddVerified}
+        actionFlex={0.3}
       />
     </>
   );
