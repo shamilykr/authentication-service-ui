@@ -90,8 +90,8 @@ const UserForm = (props: UserProps) => {
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
     []
-  );
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  ); // eslint-disable-next-line
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
 
   const handleClick = (permission: Permission) => {
@@ -116,7 +116,7 @@ const UserForm = (props: UserProps) => {
       userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
-    }
+    } // eslint-disable-next-line
   }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {
@@ -127,15 +127,28 @@ const UserForm = (props: UserProps) => {
       },
     });
     if (response) {
-      if (!groupPermissions.some((permission) => permission.id === group.id))
-        setGroupPermissions((previousState) => [
-          ...previousState,
+      if (groupPermissions.length !== 0) {
+        if (
+          !groupPermissions.some((permission) => permission.id === group.id)
+        ) {
+          setGroupPermissions((previousState) => [
+            ...previousState,
+            {
+              id: group.id,
+              name: group.name,
+              permissions: response?.data?.getGroupPermissions,
+            },
+          ]);
+        }
+      } else {
+        setGroupPermissions([
           {
             id: group.id,
             name: group.name,
             permissions: response?.data?.getGroupPermissions,
           },
         ]);
+      }
     }
   };
 
