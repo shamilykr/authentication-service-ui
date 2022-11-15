@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircleIcon from "@mui/icons-material/Circle";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Tooltip } from "@mui/material";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -15,20 +17,23 @@ import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
+import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
   const navigate = useNavigate();
-
-  useMutation(DELETE_USER, {
-    refetchQueries: [{ query: GET_USERS }],
-  });
 
   useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
     },
     fetchPolicy: "network-only",
   });
@@ -142,6 +147,13 @@ const GetFullName = (props: any) => {
 
 const CheckAccess = (props: any) => {
   const { row } = props;
+
+  const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
+    navigator.clipboard.writeText(inviteLink);
+  };
+
   return (
     <div className="toggle">
       {row.status !== "INVITED" && (
@@ -172,16 +184,25 @@ const CheckAccess = (props: any) => {
       )}
       <div className="invited-switch">
         {row.status === "INVITED" && (
-          <Chip
-            label="Invited"
-            className="pending"
-            sx={{
-              height: "36px",
-              width: "107px",
-              borderRadius: "5px",
-              fontWeight: "600",
-            }}
-          />
+          <>
+            <Chip
+              label="Invited"
+              className="pending"
+              sx={{
+                height: "36px",
+                width: "107px",
+                borderRadius: "5px",
+                fontWeight: "600",
+              }}
+            />
+            <Tooltip
+              title="Copy Invite Link"
+              onClick={onCopyInviteLink}
+              sx={{ cursor: "pointer" }}
+            >
+              <ContentCopyIcon fontSize="small" htmlColor="#01579B" />
+            </Tooltip>
+          </>
         )}
       </div>
     </div>
