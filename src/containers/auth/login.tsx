@@ -12,6 +12,8 @@ import LoginPassword from "./loginPassword";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 import { currentUserAtom } from "../../states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
+import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import Toast from "../../components/toast";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ const Login: React.FC = () => {
   const [userLogin, { data }] = useMutation(LOGIN);
   const [setPassword, { data: passwordCreatedData }] =
     useMutation(SET_PASSWORD);
+
+  // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
 
   useEffect(() => {
     if (data) {
@@ -60,12 +66,18 @@ const Login: React.FC = () => {
       },
       fetchPolicy: "no-cache",
     });
+    setToastMessage("Password set successfully");
+    setApiSuccess(true);
   };
 
   const getInputFields = () => {
     if (inviteToken)
       return <PasswordConfirmation onSubmitForm={onConfirmPassword} />;
     else return <LoginPassword onSubmitForm={onLogin} />;
+  };
+
+  const onCloseToast = () => {
+    setToastMessage("");
   };
 
   return (
@@ -76,6 +88,11 @@ const Login: React.FC = () => {
         <img src={LOGIN_URL} alt="login image" id="login-image" />
       </div>
       <div className="input-container">{getInputFields()}</div>
+      <Toast
+        message={toastMessage}
+        isOpen={Boolean(toastMessage)}
+        handleClose={onCloseToast}
+      />
     </div>
   );
 };

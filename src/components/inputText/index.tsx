@@ -32,6 +32,7 @@ const FormInputText = ({
         formState,
       }) => (
         <TextField
+          name={name}
           helperText={error ? error.message : null}
           error={!!error}
           onChange={onChange}
