@@ -127,28 +127,15 @@ const UserForm = (props: UserProps) => {
       },
     });
     if (response) {
-      if (groupPermissions.length !== 0) {
-        if (
-          !groupPermissions.some((permission) => permission.id === group.id)
-        ) {
-          setGroupPermissions((previousState) => [
-            ...previousState,
-            {
-              id: group.id,
-              name: group.name,
-              permissions: response?.data?.getGroupPermissions,
-            },
-          ]);
-        }
-      } else {
-        setGroupPermissions([
+      if (!groupPermissions.some((permission) => permission.id === group.id))
+        setGroupPermissions((previousState) => [
+          ...previousState,
           {
             id: group.id,
             name: group.name,
             permissions: response?.data?.getGroupPermissions,
           },
         ]);
-      }
     }
   };
 
