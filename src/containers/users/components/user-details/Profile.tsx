@@ -30,6 +30,7 @@ const Profile = () => {
 
   useQuery(GET_USER, {
     variables: { id: id },
+    fetchPolicy: "network-only",
     onCompleted: (data) => {
       setUser(data?.getUser);
       setUserGroups(data?.getUser?.groups);
