@@ -121,6 +121,7 @@ const GroupList: React.FC = () => {
         deletePermission="delete-groups"
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
+        cursorType="pointer"
       />
     </>
   );

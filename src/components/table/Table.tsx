@@ -36,6 +36,7 @@ const TableList: FC<TableProps> = ({
   columns,
   text,
   actionFlex,
+  cursorType,
   setItemList,
   onAdd,
   onEdit,
@@ -211,6 +212,7 @@ const TableList: FC<TableProps> = ({
           columns={final_columns}
           style={{
             borderRadius: "0px 0px 5px 5px",
+            cursor: cursorType,
           }}
           disableSelectionOnClick
           onRowClick={handleRowClick}

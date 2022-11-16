@@ -14,14 +14,33 @@ import InlineEdit from "../../components/inline-edit";
 import { Permission } from "../../types/permission";
 import "./styles.css";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { VERIFY_USER_PERMISSION } from "../../components/table/services/queries";
 
 const PermissionList: React.FC = () => {
   // eslint-disable-next-line
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [showAddPermission, setShowAddPermission] = useState(false);
+  const [isAddVerified, setAddVerified] = React.useState(true);
   const [permissionList, setPermissionList] =
     useRecoilState(permissionsListAtom);
+
+  useQuery(VERIFY_USER_PERMISSION, {
+    variables: {
+      params: {
+        permissions: ["create-permissions"],
+        operation: "AND",
+      },
+    },
+    onCompleted: (data) => {
+      setAddVerified(data?.verifyUserPermission);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
+  });
 
   const { refetch } = useQuery(GET_PERMISSIONS, {
     onCompleted: (data) => {
@@ -115,7 +134,11 @@ const PermissionList: React.FC = () => {
     <div className="permissionContainer">
       <div className="topContainer">
         <div className="heading"> Permissions </div>
-        <Button variant="contained" onClick={createPermission}>
+        <Button
+          variant="contained"
+          onClick={createPermission}
+          disabled={!isAddVerified}
+        >
           Add
         </Button>
       </div>

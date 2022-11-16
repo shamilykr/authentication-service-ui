@@ -126,6 +126,7 @@ const Users: React.FC = () => {
         deletePermission="delete-user"
         isAddVerified={!isAddVerified}
         actionFlex={0.23}
+        cursorType="pointer"
       />
     </>
   );

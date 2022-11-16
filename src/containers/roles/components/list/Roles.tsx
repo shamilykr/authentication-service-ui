@@ -101,6 +101,7 @@ const Roles: React.FC = () => {
         deletePermission="delete-roles"
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
+        cursorType="default"
       />
     </>
   );
