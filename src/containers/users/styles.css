@@ -3,6 +3,10 @@
   margin-left: 15px;
   font-weight: bold;
   color: #6d6d6d;
+  white-space: nowrap;
+  width: 204px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .avatar {
