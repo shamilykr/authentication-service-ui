@@ -69,17 +69,6 @@ const EditUser: React.FC = () => {
     userGroups: Group[],
     selectedPermissions: Permission[]
   ) => {
-    updateUser({
-      variables: {
-        id: id,
-        input: {
-          firstName: inputs.firstName,
-          middleName: inputs.middleName,
-          lastName: inputs.lastName,
-        },
-      },
-    });
-
     updateUserGroups({
       variables: {
         id: id,
@@ -94,6 +83,17 @@ const EditUser: React.FC = () => {
         id: id,
         input: {
           permissions: selectedPermissions.map((permission) => permission.id),
+        },
+      },
+    });
+
+    updateUser({
+      variables: {
+        id: id,
+        input: {
+          firstName: inputs.firstName,
+          middleName: inputs.middleName,
+          lastName: inputs.lastName,
         },
       },
       onCompleted: () => {
