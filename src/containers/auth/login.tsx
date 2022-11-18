@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
@@ -26,9 +26,21 @@ const Login: React.FC = () => {
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
-  const [userLogin, { data }] = useMutation(LOGIN);
-  const [setPassword, { data: passwordCreatedData }] =
-    useMutation(SET_PASSWORD);
+  const [userLogin, { data }] = useMutation(LOGIN, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [setPassword, { data: passwordCreatedData }] = useMutation(
+    SET_PASSWORD,
+    {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    }
+  );
 
   // eslint-disable-next-line
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
