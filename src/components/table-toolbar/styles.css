@@ -27,6 +27,10 @@
   position: relative;
 }
 
+.only-search {
+  margin-top: 10px;
+}
+
 #add-button {
   height: 49px;
   width: 150px;

@@ -17,7 +17,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
   return (
     <div className="table-toolbar">
       <legend className="legend-title">{text}</legend>
-      <div className="search-button">
+      <div className={!isAddVerified ? "search-button" : "only-search"}>
         <div className="search">
           <SearchBar
             searchLabel={searchLabel}
@@ -25,16 +25,13 @@ const TableToolBar: FC<TableToolBarProps> = ({
             searchQuery={searchQuery}
           />
         </div>
-        <div className="toolbar-button">
-          <Button
-            variant="contained"
-            id="add-button"
-            onClick={onAdd}
-            disabled={isAddVerified}
-          >
-            {buttonLabel}
-          </Button>
-        </div>
+        {!isAddVerified && (
+          <div className="toolbar-button">
+            <Button variant="contained" id="add-button" onClick={onAdd}>
+              {buttonLabel}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
