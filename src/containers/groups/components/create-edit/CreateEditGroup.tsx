@@ -152,6 +152,7 @@ const CreateOrEditGroup = () => {
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+    fetchPolicy: "network-only",
   });
 
   const handleClick = (permission: Permission) => {

@@ -99,6 +99,7 @@ const Users: React.FC = () => {
       ),
       headerAlign: "center",
       sortable: false,
+      align: "center",
     },
   ];
 
@@ -168,7 +169,6 @@ const CheckAccess = (props: any) => {
               />
             }
             sx={{
-              marginLeft: "24px !important",
               borderRadius: "5px !important",
               width: "21px",
               height: "21px",
