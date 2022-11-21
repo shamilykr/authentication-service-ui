@@ -140,7 +140,6 @@ const TableList: FC<TableProps> = ({
               }
               label="Edit"
               className={`edit  ${!isEditVerified && "disabled-styles"}`}
-              onClick={() => onEdit(params.id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">

@@ -21,7 +21,7 @@ const UserCard: FC<UserCardProps> = ({ user, onRemoveUser }) => {
         <div className="card-content">
           <Avatar {...stringAvatar(fullName)} className="avatar" />
           <div style={{ textTransform: "capitalize" }}>{fullName}</div>
-          <Chip label={"Active"} sx={{ background: "#D3F4BE" }} />
+          <Chip label={user.status} sx={{ background: "#D3F4BE" }} />
         </div>
         <IconButton onClick={() => onRemoveUser({ userId: user.id })}>
           <CancelIcon
