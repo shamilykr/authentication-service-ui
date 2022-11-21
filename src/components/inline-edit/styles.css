@@ -4,7 +4,7 @@
   width: 200px;
   text-overflow: ellipsis;
   color: #01579b;
-  margin-top: 7px;
+  margin-top: 9px;
 }
 .disabledStyles {
   background-color: aliceblue !important;
@@ -47,6 +47,6 @@ select:focus {
   margin-right: 20px;
   padding: 0px 10px 7px 10px;
   border: 1px solid #757575;
-  min-width: 200px;
-  min-height: 20px;
+  min-width: 260px;
+  min-height: 30px;
 }
