@@ -150,6 +150,9 @@ const GetFullName = (props: any) => {
 const CheckAccess = (props: any) => {
   const { row } = props;
 
+  const [isLinkCopied, setIsLinkCopied] = React.useState(false);
+  const [isLinkRefreshed, setIsLinkRefreshed] = React.useState(false);
+
   const [refreshInviteToken, { data }] = useMutation(REFRESH_INVITE_TOKEN, {
     refetchQueries: [{ query: GET_USERS }],
   });
@@ -158,6 +161,10 @@ const CheckAccess = (props: any) => {
     e.stopPropagation();
     const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
     navigator.clipboard.writeText(inviteLink);
+    setIsLinkCopied(true);
+    setTimeout(() => {
+      setIsLinkCopied(false);
+    }, 2000);
   };
 
   const onRefreshInviteLink = (e: React.MouseEvent<HTMLElement>) => {
@@ -165,6 +172,10 @@ const CheckAccess = (props: any) => {
     refreshInviteToken({
       variables: { id: props.row.id },
     });
+    setIsLinkRefreshed(true);
+    setTimeout(() => {
+      setIsLinkRefreshed(false);
+    }, 2000);
   };
 
   return (
@@ -209,14 +220,18 @@ const CheckAccess = (props: any) => {
               }}
             />
             <Tooltip
-              title="Copy Invite Link"
+              title={isLinkCopied ? "Copied" : "Copy Invite Link"}
               onClick={onCopyInviteLink}
               sx={{ cursor: "pointer" }}
             >
               <ContentCopyIcon fontSize="small" htmlColor="#01579B" />
             </Tooltip>
             <Tooltip
-              title="Refresh Invite Link"
+              title={
+                isLinkRefreshed
+                  ? "Invite Link Refreshed!"
+                  : "Refresh Invite Link"
+              }
               onClick={onRefreshInviteLink}
               sx={{ cursor: "pointer" }}
             >
