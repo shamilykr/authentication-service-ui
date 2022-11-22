@@ -13,14 +13,13 @@ interface UserCardProps {
 }
 
 const UserCard: FC<UserCardProps> = ({ user, onRemoveUser }) => {
-  const fullName = getFullName(user.firstName, user.middleName, user.lastName);
-
+  const fullName = getFullName(user.firstName, user.lastName);
   return (
     <Box sx={{ width: "85%" }}>
       <Card variant="outlined" className="user-card">
         <div className="card-content">
-          <Avatar {...stringAvatar(fullName)} className="avatar" />
-          <div style={{ textTransform: "capitalize" }}>{fullName}</div>
+          <Avatar {...stringAvatar(fullName.toUpperCase())} className="avatar" />
+          <div style={{ textTransform: "capitalize" }}>{getFullName(user.firstName, user.lastName, user.middleName)}</div>
           <Chip label={user.status} sx={{ background: "#D3F4BE" }} />
         </div>
         <IconButton onClick={() => onRemoveUser({ userId: user.id })}>
