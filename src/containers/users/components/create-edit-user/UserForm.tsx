@@ -90,7 +90,8 @@ const UserForm = (props: UserProps) => {
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
     []
-  ); // eslint-disable-next-line
+  );
+  const [status, setStatus] = useState<boolean>(false); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
   const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
 
@@ -110,8 +111,8 @@ const UserForm = (props: UserProps) => {
 
   useEffect(() => {
     if (
-      groupPermissions.length === 0 ||
-      allGroups.length === userGroups.length
+      (groupPermissions.length === 0 && !status) ||
+      allGroups?.length === userGroups?.length
     ) {
       userGroups.forEach((group: Group) => {
         handlePermissions(group);
@@ -120,22 +121,27 @@ const UserForm = (props: UserProps) => {
   }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {
-    const response = await apolloClient.query({
-      query: GET_GROUP_PERMISSIONS,
-      variables: {
-        id: group.id,
-      },
-    });
-    if (response) {
-      if (!groupPermissions.some((permission) => permission.id === group.id))
-        setGroupPermissions((previousState) => [
-          ...previousState,
-          {
-            id: group.id,
-            name: group.name,
-            permissions: response?.data?.getGroupPermissions,
-          },
-        ]);
+    setStatus(true);
+    try {
+      const response = await apolloClient.query({
+        query: GET_GROUP_PERMISSIONS,
+        variables: {
+          id: group.id,
+        },
+      });
+      if (response) {
+        if (!groupPermissions.some((groupObj) => groupObj.id === group.id))
+          setGroupPermissions((previousState) => [
+            ...previousState,
+            {
+              id: group.id,
+              name: group.name,
+              permissions: response?.data?.getGroupPermissions,
+            },
+          ]);
+      }
+    } finally {
+      setStatus(false);
     }
   };
 
@@ -205,9 +211,6 @@ const UserForm = (props: UserProps) => {
     if (event.target.checked) {
       if (value === "all") {
         setUserGroups(allGroups);
-        allGroups.forEach((group) => {
-          handlePermissions(group);
-        });
       } else {
         if (group) {
           setUserGroups([...userGroups, group]);
