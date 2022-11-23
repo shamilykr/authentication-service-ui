@@ -29,6 +29,7 @@ export const GET_GROUP = gql`
         firstName
         middleName
         lastName
+        status
       }
       roles {
         id

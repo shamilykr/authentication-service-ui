@@ -1,7 +1,7 @@
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import { GET_ROLE } from "../../services/queries";
 import {
@@ -23,9 +23,8 @@ import { Role } from "../../../../types/role";
 const CreateOrEditRole = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
@@ -42,22 +41,22 @@ const CreateOrEditRole = () => {
   };
 
   const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateRole, { data: updatedRoleData }] = useMutation(UPDATE_ROLE, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateRolePermissions, { data: updatedRolePermissionsData }] =
     useMutation(UPDATE_ROLE_PERMISSIONS, {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     });
 
@@ -92,7 +91,7 @@ const CreateOrEditRole = () => {
           setApiSuccess(true);
           setToastMessage("Role has been successfully created");
         },
-      });
+      }); // eslint-disable-next-line
   }, [createdRoleData]);
 
   useEffect(() => {

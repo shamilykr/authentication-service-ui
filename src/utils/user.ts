@@ -1,7 +1,9 @@
 export const getFullName = (
   firstName: string,
-  middleName: string,
-  lastName: string
+  lastName: string,
+  middleName?: string
 ) => {
-  return `${firstName || ""} ${middleName || ""} ${lastName || ""} `;
+  return middleName
+    ? `${firstName || ""} ${middleName || ""} ${lastName || ""} `
+    : `${firstName || ""} ${lastName || ""} `;
 };

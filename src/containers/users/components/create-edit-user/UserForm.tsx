@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSetRecoilState } from "recoil";
 
 import {
   GET_GROUPS,
@@ -33,7 +34,6 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { useRecoilState } from "recoil";
 
 interface UserProps {
   isEdit?: boolean;
@@ -91,8 +91,9 @@ const UserForm = (props: UserProps) => {
   const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
     []
   );
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [status, setStatus] = useState<boolean>(false);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
   const handleClick = (permission: Permission) => {
     if (
@@ -110,32 +111,37 @@ const UserForm = (props: UserProps) => {
 
   useEffect(() => {
     if (
-      groupPermissions.length === 0 ||
-      allGroups.length === userGroups.length
+      (groupPermissions.length === 0 && !status) ||
+      allGroups?.length === userGroups?.length
     ) {
       userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
-    }
+    } // eslint-disable-next-line
   }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {
-    const response = await apolloClient.query({
-      query: GET_GROUP_PERMISSIONS,
-      variables: {
-        id: group.id,
-      },
-    });
-    if (response) {
-      if (!groupPermissions.some((permission) => permission.id === group.id))
-        setGroupPermissions((previousState) => [
-          ...previousState,
-          {
-            id: group.id,
-            name: group.name,
-            permissions: response?.data?.getGroupPermissions,
-          },
-        ]);
+    setStatus(true);
+    try {
+      const response = await apolloClient.query({
+        query: GET_GROUP_PERMISSIONS,
+        variables: {
+          id: group.id,
+        },
+      });
+      if (response) {
+        if (!groupPermissions.some((groupObj) => groupObj.id === group.id))
+          setGroupPermissions((previousState) => [
+            ...previousState,
+            {
+              id: group.id,
+              name: group.name,
+              permissions: response?.data?.getGroupPermissions,
+            },
+          ]);
+      }
+    } finally {
+      setStatus(false);
     }
   };
 
@@ -205,9 +211,6 @@ const UserForm = (props: UserProps) => {
     if (event.target.checked) {
       if (value === "all") {
         setUserGroups(allGroups);
-        allGroups.forEach((group) => {
-          handlePermissions(group);
-        });
       } else {
         if (group) {
           setUserGroups([...userGroups, group]);

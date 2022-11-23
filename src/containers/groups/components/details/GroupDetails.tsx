@@ -2,7 +2,7 @@ import { ApolloError, useQuery } from "@apollo/client";
 import { Chip } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { groupDetailsAtom } from "../../../../states/groupStates";
 import { GroupPermissionsAtom } from "../../../../states/permissionsStates";
 import { GroupRolesAtom } from "../../../../states/roleStates";
@@ -21,8 +21,8 @@ const GroupDetails: React.FC = () => {
   const { id } = useParams();
   const [group, setGroup] = useRecoilState(groupDetailsAtom);
   const [roles, setRoles] = useRecoilState(GroupRolesAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [permissions, setPermissions] = useRecoilState(GroupPermissionsAtom);
   const navigate = useNavigate();
 

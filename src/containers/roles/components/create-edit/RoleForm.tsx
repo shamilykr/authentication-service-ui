@@ -27,8 +27,8 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [role, setRole] = useState<Role>();
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [role, setRole] = useState<Role>(); // eslint-disable-next-line
+  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
 
   const { loading } = useQuery(GET_ROLE, {
@@ -69,7 +69,7 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
             <div className="page-header">
               <div id="back-page" onClick={onBackNavigation}>
                 <ArrowBackIcon id="arrowicon" />
-                Roles Listing
+                Roles
               </div>
               <div className="create-role">
                 {id ? "Modify Role" : "Create Role"}

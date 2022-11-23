@@ -63,14 +63,14 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
               {item?.firstName && (
                 <Avatar
                   {...stringAvatar(
-                    getFullName(item.firstName, item.middleName, item.lastName)
+                    getFullName(item.firstName, item.lastName)?.toUpperCase()
                   )}
                   className="avatar"
                 />
               )}
               <span className="checklistLabel">
                 {item?.name ||
-                  getFullName(item.firstName, item.middleName, item.lastName)}
+                  getFullName(item.firstName, item.lastName, item.middleName)}
               </span>
             </div>
           );
