@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { ApolloError, useQuery } from "@apollo/client";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -24,9 +24,9 @@ import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const [userList, setUserList] = useRecoilState(userListAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [userList, setUserList] = useRecoilState(userListAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
   useQuery(GET_USERS, {

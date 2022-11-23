@@ -19,7 +19,7 @@ const UserCard: FC<UserCardProps> = ({ user, onRemoveUser }) => {
       <Card variant="outlined" className="user-card">
         <div className="card-content">
           <Avatar
-            {...stringAvatar(fullName.toUpperCase())}
+            {...stringAvatar(fullName?.toUpperCase())}
             className="avatar"
           />
           <div style={{ textTransform: "capitalize" }}>

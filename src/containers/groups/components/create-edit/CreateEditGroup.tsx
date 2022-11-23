@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 
 import {
@@ -64,9 +64,8 @@ function TabPanel(props: TabPanelProps) {
 const CreateOrEditGroup = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);

@@ -31,8 +31,7 @@ import Toast from "../../components/toast";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const HomePage = () => {
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

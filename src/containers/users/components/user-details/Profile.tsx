@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ApolloError, useQuery } from "@apollo/client";
 
 import { styled, Box, Paper, Grid, Divider, Link, Chip } from "@mui/material";
+import { useSetRecoilState } from "recoil";
 
 import { GET_USER } from "../../services/queries";
 import { User, Group, Permission } from "../../../../types/user";
@@ -12,7 +13,6 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { useRecoilState } from "recoil";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -24,9 +24,9 @@ const Profile = () => {
 
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>();
-  const [userPermissions, setUserPermissions] = useState<Permission[]>(); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [userPermissions, setUserPermissions] = useState<Permission[]>();
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
   useQuery(GET_USER, {
     variables: { id: id },

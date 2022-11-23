@@ -17,12 +17,12 @@ import {
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
-import { useRecoilState } from "recoil";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const StyledDialog = styled(Dialog)`
@@ -51,9 +51,9 @@ const TableList: FC<TableProps> = ({
   entity,
 }) => {
   const [isEditVerified, setEditVerified] = React.useState(true);
-  const [isDeleteVerified, setDeleteVerified] = React.useState(true); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [isDeleteVerified, setDeleteVerified] = React.useState(true);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {

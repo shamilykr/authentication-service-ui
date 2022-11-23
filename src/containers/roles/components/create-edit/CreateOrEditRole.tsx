@@ -1,7 +1,7 @@
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import { GET_ROLE } from "../../services/queries";
 import {
@@ -23,9 +23,8 @@ import { Role } from "../../../../types/role";
 const CreateOrEditRole = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 

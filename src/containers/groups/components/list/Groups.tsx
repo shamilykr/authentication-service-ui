@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { ApolloError, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +21,9 @@ const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
-  const [userPermissions] = useRecoilState(UserPermissionsAtom); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
   useQuery(GET_GROUPS, {

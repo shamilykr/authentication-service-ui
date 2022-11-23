@@ -12,7 +12,7 @@ import "./styles.css";
 import { Group, Permission } from "../../../../types/user";
 import { FieldValues } from "react-hook-form";
 import { currentUserAtom } from "../../../../states/loginStates";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import {
   apiRequestAtom,
@@ -20,11 +20,10 @@ import {
 } from "../../../../states/apiRequestState";
 
 const EditUser: React.FC = () => {
-  const { id } = useParams(); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
-  const [userPermissions, setUserPermissions] =
-    useRecoilState(UserPermissionsAtom);
+  const { id } = useParams();
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import {
   CREATE_USER,
@@ -20,9 +20,8 @@ import {
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [userPermissions, setUserPermissions] = useState<
     GroupPermissionsDetails[]
   >([]);

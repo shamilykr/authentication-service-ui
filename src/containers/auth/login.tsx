@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ApolloError, useMutation } from "@apollo/client";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
 import { LOGIN_URL } from "../../config";
@@ -42,8 +42,7 @@ const Login: React.FC = () => {
     }
   );
 
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
 
   useEffect(() => {
