@@ -141,7 +141,7 @@ const TableList: FC<TableProps> = ({
                     />
                   }
                   label="Edit"
-                  className={`edit  ${!isEditVerified && "disabled-styles"}`}
+                  className="edit"
                   onClick={() => onEdit(params.id)}
                 />
               </Tooltip>
@@ -151,15 +151,14 @@ const TableList: FC<TableProps> = ({
                 <GridActionsCellItem
                   icon={<DeleteOutlinedIcon className="delete" />}
                   label="Delete"
-                  className={`delete  ${
-                    !isDeleteVerified && "disabled-styles"
-                  }`}
-                  onClick={() =>
+                  className="delete"
+                  onClick={() => {
                     openConfirmPopup(
                       params.id,
                       `${params.row.firstName} ${params.row.lastName}`
-                    )
-                  }
+                    );
+                    console.log(params.row);
+                  }}
                 />
               </Tooltip>
             )}
