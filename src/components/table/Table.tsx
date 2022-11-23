@@ -154,7 +154,12 @@ const TableList: FC<TableProps> = ({
                   className={`delete  ${
                     !isDeleteVerified && "disabled-styles"
                   }`}
-                  onClick={() => openConfirmPopup(params.id, params.row.name)}
+                  onClick={() =>
+                    openConfirmPopup(
+                      params.id,
+                      `${params.row.firstName} ${params.row.lastName}`
+                    )
+                  }
                 />
               </Tooltip>
             )}
