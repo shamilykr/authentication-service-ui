@@ -6,9 +6,11 @@ import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircleIcon from "@mui/icons-material/Circle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { Tooltip } from "@mui/material";
 
 import { GET_USERS } from "./services/queries";
+import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
 import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
 import { userListAtom } from "../../states/userStates";
@@ -91,7 +93,7 @@ const Users: React.FC = () => {
     {
       field: "status",
       headerName: "Status",
-      flex: 0.2,
+      flex: 0.21,
       renderCell: (params) => (
         <div className="access-column">
           <CheckAccess {...params} />
@@ -148,10 +150,32 @@ const GetFullName = (props: any) => {
 const CheckAccess = (props: any) => {
   const { row } = props;
 
+  const [isLinkCopied, setIsLinkCopied] = React.useState(false);
+  const [isLinkRefreshed, setIsLinkRefreshed] = React.useState(false);
+
+  const [refreshInviteToken, { data }] = useMutation(REFRESH_INVITE_TOKEN, {
+    refetchQueries: [{ query: GET_USERS }],
+  });
+
   const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     const inviteLink = `${process.env.REACT_APP_BASE_URL}/#/confirmpassword?token=${props.row.inviteToken}`;
     navigator.clipboard.writeText(inviteLink);
+    setIsLinkCopied(true);
+    setTimeout(() => {
+      setIsLinkCopied(false);
+    }, 2000);
+  };
+
+  const onRefreshInviteLink = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    refreshInviteToken({
+      variables: { id: props.row.id },
+    });
+    setIsLinkRefreshed(true);
+    setTimeout(() => {
+      setIsLinkRefreshed(false);
+    }, 2000);
   };
 
   return (
@@ -196,11 +220,22 @@ const CheckAccess = (props: any) => {
               }}
             />
             <Tooltip
-              title="Copy Invite Link"
+              title={isLinkCopied ? "Copied" : "Copy Invite Link"}
               onClick={onCopyInviteLink}
               sx={{ cursor: "pointer" }}
             >
               <ContentCopyIcon fontSize="small" htmlColor="#01579B" />
+            </Tooltip>
+            <Tooltip
+              title={
+                isLinkRefreshed
+                  ? "Invite Link Refreshed!"
+                  : "Refresh Invite Link"
+              }
+              onClick={onRefreshInviteLink}
+              sx={{ cursor: "pointer" }}
+            >
+              <RefreshIcon fontSize="medium" htmlColor="#01579B" />
             </Tooltip>
           </>
         )}
