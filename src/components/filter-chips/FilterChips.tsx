@@ -41,10 +41,13 @@ const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
               selected
                 ? {
                     fontSize: "medium",
+                    borderWidth: "2px",
                     borderColor: "#01579B",
                   }
                 : {
                     fontSize: "medium",
+                    color: "#454545",
+                    background: "#fff",
                   }
             }
             key={permission.id}
