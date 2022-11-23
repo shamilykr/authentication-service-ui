@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSetRecoilState } from "recoil";
 
 import {
   GET_GROUPS,
@@ -33,7 +34,6 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { useRecoilState } from "recoil";
 
 interface UserProps {
   isEdit?: boolean;
@@ -92,8 +92,8 @@ const UserForm = (props: UserProps) => {
     []
   );
   const [status, setStatus] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
 
   const handleClick = (permission: Permission) => {
     if (
@@ -117,7 +117,7 @@ const UserForm = (props: UserProps) => {
       userGroups.forEach((group: Group) => {
         handlePermissions(group);
       });
-    }
+    } // eslint-disable-next-line
   }, [userGroups]);
 
   const handlePermissions = async (group: Group) => {

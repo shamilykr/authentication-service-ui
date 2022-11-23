@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { ApolloError, useQuery } from "@apollo/client";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +20,9 @@ const Roles: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
-  const [userPermissions] = useRecoilState(UserPermissionsAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
   useQuery(GET_ROLES, {
@@ -100,6 +100,8 @@ const Roles: React.FC = () => {
         editPermission="edit-roles"
         deletePermission="delete-roles"
         isAddVerified={!isAddVerified}
+        actionFlex={0.3}
+        cursorType="default"
       />
     </>
   );

@@ -136,16 +136,19 @@
 #active-user {
   background-color: #d3f4be;
   color: #008000d1;
+  max-height: 25px;
 }
 
 #inactive-user {
   background-color: #80000040;
   color: #8000008c;
+  max-height: 25px;
 }
 
 #invited-user {
   background-color: #efcc2433;
   color: #d9a034;
+  max-height: 25px;
 }
 
 @media (max-width: 900px) {

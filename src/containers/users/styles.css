@@ -3,6 +3,10 @@
   margin-left: 15px;
   font-weight: bold;
   color: #6d6d6d;
+  white-space: nowrap;
+  width: 204px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .avatar {
@@ -22,7 +26,6 @@
 .username-column {
   display: flex;
   width: 100%;
-  cursor: pointer;
 }
 
 .user-list-header div {
@@ -55,7 +58,7 @@
 
 #enabled-text {
   font-size: 17px;
-  margin-left: 10px;
+  margin-left: 13px;
 }
 
 #active {

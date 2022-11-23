@@ -17,12 +17,12 @@ import {
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
-import { useRecoilState } from "recoil";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const StyledDialog = styled(Dialog)`
@@ -35,6 +35,8 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  actionFlex,
+  cursorType,
   setItemList,
   onAdd,
   onEdit,
@@ -50,8 +52,8 @@ const TableList: FC<TableProps> = ({
 }) => {
   const [isEditVerified, setEditVerified] = React.useState(true);
   const [isDeleteVerified, setDeleteVerified] = React.useState(true);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
@@ -121,7 +123,7 @@ const TableList: FC<TableProps> = ({
       type: "actions",
       headerName: "Actions",
       headerClassName: "table-list-header",
-      flex: 0.3,
+      flex: actionFlex,
       cellClassName: "actions",
       headerAlign: "center",
 
@@ -138,7 +140,6 @@ const TableList: FC<TableProps> = ({
               }
               label="Edit"
               className={`edit  ${!isEditVerified && "disabled-styles"}`}
-              onClick={() => onEdit(params.id)}
             />
           </Tooltip>,
           <Tooltip title="Delete" arrow placement="top">
@@ -210,6 +211,7 @@ const TableList: FC<TableProps> = ({
           columns={final_columns}
           style={{
             borderRadius: "0px 0px 5px 5px",
+            cursor: cursorType,
           }}
           disableSelectionOnClick
           onRowClick={handleRowClick}

@@ -19,6 +19,8 @@ export interface TableProps {
   editPermission?: string;
   deletePermission?: string;
   isAddVerified?: boolean;
+  actionFlex: number;
+  cursorType: string;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;

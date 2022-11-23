@@ -1,12 +1,6 @@
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
-import {
-  Outlet,
-  Navigate,
-  useNavigate,
-  NavLink,
-  useLocation,
-} from "react-router-dom";
+import React from "react";
+import { Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
@@ -37,7 +31,7 @@ import Toast from "../../components/toast";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 const HomePage = () => {
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

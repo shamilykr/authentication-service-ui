@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-import { useRecoilState } from "recoil";
+import { ApolloError, useMutation } from "@apollo/client";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
 import { LOGIN_URL } from "../../config";
@@ -12,21 +12,38 @@ import LoginPassword from "./loginPassword";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 import { currentUserAtom } from "../../states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
+import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import Toast from "../../components/toast";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const inviteToken: string | null = searchParams.get("token");
-
+  // eslint-disable-next-line
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
-
+  // eslint-disable-next-line
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
-  const [userLogin, { data }] = useMutation(LOGIN);
-  const [setPassword, { data: passwordCreatedData }] =
-    useMutation(SET_PASSWORD);
+  const [userLogin, { data }] = useMutation(LOGIN, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
+  const [setPassword, { data: passwordCreatedData }] = useMutation(
+    SET_PASSWORD,
+    {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    }
+  );
+
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
 
   useEffect(() => {
     if (data) {
@@ -38,11 +55,11 @@ const Login: React.FC = () => {
       setUserPermissions(user?.permissions);
       setCurrentUserDetails(user);
       navigate("/home/users");
-    }
+    } // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
-    if (passwordCreatedData) navigate("/");
+    if (passwordCreatedData) navigate("/"); // eslint-disable-next-line
   }, [passwordCreatedData]);
 
   const onLogin = (data: FieldValues) => {
@@ -60,6 +77,8 @@ const Login: React.FC = () => {
       },
       fetchPolicy: "no-cache",
     });
+    setToastMessage("Password set successfully");
+    setApiSuccess(true);
   };
 
   const getInputFields = () => {
@@ -68,12 +87,23 @@ const Login: React.FC = () => {
     else return <LoginPassword onSubmitForm={onLogin} />;
   };
 
+  const onCloseToast = () => {
+    setToastMessage("");
+  };
+
   return (
     <div className="login-page">
       <div className="left">
+        {" "}
+        {/* eslint-disable-next-line*/}
         <img src={LOGIN_URL} alt="login image" id="login-image" />
       </div>
       <div className="input-container">{getInputFields()}</div>
+      <Toast
+        message={toastMessage}
+        isOpen={Boolean(toastMessage)}
+        handleClose={onCloseToast}
+      />
     </div>
   );
 };

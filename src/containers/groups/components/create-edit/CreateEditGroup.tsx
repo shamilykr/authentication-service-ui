@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 
 import {
@@ -64,9 +64,8 @@ function TabPanel(props: TabPanelProps) {
 const CreateOrEditGroup = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
@@ -84,31 +83,31 @@ const CreateOrEditGroup = () => {
   );
 
   const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [createGroup, { data: createdGroupData }] = useMutation(CREATE_GROUP, {
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateGroupRoles, { data: updatedGroupRolesData }] = useMutation(
     UPDATE_GROUP_ROLES,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
   const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
     useMutation(UPDATE_GROUP_PERMISSIONS, {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     });
 
@@ -275,7 +274,7 @@ const CreateOrEditGroup = () => {
           },
         },
       });
-    }
+    } // eslint-disable-next-line
   }, [createdGroupData]);
 
   useEffect(() => {
@@ -327,7 +326,7 @@ const CreateOrEditGroup = () => {
       allRoles?.length === roles?.length
     ) {
       roles.forEach((role) => handlePermissions(role));
-    }
+    } // eslint-disable-next-line
   }, [roles]);
 
   const handlePermissions = async (role: Role) => {

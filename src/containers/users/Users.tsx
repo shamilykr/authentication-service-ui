@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
@@ -25,8 +25,8 @@ const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
   useQuery(GET_USERS, {
@@ -49,11 +49,12 @@ const Users: React.FC = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     userPermissions.map((item: any) => {
       if (item?.name.includes("create-user")) {
         setAddVerified(true);
       }
-    });
+    }); // eslint-disable-next-line
   }, []);
 
   const setItemList = (data: any) => {
@@ -126,6 +127,8 @@ const Users: React.FC = () => {
         editPermission="edit-user"
         deletePermission="delete-user"
         isAddVerified={!isAddVerified}
+        actionFlex={0.23}
+        cursorType="pointer"
       />
     </>
   );

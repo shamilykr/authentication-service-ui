@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 
 import {
   UPDATE_USER,
@@ -12,7 +12,7 @@ import "./styles.css";
 import { Group, Permission } from "../../../../types/user";
 import { FieldValues } from "react-hook-form";
 import { currentUserAtom } from "../../../../states/loginStates";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "../../../../states/permissionsStates";
 import {
   apiRequestAtom,
@@ -20,11 +20,10 @@ import {
 } from "../../../../states/apiRequestState";
 
 const EditUser: React.FC = () => {
-  const { id } = useParams(); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom); // eslint-disable-next-line
-  const [userPermissions, setUserPermissions] =
-    useRecoilState(UserPermissionsAtom);
+  const { id } = useParams();
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
 
@@ -34,17 +33,17 @@ const EditUser: React.FC = () => {
         setCurrentUserDetails(data.updateUser);
       }
     },
-    onError: () => {
+    onError: (error: ApolloError) => {
       setApiSuccess(false);
-      setToastMessage("The request could not be processed");
+      setToastMessage(error.message);
     },
   });
   const [updateUserGroups, { error: groupUpdateError }] = useMutation(
     UPDATE_USER_GROUPS,
     {
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
@@ -56,9 +55,9 @@ const EditUser: React.FC = () => {
           setUserPermissions(data.updateUserPermissions);
         }
       },
-      onError: () => {
+      onError: (error: ApolloError) => {
         setApiSuccess(false);
-        setToastMessage("The request could not be processed");
+        setToastMessage(error.message);
       },
     }
   );
@@ -69,17 +68,6 @@ const EditUser: React.FC = () => {
     userGroups: Group[],
     selectedPermissions: Permission[]
   ) => {
-    updateUser({
-      variables: {
-        id: id,
-        input: {
-          firstName: inputs.firstName,
-          middleName: inputs.middleName,
-          lastName: inputs.lastName,
-        },
-      },
-    });
-
     updateUserGroups({
       variables: {
         id: id,
@@ -94,6 +82,17 @@ const EditUser: React.FC = () => {
         id: id,
         input: {
           permissions: selectedPermissions.map((permission) => permission.id),
+        },
+      },
+    });
+
+    updateUser({
+      variables: {
+        id: id,
+        input: {
+          firstName: inputs.firstName,
+          middleName: inputs.middleName,
+          lastName: inputs.lastName,
         },
       },
       onCompleted: () => {
