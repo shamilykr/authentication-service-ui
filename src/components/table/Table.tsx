@@ -157,7 +157,6 @@ const TableList: FC<TableProps> = ({
                       params.id,
                       `${params.row.firstName} ${params.row.lastName}`
                     );
-                    console.log(params.row);
                   }}
                 />
               </Tooltip>
