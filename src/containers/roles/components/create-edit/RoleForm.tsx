@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { ApolloError, useQuery } from "@apollo/client";
+import { useSetRecoilState } from "recoil";
 
 import { RoleFormSchema } from "../../roleSchema";
 import "./styles.css";
@@ -15,7 +16,6 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { useRecoilState } from "recoil";
 
 interface RoleFormProps {
   name: string;
@@ -27,9 +27,9 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [role, setRole] = useState<Role>(); // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const [role, setRole] = useState<Role>();
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
 
   const { loading } = useQuery(GET_ROLE, {
     skip: !id,

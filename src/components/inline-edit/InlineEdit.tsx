@@ -3,11 +3,11 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import { Tooltip } from "@mui/material";
+import { useSetRecoilState } from "recoil";
 
 import "./styles.css";
 import { ApolloError, useQuery } from "@apollo/client";
 import { VERIFY_USER_PERMISSION } from "../table/services/queries";
-import { useRecoilState } from "recoil";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 type InlineEditProps = {
@@ -30,9 +30,8 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   const inputElement = useRef<any>(null);
   const [editingValue, setEditingValue] = useState<string | undefined>(value);
   const [isDisabled, setIsDisabled] = useState(!isAdd);
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [isEditVerified, setEditVerified] = React.useState(true);
   const [isDeleteVerified, setDeleteVerified] = React.useState(true);
 
