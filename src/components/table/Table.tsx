@@ -129,68 +129,84 @@ const TableList: FC<TableProps> = ({
 
       getActions: (params) => {
         return [
-          <Tooltip title="Edit" arrow placement="top">
-            <GridActionsCellItem
-              icon={
-                <EditOutlinedIcon
+          <>
+            {isEditVerified && (
+              <Tooltip title="Edit" arrow placement="top">
+                <GridActionsCellItem
+                  icon={
+                    <EditOutlinedIcon
+                      onClick={() => {
+                        onEdit(params.id);
+                      }}
+                    />
+                  }
+                  label="Edit"
+                  className="edit"
+                  onClick={() => onEdit(params.id)}
+                />
+              </Tooltip>
+            )}
+            {isDeleteVerified && (
+              <Tooltip title="Delete" arrow placement="top">
+                <GridActionsCellItem
+                  icon={<DeleteOutlinedIcon className="delete" />}
+                  label="Delete"
+                  className="delete"
                   onClick={() => {
-                    onEdit(params.id);
+                    openConfirmPopup(
+                      params.id,
+                      `${params.row.firstName} ${params.row.lastName}`
+                    );
                   }}
                 />
-              }
-              label="Edit"
-              className={`edit  ${!isEditVerified && "disabled-styles"}`}
-            />
-          </Tooltip>,
-          <Tooltip title="Delete" arrow placement="top">
-            <GridActionsCellItem
-              icon={<DeleteOutlinedIcon className="delete" />}
-              label="Delete"
-              className={`delete  ${!isDeleteVerified && "disabled-styles"}`}
-              onClick={() => openConfirmPopup(params.id, params.row.name)}
-            />
-          </Tooltip>,
-          <StyledDialog
-            PaperProps={{
-              style: {
-                boxShadow: "none",
-                minWidth: "400px",
-                alignItems: "center",
-              },
-            }}
-            open={open}
-            onClose={handleClose}
-          >
-            <DialogTitle>
-              <>Delete {entity}</>
-            </DialogTitle>
-            <DialogContentText sx={{ width: "84%" }}>
-              <>
-                {" "}
-                Are you sure you want to delete the {entity?.toLowerCase()}{" "}
-                {entityName}?
-              </>
-            </DialogContentText>
-            <DialogActions>
-              <Button onClick={handleClose}>No</Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  height: "30px",
-                }}
-                onClick={onConfirmDelete}
-                autoFocus
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </StyledDialog>,
+              </Tooltip>
+            )}
+            <StyledDialog
+              PaperProps={{
+                style: {
+                  boxShadow: "none",
+                  minWidth: "400px",
+                  alignItems: "center",
+                },
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <DialogTitle>
+                <>Delete {entity}</>
+              </DialogTitle>
+              <DialogContentText sx={{ width: "84%" }}>
+                <>
+                  {" "}
+                  Are you sure you want to delete the {entity?.toLowerCase()}{" "}
+                  {entityName}?
+                </>
+              </DialogContentText>
+              <DialogActions>
+                <Button onClick={handleClose}>No</Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    height: "30px",
+                  }}
+                  onClick={onConfirmDelete}
+                  autoFocus
+                >
+                  Yes
+                </Button>
+              </DialogActions>
+            </StyledDialog>
+          </>,
         ];
       },
     },
   ];
-
-  const final_columns = [...columns, ...action_column];
+  let final_columns;
+  if (!isEditVerified && !isDeleteVerified) {
+    final_columns = columns;
+  } else {
+    final_columns = [...columns, ...action_column];
+  }
 
   return (
     <div className="table-component">

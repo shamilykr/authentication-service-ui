@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "@mui/material";
 
 import { permissionsListAtom } from "../../states/permissionsStates";
@@ -17,9 +17,8 @@ import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import { VERIFY_USER_PERMISSION } from "../../components/table/services/queries";
 
 const PermissionList: React.FC = () => {
-  // eslint-disable-next-line
-  const [apiSuccess, setApiSuccess] = useRecoilState(apiRequestAtom); // eslint-disable-next-line
-  const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [showAddPermission, setShowAddPermission] = useState(false);
   const [isAddVerified, setAddVerified] = React.useState(true);
   const [permissionList, setPermissionList] =

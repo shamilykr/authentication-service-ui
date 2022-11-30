@@ -51,7 +51,7 @@ const Users: React.FC = () => {
   useEffect(() => {
     // eslint-disable-next-line
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-user")) {
+      if (item?.name.includes("create-users")) {
         setAddVerified(true);
       }
     }); // eslint-disable-next-line
@@ -102,6 +102,7 @@ const Users: React.FC = () => {
       ),
       headerAlign: "center",
       sortable: false,
+      align: "center",
     },
   ];
 
@@ -195,7 +196,6 @@ const CheckAccess = (props: any) => {
               />
             }
             sx={{
-              marginLeft: "24px !important",
               borderRadius: "5px !important",
               width: "21px",
               height: "21px",

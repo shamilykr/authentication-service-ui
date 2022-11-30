@@ -3,8 +3,12 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CheckIcon from "@mui/icons-material/Check";
 import { Tooltip } from "@mui/material";
+import { useSetRecoilState } from "recoil";
 
 import "./styles.css";
+import { ApolloError, useQuery } from "@apollo/client";
+import { VERIFY_USER_PERMISSION } from "../table/services/queries";
+import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 
 type InlineEditProps = {
   value?: string;
@@ -26,6 +30,44 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   const inputElement = useRef<any>(null);
   const [editingValue, setEditingValue] = useState<string | undefined>(value);
   const [isDisabled, setIsDisabled] = useState(!isAdd);
+  const setApiSuccess = useSetRecoilState(apiRequestAtom);
+  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const [isEditVerified, setEditVerified] = React.useState(true);
+  const [isDeleteVerified, setDeleteVerified] = React.useState(true);
+
+  useQuery(VERIFY_USER_PERMISSION, {
+    variables: {
+      params: {
+        permissions: ["edit-permissions"],
+        operation: "AND",
+      },
+    },
+    onCompleted: (data) => {
+      setEditVerified(data?.verifyUserPermission);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  useQuery(VERIFY_USER_PERMISSION, {
+    variables: {
+      params: {
+        permissions: ["delete-permissions"],
+        operation: "AND",
+      },
+    },
+    onCompleted: (data) => {
+      setDeleteVerified(data?.verifyUserPermission);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
+  });
 
   useEffect(() => {
     setEditingValue(value);
@@ -79,11 +121,13 @@ const InlineEdit: React.FC<InlineEditProps> = ({
         />
       </Tooltip>
       <span className="iconSpacing">
-        <EditOutlinedIcon
-          sx={{ marginRight: "1px", color: "#039be5c2" }}
-          onClick={onEdit}
-          className={`${!isDisabled && "editIcon"}`}
-        />
+        {isEditVerified && (
+          <EditOutlinedIcon
+            sx={{ marginRight: "1px", color: "#039be5c2" }}
+            onClick={onEdit}
+            className={`${!isDisabled && "editIcon"}`}
+          />
+        )}
         {!isDisabled ? (
           <CheckIcon
             className="saveIcon"
@@ -91,10 +135,14 @@ const InlineEdit: React.FC<InlineEditProps> = ({
             sx={{ color: "green" }}
           />
         ) : (
-          <DeleteOutlineOutlinedIcon
-            onClick={onDelete}
-            sx={{ marginRight: "1px", color: "#eb272785" }}
-          />
+          <>
+            {isDeleteVerified && (
+              <DeleteOutlineOutlinedIcon
+                onClick={onDelete}
+                sx={{ marginRight: "1px", color: "#eb272785" }}
+              />
+            )}
+          </>
         )}
       </span>
     </div>
