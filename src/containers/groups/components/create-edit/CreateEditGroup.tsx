@@ -34,6 +34,10 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import {
+  GROUP_CREATE_SUCCESS_MESSAGE,
+  GROUP_UPDATE_SUCCESS_MESSAGE,
+} from "../../../../constants/messages";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -284,8 +288,8 @@ const CreateOrEditGroup = () => {
         navigate("/home/groups");
         setApiSuccess(true);
         createdGroupData
-          ? setToastMessage("Group has been successfully created")
-          : setToastMessage("Group has been successfully updated");
+          ? setToastMessage(GROUP_CREATE_SUCCESS_MESSAGE)
+          : setToastMessage(GROUP_UPDATE_SUCCESS_MESSAGE);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

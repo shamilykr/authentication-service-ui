@@ -18,6 +18,7 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { USER_UPDATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
@@ -99,7 +100,7 @@ const EditUser: React.FC = () => {
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError) {
           navigate("/home/users");
           setApiSuccess(true);
-          setToastMessage("User has been successfully updated");
+          setToastMessage(USER_UPDATE_SUCCESS_MESSAGE);
         }
       },
     });

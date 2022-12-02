@@ -14,6 +14,7 @@ import { currentUserAtom } from "../../states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import Toast from "../../components/toast";
+import { PASSWORD_SET_MESSAGE } from "../../constants/messages";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Login: React.FC = () => {
       },
       fetchPolicy: "no-cache",
     });
-    setToastMessage("Password set successfully");
+    setToastMessage(PASSWORD_SET_MESSAGE);
     setApiSuccess(true);
   };
 

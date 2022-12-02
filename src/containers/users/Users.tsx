@@ -20,6 +20,11 @@ import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
 import { UserPermissionsAtom } from "../../states/permissionsStates";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import {
+  CREATE_USER_PERMISSION,
+  DELETE_USER_PERMISSION,
+  UPDATE_USER_PERMISSION,
+} from "../../constants/permissions";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
@@ -51,7 +56,7 @@ const Users: React.FC = () => {
   useEffect(() => {
     // eslint-disable-next-line
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-users")) {
+      if (item?.name.includes(CREATE_USER_PERMISSION)) {
         setAddVerified(true);
       }
     }); // eslint-disable-next-line
@@ -125,8 +130,8 @@ const Users: React.FC = () => {
         deleteMutation={DELETE_USER}
         refetchQuery={GET_USERS}
         handleRowClick={onUserClick}
-        editPermission="edit-user"
-        deletePermission="delete-user"
+        editPermission={UPDATE_USER_PERMISSION}
+        deletePermission={DELETE_USER_PERMISSION}
         isAddVerified={!isAddVerified}
         actionFlex={0.23}
         cursorType="pointer"

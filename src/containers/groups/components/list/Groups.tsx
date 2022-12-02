@@ -16,6 +16,11 @@ import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import {
+  CREATE_GROUP_PERMISSION,
+  DELETE_GROUP_PERMISSION,
+  UPDATE_GROUP_PERMISSION,
+} from "../../../../constants/permissions";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -92,7 +97,7 @@ const GroupList: React.FC = () => {
   useEffect(() => {
     // eslint-disable-next-line
     userPermissions.map((item: any) => {
-      if (item?.name.includes("create-groups")) {
+      if (item?.name.includes(CREATE_GROUP_PERMISSION)) {
         setAddVerified(true);
       }
     }); // eslint-disable-next-line
@@ -117,8 +122,8 @@ const GroupList: React.FC = () => {
         onAdd={onAddGroup}
         onEdit={onEditGroup}
         handleRowClick={onGroupClick}
-        editPermission="edit-groups"
-        deletePermission="delete-groups"
+        editPermission={UPDATE_GROUP_PERMISSION}
+        deletePermission={DELETE_GROUP_PERMISSION}
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="pointer"

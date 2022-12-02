@@ -19,6 +19,10 @@ import {
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
 import { Role } from "../../../../types/role";
+import {
+  ROLE_CREATE_SUCCESS_MESSAGE,
+  ROLE_UPDATE_SUCCESS_MESSAGE,
+} from "../../../../constants/messages";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -89,7 +93,7 @@ const CreateOrEditRole = () => {
         onCompleted: () => {
           navigate("/home/roles");
           setApiSuccess(true);
-          setToastMessage("Role has been successfully created");
+          setToastMessage(ROLE_CREATE_SUCCESS_MESSAGE);
         },
       }); // eslint-disable-next-line
   }, [createdRoleData]);
@@ -97,7 +101,7 @@ const CreateOrEditRole = () => {
   useEffect(() => {
     if (updatedRoleData && updatedRolePermissionsData) {
       navigate("/home/roles");
-      setToastMessage("Role has been successfully updated");
+      setToastMessage(ROLE_UPDATE_SUCCESS_MESSAGE);
       setApiSuccess(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

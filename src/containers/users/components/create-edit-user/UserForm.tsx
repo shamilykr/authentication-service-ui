@@ -140,6 +140,9 @@ const UserForm = (props: UserProps) => {
             },
           ]);
       }
+    } catch (exception: ApolloError | any) {
+      setToastMessage(exception.message);
+      setApiSuccess(false);
     } finally {
       setStatus(false);
     }

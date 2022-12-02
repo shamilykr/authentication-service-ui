@@ -14,10 +14,15 @@ const link = createHttpLink({
   uri: process.env.REACT_APP_API_URL,
   // credentials: "include",
 });
-
+const setNavigate = () => {
+  window.location.hash = RoutePaths.login;
+};
 const ErrorCheck = (message: string) => {
   if (ErrorMessagesArray.includes(message)) {
-    window.location.hash = RoutePaths.login;
+    const delayDebounce = setTimeout(() => {
+      setNavigate();
+    }, 1);
+    return () => clearTimeout(delayDebounce);
   }
 };
 
