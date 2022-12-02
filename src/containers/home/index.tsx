@@ -1,22 +1,7 @@
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import React from "react";
-import { Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
-import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import {
-  Avatar,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { Avatar, Divider } from "@mui/material";
 import { useRecoilState } from "recoil";
 
 import { LOGO_URL } from "../../config";
@@ -26,21 +11,15 @@ import { LOGOUT } from "../auth/services/mutations";
 import { GET_USERS } from "../users/services/queries";
 import { allUsersAtom } from "../../states/userStates";
 import { currentUserAtom } from "../../states/loginStates";
-import { stringAvatar, stringToColor } from "../../utils/table";
+import { stringAvatar } from "../../utils/table";
 import Toast from "../../components/toast";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
+import SideBar from "../../components/side-bar";
 
 const HomePage = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const navigate = useNavigate();
 
   const setUsers = useSetRecoilState(allUsersAtom);
@@ -74,116 +53,38 @@ const HomePage = () => {
   const onCloseToast = () => {
     setToastMessage("");
   };
-
   return (
     <>
       <div className="wrapperContainer">
-        <div className="navBar">
-          <div className="navLogo">
-            <img alt="logo" src={LOGO_URL} />
-          </div>
-          <div className="userdetails">
-            <Avatar
-              {...stringAvatar(
-                `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-              )}
-            />
-            <Tooltip title="Account Details">
-              <IconButton className="navbar-avatar" onClick={handleClick}>
-                <ArrowDropDownOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              className="menu-styles"
-              PaperProps={{
-                elevation: 0,
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem>
-                <Avatar
-                  {...stringAvatar(
-                    `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                  )}
-                  sx={{
-                    marginLeft: "0px !important",
-                    bgcolor: stringToColor(
-                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                    ),
-                  }}
-                />
-                <div>
-                  <div className="user-name">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                  <div className="user-email">{currentUserDetails.email}</div>
-                </div>
-              </MenuItem>
-              <Divider />
-              <MenuItem
-                onClick={() => {
-                  navigate(`./users/${currentUserDetails.id}`);
-                }}
-                sx={{ color: "#6d6d6d" }}
-              >
-                <AccountCircleOutlinedIcon className="details-icon" />
-                View Profile
-              </MenuItem>
-              <MenuItem onClick={onLogout} sx={{ color: "#6d6d6d" }}>
-                <LogoutOutlinedIcon className="details-icon" />
-                Logout
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
-
         <div className="body">
           <div className="sideBar">
-            <nav>
-              <div className="sideBarContainer">
-                <NavLink
-                  to="/home/users"
-                  className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
-                  }
-                >
-                  <PeopleAltOutlinedIcon className="icon" />
-                  USERS
-                </NavLink>
-                <NavLink
-                  to="/home/groups"
-                  className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
-                  }
-                >
-                  <Diversity3OutlinedIcon className="icon" />
-                  GROUPS
-                </NavLink>
-
-                <NavLink
-                  to="/home/roles"
-                  className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
-                  }
-                >
-                  <WorkOutlineOutlinedIcon className="icon" />
-                  ROLES
-                </NavLink>
-
-                <NavLink
-                  to="/home/permissions"
-                  className={({ isActive }) =>
-                    isActive ? "active-text-link" : "text-link"
-                  }
-                >
-                  <LockOutlinedIcon className="icon" />
-                  PERMISSIONS
-                </NavLink>
+            <div className="navBar">
+              <div className="navLogo">
+                <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
               </div>
-            </nav>
+              <div className="menu-icon">
+                <MenuIcon />
+              </div>
+            </div>
+            <div className="nav-user-details">
+              <SideBar />
+              <div>
+                <Divider />
+                <div className="userdetails">
+                  <Avatar
+                    {...stringAvatar(
+                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                    )}
+                  />
+                  <div className="name-logout">
+                    <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                    <div onClick={onLogout} className="logout">
+                      Logout
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="outlet">
