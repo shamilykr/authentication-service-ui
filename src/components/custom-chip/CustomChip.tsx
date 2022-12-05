@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 26px;
   font-size: 14px;
   padding: 2px 8px 0px 8px;
-  max-width: 100px;
+  max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

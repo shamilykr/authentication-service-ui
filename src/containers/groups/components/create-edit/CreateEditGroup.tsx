@@ -38,6 +38,7 @@ import {
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "../../../../constants/messages";
+import RoleCardsChecklist from "../../../../components/role-cards-checklist/RoleCardsChecklist";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,7 +58,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
@@ -195,31 +196,30 @@ const CreateOrEditGroup = () => {
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    item?: Entity
+    item?: Role
   ) => {
     const value = event.target.value;
-
-    // if (event.target.checked) {
-    //   if (value === "all") {
-    //     setRoles(allRoles);
-    //     return;
-    //   }
-    //   if (item) {
-    //     handlePermissions(item);
-    //     if (roles[0] === null) {
-    //       setRoles([item]);
-    //     } else {
-    //       setRoles([...roles, item]);
-    //     }
-    //   }
-    // } else {
-    //   if (value === "all") {
-    //     setRoles([]);
-    //     setEntityPermissions([]);
-    //     return;
-    //   }
-    //   removeItem({ roleId: item?.id as string });
-    // }
+    if (event.target.checked) {
+      if (value === "all") {
+        setRoles(allRoles);
+        return;
+      }
+      if (item) {
+        handlePermissions(item);
+        if (roles[0] === null) {
+          setRoles([item]);
+        } else {
+          setRoles([...roles, item]);
+        }
+      }
+    } else {
+      if (value === "all") {
+        setRoles([]);
+        setEntityPermissions([]);
+        return;
+      }
+      removeItem({ roleId: item?.id as string });
+    }
   };
 
   const onChangeUsers = (
@@ -358,6 +358,7 @@ const CreateOrEditGroup = () => {
       setStatus(false);
     }
   };
+
   return (
     <div className="access-settings">
       {!loading && (
@@ -376,7 +377,7 @@ const CreateOrEditGroup = () => {
             width: "98.7%",
           }}
         >
-          <Tabs value={value} onChange={handleChange}>
+          <Tabs value={value} onChange={handleChange} className="custom-tabs">
             <Tab
               label="Roles"
               sx={{ textTransform: "none", fontSize: "18px" }}
@@ -392,28 +393,15 @@ const CreateOrEditGroup = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Grid container spacing={1} width="100%">
-            <Grid item xs={10} lg={5}>
-              <div>
-                <div className="header">Roles</div>
-              </div>
-              {!loading && (
-                <ChecklistComponent
-                  mapList={roleData?.getRoles}
-                  currentCheckedItems={roles}
-                  name="Select roles"
-                  onChange={onChange}
-                />
-              )}
-            </Grid>
-            <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-            <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
-              <div className="header">
-                Permissions summary of selected roles
-              </div>
-              <PermissionTabs permissions={entityPermissions} />
-            </Grid>
-          </Grid>
+          {!loading && (
+            <>
+              <RoleCardsChecklist
+                roleList={roleData?.getRoles}
+                currentCheckedItems={roles}
+                onChange={onChange}
+              />
+            </>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <FilterChips

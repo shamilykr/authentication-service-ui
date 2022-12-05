@@ -20,6 +20,10 @@ interface TabProps {
   checked?: boolean;
 }
 
+const Container = styled.div`
+  font-family: "Manrope";
+`;
+
 const CheckBoxComponent = styled.div<{ showRoles: boolean }>`
   display: flex;
   align-items: center;
@@ -44,6 +48,7 @@ const RolesPermissionsTab = styled.div<TabProps>`
   background: ${(props) => (props.checked ? "#eaf1fd" : "#F1F2F5")};
   color: ${(props) => (props.checked ? "#2F6FED" : "#3E5468")};
   border-radius: 4px;
+  font-family: "Manrope";
 `;
 
 const StyledDownArrowIcon = styled(DownArrowIcon)<{ showRoles: boolean }>`
@@ -73,7 +78,7 @@ const GroupCard: FC<GroupCardProps> = ({
   };
 
   return (
-    <div className="checkbox-card">
+    <Container>
       <CheckBoxComponent key={group.id} showRoles={showRoles}>
         <div className="checkbox-label">
           <Checkbox
@@ -106,7 +111,7 @@ const GroupCard: FC<GroupCardProps> = ({
           ))}
         </div>
       </RoleCards>
-    </div>
+    </Container>
   );
 };
 

@@ -341,7 +341,6 @@ const UserForm = (props: UserProps) => {
             <div id="groups-permissions">
               <div id="user-groups">
                 <ChecklistComponent
-                  name="Select Groups"
                   mapList={groupData?.getGroups}
                   currentCheckedItems={userGroups}
                   onChange={handleChange}

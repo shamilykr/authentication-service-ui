@@ -9,7 +9,6 @@ import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedico
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 
 interface ChecklistProps {
-  name: String;
   mapList: Entity[] | User[];
   currentCheckedItems: Entity[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
@@ -17,7 +16,6 @@ interface ChecklistProps {
 
 export const ChecklistComponent: FC<ChecklistProps> = ({
   mapList,
-  name,
   currentCheckedItems,
   onChange,
 }) => {
@@ -38,7 +36,6 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   return (
     <div id="add-items">
       <div id="titlebar">
-        <div id="titleChecklist"> {name} </div>
         <div id="selectall">
           <Checkbox
             value={"all"}
