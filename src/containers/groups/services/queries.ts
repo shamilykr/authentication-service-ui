@@ -8,6 +8,10 @@ export const GET_GROUPS = gql`
       roles {
         id
         name
+        permissions {
+          id
+          name
+        }
       }
       users {
         firstName

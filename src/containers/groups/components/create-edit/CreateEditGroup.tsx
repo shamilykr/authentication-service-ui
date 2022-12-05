@@ -199,27 +199,27 @@ const CreateOrEditGroup = () => {
   ) => {
     const value = event.target.value;
 
-    if (event.target.checked) {
-      if (value === "all") {
-        setRoles(allRoles);
-        return;
-      }
-      if (item) {
-        handlePermissions(item);
-        if (roles[0] === null) {
-          setRoles([item]);
-        } else {
-          setRoles([...roles, item]);
-        }
-      }
-    } else {
-      if (value === "all") {
-        setRoles([]);
-        setEntityPermissions([]);
-        return;
-      }
-      removeItem({ roleId: item?.id as string });
-    }
+    // if (event.target.checked) {
+    //   if (value === "all") {
+    //     setRoles(allRoles);
+    //     return;
+    //   }
+    //   if (item) {
+    //     handlePermissions(item);
+    //     if (roles[0] === null) {
+    //       setRoles([item]);
+    //     } else {
+    //       setRoles([...roles, item]);
+    //     }
+    //   }
+    // } else {
+    //   if (value === "all") {
+    //     setRoles([]);
+    //     setEntityPermissions([]);
+    //     return;
+    //   }
+    //   removeItem({ roleId: item?.id as string });
+    // }
   };
 
   const onChangeUsers = (
@@ -425,12 +425,12 @@ const CreateOrEditGroup = () => {
           <div className="add-members">
             <Grid container spacing={1} width="100%">
               <Grid item xs={10} lg={5}>
-                <ChecklistComponent
+                {/* <ChecklistComponent
                   mapList={allUsers}
                   currentCheckedItems={users}
                   name="Select members"
                   onChange={onChangeUsers}
-                />
+                /> */}
               </Grid>
               <Divider
                 orientation="vertical"

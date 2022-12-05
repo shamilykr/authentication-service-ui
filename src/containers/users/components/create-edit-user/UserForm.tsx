@@ -68,7 +68,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
@@ -328,7 +328,11 @@ const UserForm = (props: UserProps) => {
           <Box
             sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
           >
-            <Tabs value={value} onChange={handleTabChange}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              className="custom-tabs"
+            >
               <Tab label="Groups" />
               <Tab label="Permissions" />
             </Tabs>
@@ -343,7 +347,7 @@ const UserForm = (props: UserProps) => {
                   onChange={handleChange}
                 />
               </div>
-              <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
+              {/* <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
               <div id="user-groups">
                 <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
                   <div className="header">
@@ -351,7 +355,7 @@ const UserForm = (props: UserProps) => {
                   </div>
                   <PermissionTabs permissions={groupPermissions} />
                 </Grid>
-              </div>
+              </div> */}
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>

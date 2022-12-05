@@ -3,7 +3,7 @@ import { Permission } from "./permission";
 export interface Role {
   id: string;
   name: string;
-  permissions?: Permission[];
+  permissions: Permission[];
 }
 
 export interface NewRole {
