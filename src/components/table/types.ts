@@ -11,6 +11,7 @@ export interface TableProps {
   columns: GridColumns;
   buttonLabel: string;
   text: string;
+  count: number;
   searchLabel: string;
   setItemList: (data: any) => void;
   entity: string;

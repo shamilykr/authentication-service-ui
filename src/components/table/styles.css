@@ -1,15 +1,5 @@
-.table-listing-items {
-  height: 85%;
-  width: 100%;
-  margin-top: 20px;
-}
-
 .table-component {
-  height: 100%;
-}
-
-.table-toolbar {
-  width: 100%;
+  height: 86%;
 }
 
 .table-list-header {
@@ -18,20 +8,34 @@
   height: 60px !important;
 }
 
-.edit {
-  color: #67686cbf !important;
+.blurred-edit {
+  opacity: 0.5;
+}
+
+.blurred-delete {
+  opacity: 0.5;
+}
+
+.blurred-edit:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
+  opacity: 0.5;
+}
+
+.blurred-delete:hover {
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
+    brightness(83%) contrast(96%);
+  opacity: 0.5;
 }
 
 .edit:hover {
-  color: #039be5 !important;
-}
-
-.delete {
-  color: #67686cbf !important;
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
 }
 
 .delete:hover {
-  color: #eb272785 !important;
+  filter: invert(15%) sepia(97%) saturate(4902%) hue-rotate(349deg)
+    brightness(83%) contrast(96%);
 }
 
 .disabled-styles:hover {
@@ -44,56 +48,91 @@
   min-height: 50px !important;
 }
 
-.MuiDataGrid-root {
-  border-top: 1px solid #9d9d9d29 !important;
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
+.edit-line {
+  padding-top: 15px;
 }
 
-.MuiDataGrid-columnHeaders {
-  border-bottom: 1px solid #9d9d9d29 !important;
-  color: #67686c;
+.edit-line:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
 }
 
-.MuiDataGrid-footerContainer {
-  border-top: 1px solid #9d9d9d29 !important;
-  color: #67686c8c !important;
+.blurred-edit-line {
+  padding-top: 15px;
+  opacity: 0.5;
 }
 
-.MuiDataGrid-virtualScroller {
-  margin-top: 62px !important;
+.blurred-edit-line:hover {
+  filter: invert(33%) sepia(91%) saturate(3281%) hue-rotate(213deg)
+    brightness(99%) contrast(87%);
+  opacity: 0.5;
 }
 
-.MuiDataGrid-columnHeaders {
-  min-height: 61px !important;
-  background-color: #f4f8fb94;
-  border-radius: 0% !important;
-}
-
-.MuiDataGrid-columnHeaderTitle {
-  font-size: 18px;
-  color: #4d4d4d;
-}
-
-.MuiDataGrid-row {
-  min-height: 70px !important;
-  border-bottom: 1px solid #9d9d9d29 !important;
-}
-
-.MuiSvgIcon-root-MuiSvgIcon {
-  color: #039be5 !important;
-}
-
-.MuiCheckbox-root {
-  color: #67686c8c !important;
-}
-
-.MuiDataGrid-cellContent {
-  font-size: 16px;
-  margin-left: 35px;
+#pagination-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  color: #727782;
+  line-height: 20px;
+  width: 89px;
 }
 
 .MuiDataGrid-cell:focus {
   outline: none !important;
+}
+
+.css-3q9hkm-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 37px;
+  height: 31px;
+  background-color: white;
+  font-family: "Inter" !important;
+  font-size: 15px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root {
+  background-color: white !important;
+  margin: 0px 5px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+.css-204u17-MuiDataGrid-main {
+  border: 1px solid #d9d9d9 !important;
+}
+
+@media screen and (max-width: 1597px) {
+  .css-1oj2twp-MuiPagination-root {
+    width: 73% !important;
+  }
+  .go-to-page {
+    width: 169px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .go-to-page {
+    display: none !important;
+  }
+  .css-1oj2twp-MuiPagination-root {
+    width: 76% !important;
+  }
+}
+
+.css-1oj2twp-MuiPagination-root {
+  width: 78%;
+}
+
+.pagination-count {
+  width: 120px;
+  font-family: "Inter";
+  font-size: 16px;
+  color: #1a191c;
+}
+
+.go-to-page {
+  display: flex;
+  align-items: center;
 }

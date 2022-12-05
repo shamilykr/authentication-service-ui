@@ -2,23 +2,30 @@
   display: flex;
   align-items: center;
   position: relative;
-  margin-right: 33px;
+  margin-right: 20px;
 }
 
 .search-icon {
   position: absolute;
-  right: 10px;
+  left: 18px;
   color: #4a4a4a6e;
+  bottom: 11px;
 }
 
 .search-bar {
-  width: 268px;
-  border-radius: 25px;
-  background-color: #f4f8fb;
-  font-size: 13;
-  padding-left: 24px;
-  padding-right: -2px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 9px 11px 9px 17px;
+  width: 436px;
+  height: 31px;
+  background: #FFFFFF;
+  border-radius: 6px;
+}
+
+.css-1le28he-MuiInputBase-root {
+  font-family: 'Manrope' !important;
+  position: relative;
+  left: 32px;
+  font-size: 16px !important;
 }

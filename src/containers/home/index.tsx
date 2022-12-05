@@ -181,13 +181,15 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
-          <div className="outlet">
-            {CustomerAuth?.isAuthenticated ? (
-              <Outlet />
-            ) : (
-              <Navigate replace to="/login" />
-            )}
+          <div className="nav-outlet">
+            <div className="nav"></div>
+            <div className="outlet">
+              {CustomerAuth?.isAuthenticated ? (
+                <Outlet />
+              ) : (
+                <Navigate replace to="/login" />
+              )}
+            </div>
           </div>
           <Toast
             message={toastMessage}

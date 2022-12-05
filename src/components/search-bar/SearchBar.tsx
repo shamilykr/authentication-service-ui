@@ -1,7 +1,7 @@
 import { InputBase } from "@mui/material";
-import { GridSearchIcon } from "@mui/x-data-grid";
 import { FC, useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
+import {ReactComponent as SearchIcon} from '../../assets/search.svg'
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
@@ -46,7 +46,7 @@ const SearchBar: FC<SearchBarProps> = ({
         />
       </div>
       <div className="search-icon">
-        <GridSearchIcon />
+        <SearchIcon />
       </div>
     </div>
   );

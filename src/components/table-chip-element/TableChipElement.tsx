@@ -33,7 +33,11 @@ const TableChipElement: FC<TableChipElementProps> = ({
       {viewAllItems ? (
         <>
           {row[columnName]?.map((item: any) => (
-            <Chip label={item?.name} key={item?.id} id="chip" />
+            <Chip
+              label={item?.name}
+              key={item?.id}
+              id={row.status !== "INVITED" ? "chip" : "blurred-chip"}
+            />
           ))}
           <CancelIcon id="cancel-icon" onClick={onCancel} />
         </>
@@ -42,14 +46,20 @@ const TableChipElement: FC<TableChipElementProps> = ({
           {row[columnName]?.map(
             (item: any, i: number) =>
               i < defaultSize && (
-                <Chip label={item?.name} key={item?.id} id="chip" />
+                <Chip
+                  label={item?.name}
+                  key={item?.id}
+                  id={row.status !== "INVITED" ? "chip" : "blurred-chip"}
+                />
               )
           )}
           {row[columnName]?.length > defaultSize && (
             <Chip
               label={`+${row[columnName]?.length - defaultSize}`}
               key="click-to-see-more"
-              id="chip"
+              id={
+                row.status !== "INVITED" ? "count-chip" : "blurred-count-chip"
+              }
               onClick={onClickShowMore}
             />
           )}

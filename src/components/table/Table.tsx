@@ -4,10 +4,16 @@ import {
   GridColumns,
   GridRowId,
 } from "@mui/x-data-grid";
+import {
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from "@mui/x-data-grid";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useState } from "react";
-import { Tooltip } from "@mui/material";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Tooltip, Button, TextField } from "@mui/material";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
@@ -16,12 +22,16 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { ReactComponent as EditIcon } from "../../assets/edit.svg";
+import { ReactComponent as LineIcon } from "../../assets/line.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
 import DialogBox from "../dialog-box";
 
 const TableList: FC<TableProps> = ({
   rows,
   columns,
   text,
+  count,
   actionFlex,
   cursorType,
   setItemList,
@@ -109,6 +119,61 @@ const TableList: FC<TableProps> = ({
     handleClose();
   };
 
+  function CustomPagination() {
+    const apiRef = useGridApiContext();
+    const page = useGridSelector(apiRef, gridPageSelector);
+    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+    const [pageValue, setPageValue] = useState(1);
+    return (
+      <>
+        <div className="pagination-count">Total {count} items</div>
+        <Pagination
+          color="primary"
+          variant="outlined"
+          shape="rounded"
+          page={page + 1}
+          count={pageCount}
+          // @ts-expect-error
+          renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+          onChange={(event, value) => {
+            apiRef.current.setPage(value - 1);
+            setPageValue(value);
+          }}
+        />
+        <div className="go-to-page">
+          <div id="pagination-text">Go to Page</div>
+          <div>
+            <TextField
+              value={pageValue}
+              onChange={(e: any) => {
+                setPageValue(e.target.value);
+              }}
+              inputProps={{
+                min: 0,
+                style: { textAlign: "center", padding: 0 },
+              }}
+              sx={{ ml: "9px", mr: "9px" }}
+            />
+          </div>
+          <div>
+            <Button
+              sx={{
+                textTransform: "none",
+                backgroundColor: "#2F6FED",
+                color: "white",
+                minWidth: "32px !important",
+                height: "35px !important",
+              }}
+              onClick={() => apiRef.current.setPage(pageValue - 1)}
+            >
+              Go
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   const action_column: GridColumns = [
     {
       field: "actions",
@@ -126,11 +191,22 @@ const TableList: FC<TableProps> = ({
               <Tooltip title="Edit" arrow placement="top">
                 <GridActionsCellItem
                   icon={
-                    <EditOutlinedIcon
-                      onClick={() => {
-                        onEdit(params.id);
-                      }}
-                    />
+                    <>
+                      <EditIcon
+                        className={
+                          params.row.status !== "INVITED"
+                            ? "edit"
+                            : "blurred-edit"
+                        }
+                      />
+                      <LineIcon
+                        className={
+                          params.row.status !== "INVITED"
+                            ? "edit-line"
+                            : "blurred-edit-line"
+                        }
+                      />
+                    </>
                   }
                   label="Edit"
                   className="edit"
@@ -141,9 +217,13 @@ const TableList: FC<TableProps> = ({
             {isDeleteVerified && (
               <Tooltip title="Delete" arrow placement="top">
                 <GridActionsCellItem
-                  icon={<DeleteOutlinedIcon className="delete" />}
+                  icon={<DeleteIcon className="delete" />}
                   label="Delete"
-                  className="delete"
+                  className={
+                    params.row.status !== "INVITED"
+                      ? "delete"
+                      : "blurred-delete"
+                  }
                   onClick={() => {
                     openConfirmPopup(
                       params.id,
@@ -180,30 +260,31 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
-      <div className="table-toolbar" style={{ border: "none" }}>
-        <TableToolBar
-          text={text}
-          buttonLabel={buttonLabel}
-          searchLabel={searchLabel}
-          setItemList={setItemList}
-          searchQuery={refetchQuery}
-          isAddVerified={isAddVerified}
-          onAdd={onAdd}
-        />
-      </div>
-      <div className="table-listing-items">
-        <DataGrid
-          rows={rows}
-          columns={final_columns}
-          style={{
-            borderRadius: "0px 0px 5px 5px",
-            cursor: cursorType,
-          }}
-          disableSelectionOnClick
-          onRowClick={handleRowClick}
-          disableColumnMenu
-        />
-      </div>
+      <TableToolBar
+        text={text}
+        buttonLabel={buttonLabel}
+        searchLabel={searchLabel}
+        setItemList={setItemList}
+        searchQuery={refetchQuery}
+        isAddVerified={isAddVerified}
+        onAdd={onAdd}
+      />
+      <DataGrid
+        rows={rows}
+        columns={final_columns}
+        style={{
+          borderRadius: "0px 0px 5px 5px",
+          cursor: cursorType,
+        }}
+        disableSelectionOnClick
+        onRowClick={handleRowClick}
+        disableColumnMenu
+        pageSize={8}
+        rowsPerPageOptions={[5]}
+        components={{
+          Pagination: CustomPagination,
+        }}
+      />
     </div>
   );
 };
