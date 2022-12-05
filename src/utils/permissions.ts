@@ -16,13 +16,13 @@ export const getOverallPermissions = (
 };
 
 export const getUniquePermissionsFromRoles = (roles: Role[]) => {
-  const permissionsList = roles.reduce((acc: Permission[], cur) => {
+  const permissionsList = roles?.reduce((acc: Permission[], cur) => {
     acc.push(...cur.permissions);
     return acc;
   }, []);
   return [
     ...Array.from(
-      new Set(permissionsList.map((permission: any) => permission.name))
+      new Set(permissionsList?.map((permission: any) => permission.name))
     ),
   ];
 };

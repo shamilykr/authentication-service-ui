@@ -64,9 +64,9 @@ const theme = createTheme({
         },
         outlined: {
           boxShadow: 1,
-          borderRadius: 20,
-          border: "1px solid #039BE5",
-          color: "#039BE5",
+          borderRadius: 5,
+          border: "1px solid #2F6FED",
+          color: "#2F6FED",
           "&:hover": {
             border: "1px solid #01579B",
             color: "#01579B",
@@ -74,6 +74,8 @@ const theme = createTheme({
         },
         contained: {
           padding: "6px 6px",
+          borderRadius: 5,
+          background: "#2F6FED",
         },
         text: {
           color: "#636363",
