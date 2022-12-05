@@ -67,7 +67,10 @@ const AddUser: React.FC = () => {
   ) => {
     createUser({
       variables: {
-        input: inputs,
+        input: {
+          ...inputs,
+          phone: String(inputs.phone).replaceAll(" ", ""),
+        },
       },
     });
     setUserPermissions(userPermissions);

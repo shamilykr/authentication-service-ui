@@ -26,21 +26,12 @@ const GroupDetails: React.FC = () => {
   const [permissions, setPermissions] = useRecoilState(GroupPermissionsAtom);
   const navigate = useNavigate();
 
-  useQuery(GET_GROUP, {
+  const { loading } = useQuery(GET_GROUP, {
     variables: { id },
+    fetchPolicy: "network-only",
     onCompleted: (data) => {
       setGroup(data?.getGroup);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
-
-  useQuery(GET_GROUP_ROLES, {
-    variables: { id },
-    onCompleted: (data) => {
-      setRoles(data?.getGroupRoles);
+      setRoles(data?.getGroup?.roles);
     },
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
@@ -50,6 +41,7 @@ const GroupDetails: React.FC = () => {
 
   useQuery(GET_GROUP_PERMISSIONS, {
     variables: { id },
+    fetchPolicy: "network-only",
     onCompleted: (data) => {
       setPermissions(data?.getGroupPermissions);
     },
@@ -71,22 +63,26 @@ const GroupDetails: React.FC = () => {
       </div>
       <legend id="group-title"> {group.name} </legend>
       <div id="rolesandpermissions">
-        <div id="roles">
-          <legend id="bold"> Group Roles </legend>
-          <div id="item-list-details">
-            {roles.map((item) => (
-              <Chip id="item" key={item.id} label={item.name} />
-            ))}
-          </div>
-        </div>
-        <div id="roles">
-          <legend id="bold"> Group Permissions </legend>
-          <div id="item-list-details">
-            {permissions.map((item) => (
-              <Chip id="item" key={item.id} label={item.name} />
-            ))}
-          </div>
-        </div>
+        {!loading && (
+          <>
+            <div id="roles">
+              <legend id="bold"> Group Roles </legend>
+              <div id="item-list-details">
+                {roles?.map((item) => (
+                  <Chip id="item" key={item.id} label={item.name} />
+                ))}
+              </div>
+            </div>
+            <div id="roles">
+              <legend id="bold"> Group Permissions </legend>
+              <div id="item-list-details">
+                {permissions?.map((item) => (
+                  <Chip id="item" key={item.id} label={item.name} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

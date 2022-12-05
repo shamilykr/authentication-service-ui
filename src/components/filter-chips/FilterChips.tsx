@@ -8,6 +8,7 @@ import "./styles.css";
 import { GET_PERMISSIONS } from "../../containers/permissions/services/queries";
 import { Permission } from "../../types/user";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { RemovedPermissions } from "../../containers/permissions/constants";
 
 interface FilterChipsProps {
   selectedPermissions: Permission[];
@@ -35,27 +36,35 @@ const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
         const selected = selectedPermissions.some(
           (selected: Permission) => selected.id === permission.id
         );
+        const isValidPermission = !RemovedPermissions.includes(permission.name);
+
         return (
-          <Chip
-            sx={
-              selected
-                ? {
-                    fontSize: "medium",
-                    borderWidth: "2px",
-                    borderColor: "#01579B",
-                  }
-                : {
-                    fontSize: "medium",
-                    color: "#454545",
-                    background: "#fff",
-                  }
-            }
-            key={permission.id}
-            label={permission.name}
-            onClick={() => handleClick(permission)}
-            variant="outlined"
-            icon={selected ? <DoneIcon style={{ color: "green" }} /> : <> </>}
-          />
+          <>
+            {isValidPermission && (
+              <Chip
+                sx={
+                  selected
+                    ? {
+                        fontSize: "medium",
+                        borderWidth: "2px",
+                        borderColor: "#01579B",
+                      }
+                    : {
+                        fontSize: "medium",
+                        color: "#454545",
+                        background: "#fff",
+                      }
+                }
+                key={permission.id}
+                label={permission.name}
+                onClick={() => handleClick(permission)}
+                variant="outlined"
+                icon={
+                  selected ? <DoneIcon style={{ color: "green" }} /> : <> </>
+                }
+              />
+            )}
+          </>
         );
       })}
     </div>

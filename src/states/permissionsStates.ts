@@ -24,3 +24,23 @@ export const UserPermissionsAtom = atom<string[]>({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const IsViewUsersVerifiedAtom = atom<boolean>({
+  key: "IsViewUsersVerifiedAtom",
+  default: false,
+});
+
+export const IsViewGroupsVerifiedAtom = atom<boolean>({
+  key: "IsViewGroupsVerifiedAtom",
+  default: false,
+});
+
+export const IsViewRolesVerifiedAtom = atom<boolean>({
+  key: "IsViewRolesVerifiedAtom",
+  default: false,
+});
+
+export const IsViewPermissionsVerifiedAtom = atom<boolean>({
+  key: "IsViewPermissionsVerifiedAtom",
+  default: false,
+});
