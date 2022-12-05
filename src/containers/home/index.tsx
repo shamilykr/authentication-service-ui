@@ -29,6 +29,7 @@ import {
 import { VERIFY_USER_PERMISSION } from "../../components/table/services/queries";
 import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
 import SideBar from "../../components/side-bar";
+import { ReactComponent as ArrowIcon } from "../../assets/arrow.svg";
 
 const HomePage = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
@@ -140,7 +141,52 @@ const HomePage = () => {
       setApiSuccess(false);
     },
   });
-
+  const handleRedirection = (path: string) => {
+    let redirectUrl = "/home/users";
+    redirectUrl =
+      path === "groups"
+        ? "/home/groups"
+        : path === "roles"
+        ? "/home/roles"
+        : redirectUrl;
+    navigate(redirectUrl);
+  };
+  const getHeader = () => {
+    const pathnameArray = window?.location?.hash
+      ?.split("home")?.[1]
+      ?.split("/");
+    if (pathnameArray?.length === 4) {
+      return `Modify ${pathnameArray[1]}`;
+    } else if (pathnameArray[2] === "add") {
+      return `Add ${pathnameArray[1]}`;
+    } else if (pathnameArray?.length === 3 && pathnameArray[2] !== "add") {
+      return `View ${pathnameArray[1]}`;
+    } else if (pathnameArray?.length === 2) {
+      return (
+        pathnameArray[1]?.charAt(0).toUpperCase() + pathnameArray[1].slice(1)
+      );
+    }
+  };
+  const getSubHeader = () => {
+    const pathnameArray = window?.location?.hash
+      ?.split("home")?.[1]
+      ?.split("/");
+    if (pathnameArray?.length > 2) {
+      return (
+        <div className="nav-sub-header-wrapper nav-sub-header">
+          <div
+            className="nav-sub-header-active"
+            onClick={() => handleRedirection(pathnameArray[1])}
+          >
+            {pathnameArray[1]?.charAt(0).toUpperCase() +
+              pathnameArray[1].slice(1)}
+          </div>
+          <ArrowIcon className="nav-bar-icon" />
+          <div>{getHeader()}</div>
+        </div>
+      );
+    } else return null;
+  };
   const onLogout = () => {
     logout();
   };
@@ -182,7 +228,12 @@ const HomePage = () => {
             </div>
           </div>
           <div className="nav-outlet">
-            <div className="nav"></div>
+            <div className="nav">
+              <div className="nav-header-wrap">
+                {getSubHeader()}
+                <div className="nav-header">{getHeader()}</div>
+              </div>
+            </div>
             <div className="outlet">
               {CustomerAuth?.isAuthenticated ? (
                 <Outlet />

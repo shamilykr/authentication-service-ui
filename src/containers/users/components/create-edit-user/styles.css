@@ -63,6 +63,9 @@
   height: 45px;
 }
 
+.three-items-row {
+  width: 33% !important;
+}
 .text {
   border-radius: 6px !important;
   margin-right: 30px !important;

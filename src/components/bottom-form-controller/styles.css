@@ -1,0 +1,13 @@
+.bottom-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  left: 0px;
+  padding: 30px 60px;
+  display: flex;
+}
+
+.submit-buttom-style {
+  margin-left: 20px;
+}

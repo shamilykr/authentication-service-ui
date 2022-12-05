@@ -5,6 +5,7 @@ import { Button, Divider } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import BottomFormController from "../../../../components/bottom-form-controller";
 
 import "./styles.css";
 import { GroupFormSchema } from "../../groupSchema";
@@ -35,44 +36,33 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
   };
 
   return (
-    <div>
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmitForm)} className="form">
-          <div id="back-page" onClick={onBackNavigation}>
-            <ArrowBackIcon sx={{ height: 15 }} />
-            Groups
-          </div>
-          <div className="top-bar">
-            <div className="title-section">
-              <div className="create-group">
-                {id ? "Modify Group" : "Add Group"}
-              </div>
-            </div>
-            <div className="button-section">
-              <Button variant="text" onClick={onBackNavigation}>
-                Cancel
-              </Button>
-              <Button
-                variant="outlined"
-                className="buttonCreateGroup"
-                type="submit"
-              >
-                {id ? "Update" : "Create"}
-              </Button>
-            </div>
-          </div>
-          <Divider sx={{ width: "98.7%" }} />
-          <FormInputText
-            name="name"
-            label="Group Name"
-            type="text"
-            className="group-name"
-            defaultText={name}
-          />
-          {/* <Divider sx={{ marginTop: 2 }} /> */}
-        </form>
-      </FormProvider>
-    </div>
+    <>
+      <div>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit(onSubmitForm)}
+            className="form"
+            id="group-form"
+          >
+            <FormInputText
+              name="name"
+              label="Group Name"
+              type="text"
+              className="group-name"
+              defaultText={name}
+            />
+          </form>
+        </FormProvider>
+      </div>
+      <BottomFormController
+        primarybuttonLabel={id ? "Update group" : "Create group"}
+        primaryButtonType="submit"
+        formId="group-form"
+        onSubmit={() => handleSubmit(onSubmitForm)()}
+        onCancel={onBackNavigation}
+        secondaryButtonLabel="Cancel"
+      />
+    </>
   );
 };
 

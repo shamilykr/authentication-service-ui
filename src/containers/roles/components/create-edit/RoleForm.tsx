@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { ApolloError, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
+import BottomFormController from "../../../../components/bottom-form-controller";
 
 import { RoleFormSchema } from "../../roleSchema";
 import "./styles.css";
@@ -62,44 +63,38 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
   };
 
   return (
-    <div>
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmitForm)} className="form">
-          <div className="horizontal-bar">
-            <div className="page-header">
-              <div id="back-page" onClick={onBackNavigation}>
-                <ArrowBackIcon id="arrowicon" />
-                Roles
-              </div>
-              <div className="create-role">
-                {id ? "Modify Role" : "Create Role"}
-              </div>
-            </div>
-            <div className="submit-section">
-              <Button variant="text" onClick={onBackNavigation}>
-                Cancel
-              </Button>
-              <Button variant="outlined" type="submit">
-                {id ? "Update" : "Create"}
-              </Button>
-            </div>
-          </div>
-          <Divider sx={{ marginTop: "2px", marginBottom: "10px" }} />
-          {!loading && (
-            <>
-              <FormInputText
-                name="name"
-                label="Role Name"
-                type="text"
-                className="role-name"
-                defaultText={role?.name}
-              />
-              <Divider sx={{ marginTop: "46px" }} />
-            </>
-          )}
-        </form>
-      </FormProvider>
-    </div>
+    <>
+      <div>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit(onSubmitForm)}
+            className="form"
+            id="role-form"
+          >
+            {!loading && (
+              <>
+                <FormInputText
+                  name="name"
+                  label="Role Name"
+                  type="text"
+                  className="role-name"
+                  defaultText={role?.name}
+                />
+                <Divider sx={{ marginTop: "46px" }} />
+              </>
+            )}
+          </form>
+        </FormProvider>
+      </div>
+      <BottomFormController
+        primarybuttonLabel={id ? "Update role" : "Create role"}
+        primaryButtonType="submit"
+        formId="role-form"
+        onSubmit={() => handleSubmit(onSubmitForm)()}
+        onCancel={onBackNavigation}
+        secondaryButtonLabel="Cancel"
+      />
+    </>
   );
 };
 
