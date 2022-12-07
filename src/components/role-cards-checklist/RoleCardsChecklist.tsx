@@ -66,7 +66,9 @@ const RoleCardsChecklist: FC<Props> = ({
           icon={<UnCheckedIcon />}
           checkedIcon={<CheckedIcon />}
         />
-        <span> Select All</span>
+        <span style={{ marginLeft: "5px", marginBottom: "7px" }}>
+          Select All
+        </span>
       </SelectAll>
       <CardsContainer>
         {roleList?.map((role: Role) => (

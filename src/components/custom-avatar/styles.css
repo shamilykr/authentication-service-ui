@@ -1,0 +1,27 @@
+.custom-avatar {
+  display: flex;
+}
+.fullname {
+  font-size: 14px;
+  margin-left: 15px;
+  font-weight: bold;
+  color: #0a0d14;
+  white-space: nowrap;
+  width: 204px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Manrope";
+}
+
+.avatar {
+  margin-left: 20px;
+}
+
+.email {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 15px;
+}

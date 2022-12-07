@@ -30,6 +30,7 @@ const RoleNameCntr = styled.div`
   column-gap: 12px;
   border-bottom: 1px solid #d2d5dd;
   padding-left: 14px;
+  padding: 4px 0px 4px 14px;
 `;
 
 const RoleName = styled.div`
