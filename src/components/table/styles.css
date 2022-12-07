@@ -1,5 +1,5 @@
 .table-component {
-  height: 94%;
+  height: 90%;
 }
 
 .table-list-header {
@@ -135,4 +135,13 @@
 .go-to-page {
   display: flex;
   align-items: center;
+}
+
+.css-14301sb-MuiDataGrid-root
+  .MuiDataGrid-columnHeader--sorted
+  .MuiDataGrid-iconButtonContainer,
+.css-14301sb-MuiDataGrid-root
+  .MuiDataGrid-columnHeader--filtered
+  .MuiDataGrid-iconButtonContainer {
+  display: none;
 }

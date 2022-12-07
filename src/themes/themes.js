@@ -29,15 +29,12 @@ const theme = createTheme({
     MuiMenu: {
       styleOverrides: {
         paper: {
-          minWidth: "250px !important",
           overflow: "visible !important",
           filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32)) !important",
           mt: "1.5 !important",
-          "& .MuiAvatar-root": {
-            width: 38,
-            height: 38,
-            marginRight: 6,
-          },
+          width: "675px",
+          height: "444px",
+          borderRadius: "6px !important",
           "&:before": {
             content: '""',
             display: "block",
@@ -123,7 +120,7 @@ const theme = createTheme({
           },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
-            minHeight: "76px !important",
+            minHeight: "77.87px !important",
             borderBottom: "1px solid #D9D9D9 !important",
           },
           "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":
@@ -140,7 +137,7 @@ const theme = createTheme({
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: "#E9EDF2",
             position: "relative",
-            minHeight: "70px !important",
+            minHeight: "94px !important",
             position: "relative",
             top: "-2px",
           },
