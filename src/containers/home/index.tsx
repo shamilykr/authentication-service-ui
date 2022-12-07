@@ -32,6 +32,7 @@ import SideBar from "../../components/side-bar";
 import { groupListAtom } from "../../states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
 import { ReactComponent as ArrowIcon } from "../../assets/arrow.svg";
+import { VIEW_GROUP_PERMISSION, VIEW_ROLE_PERMISSION, VIEW_USER_PERMISSION } from "../../constants/permissions";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
@@ -51,7 +52,7 @@ const HomePage = () => {
   const [verifyViewUser] = useLazyQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
-        permissions: ["view-user"],
+        permissions: [VIEW_USER_PERMISSION],
         operation: "AND",
       },
     },
@@ -68,7 +69,7 @@ const HomePage = () => {
   const [verifyViewGroups] = useLazyQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
-        permissions: ["view-groups"],
+        permissions: [VIEW_GROUP_PERMISSION],
         operation: "AND",
       },
     },
@@ -85,7 +86,7 @@ const HomePage = () => {
   const [verifyViewRoles] = useLazyQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
-        permissions: ["view-roles"],
+        permissions: [VIEW_ROLE_PERMISSION],
         operation: "AND",
       },
     },

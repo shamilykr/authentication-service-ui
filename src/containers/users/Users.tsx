@@ -17,7 +17,7 @@ import TableList from "../../components/table/Table";
 import TableChipElement from "../../components/table-chip-element";
 import { stringAvatar } from "../../utils/table";
 import "./components/create-edit-user/styles.css";
-import { UserPermissionsAtom } from "../../states/permissionsStates";
+import { IsViewUsersVerifiedAtom, UserPermissionsAtom } from "../../states/permissionsStates";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import {
   CREATE_USER_PERMISSION,
@@ -27,6 +27,7 @@ import {
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
+  const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
@@ -133,6 +134,7 @@ const Users: React.FC = () => {
         handleRowClick={onUserClick}
         editPermission={UPDATE_USER_PERMISSION}
         deletePermission={DELETE_USER_PERMISSION}
+        isViewVerified ={isViewUsersVerified}
         isAddVerified={!isAddVerified}
         actionFlex={0.23}
         cursorType="pointer"

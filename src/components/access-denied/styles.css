@@ -1,0 +1,24 @@
+.access-denied{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#access-denied{
+  width: 33%;
+}
+
+#access-denied-heading{
+  font-size: 22px;
+  letter-spacing: 1px;
+  font-weight: 900;
+  margin-bottom: 7px;
+}
+
+#access-denied-description{
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin-top: 0px;
+}

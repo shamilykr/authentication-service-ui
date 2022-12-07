@@ -15,13 +15,14 @@ import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useState } from "react";
 import { Tooltip, Button, TextField } from "@mui/material";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import AccessDenied from "../access-denied";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 import { ReactComponent as LineIcon } from "../../assets/line.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
@@ -43,6 +44,7 @@ const TableList: FC<TableProps> = ({
   refetchQuery,
   editPermission,
   deletePermission,
+  isViewVerified,
   isAddVerified,
   handleRowClick,
   entity,
@@ -51,6 +53,7 @@ const TableList: FC<TableProps> = ({
   const [isDeleteVerified, setDeleteVerified] = React.useState(true);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
@@ -67,6 +70,7 @@ const TableList: FC<TableProps> = ({
     },
     fetchPolicy: "network-only",
   });
+
   useQuery(VERIFY_USER_PERMISSION, {
     variables: {
       params: {
@@ -260,6 +264,8 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
+{isViewVerified ? (
+  <>
       <TableToolBar
         text={text}
         buttonLabel={buttonLabel}
@@ -285,6 +291,10 @@ const TableList: FC<TableProps> = ({
           Pagination: CustomPagination,
         }}
       />
+       </>
+      ) : (
+        <AccessDenied />
+      )}
     </div>
   );
 };

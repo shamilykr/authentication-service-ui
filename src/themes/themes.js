@@ -43,7 +43,7 @@ const theme = createTheme({
             right: 14,
             width: 10,
             height: 10,
-            backgroundColor: "#fff !important",
+            backgroundColor: "inherit",
             transform: "translateY(-50%) rotate(45deg)",
             zIndex: 0,
           },
