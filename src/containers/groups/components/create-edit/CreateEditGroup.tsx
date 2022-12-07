@@ -20,16 +20,13 @@ import {
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
-import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
-import PermissionTabs from "../../../../components/tabs/PermissionTabs";
 import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
 import { allUsersAtom } from "../../../../states/userStates";
-import UserCard from "./Usercard";
 import {
   apiRequestAtom,
   toastMessageAtom,
@@ -42,7 +39,7 @@ import RoleCardsChecklist from "../../../../components/role-cards-checklist/Role
 import { AvatarChecklistComponent } from "../../../../components/avatar-checklist/AvatarChecklist";
 import { GET_USERS } from "../../../users/services/queries";
 import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
-
+import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -116,13 +113,15 @@ const CreateOrEditGroup = () => {
       },
     }
   );
-  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
-    useMutation(UPDATE_GROUP_PERMISSIONS, {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    });
+  const [
+    updateGroupPermissions,
+    { data: updatedGroupPermissionsData },
+  ] = useMutation(UPDATE_GROUP_PERMISSIONS, {
+    onError: (error: ApolloError) => {
+      setApiSuccess(false);
+      setToastMessage(error.message);
+    },
+  });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -443,6 +442,12 @@ const CreateOrEditGroup = () => {
                         firstName={user?.firstName}
                         lastName={user?.lastName}
                         email={user?.email}
+                      />
+                      <CrossIcon
+                        className="cross-icon"
+                        onClick={() =>
+                          removeItem({ userId: user?.id as string })
+                        }
                       />
                     </div>
                   ))}

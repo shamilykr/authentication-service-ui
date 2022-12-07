@@ -22,6 +22,11 @@
 }
 .selected-items {
   margin-bottom: 5px;
+  display: flex;
+}
+.cross-icon {
+  margin-top: 5px;
+  cursor: pointer;
 }
 .title-section {
   display: flex;
