@@ -29,9 +29,12 @@ import {
 import { VERIFY_USER_PERMISSION } from "../../components/table/services/queries";
 import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
 import SideBar from "../../components/side-bar";
+import { groupListAtom } from "../../states/groupStates";
+import { GET_GROUPS } from "../groups/services/queries";
 import { ReactComponent as ArrowIcon } from "../../assets/arrow.svg";
 
 const HomePage = () => {
+  const setGroupList = useSetRecoilState(groupListAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
@@ -121,6 +124,16 @@ const HomePage = () => {
       setToastMessage(error.message);
       setApiSuccess(false);
     },
+  });
+  useQuery(GET_GROUPS, {
+    onCompleted: (data) => {
+      setGroupList(data?.getGroups);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
   });
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
