@@ -6,9 +6,9 @@ import "./styles.css";
 import { stringSmallAvatar } from "../../utils/table";
 
 interface AvatarProps {
-  firstName: string;
-  lastName: string;
-  email: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 }
 
 export const CustomAvatar: FC<AvatarProps> = ({
@@ -20,11 +20,11 @@ export const CustomAvatar: FC<AvatarProps> = ({
     <div className="custom-avatar">
       <Avatar
         {...stringSmallAvatar(`${firstName} ${lastName}`?.toUpperCase())}
-        className="avatar"
+        className="custom-avatar"
       />
       <div>
-        <div className="fullname">{`${firstName} ${lastName}`}</div>
-        <div className="email">{email}</div>
+        <div className="custom-fullname">{`${firstName} ${lastName}`}</div>
+        <div className="custom-email">{email}</div>
       </div>
     </div>
   );

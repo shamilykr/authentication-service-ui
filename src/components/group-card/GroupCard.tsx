@@ -16,6 +16,8 @@ interface GroupCardProps {
   group: any;
   currentCheckedItems: Group[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  showCheckBox?: Boolean;
+  isViewPage?: Boolean;
 }
 interface TabProps {
   checked?: boolean;
@@ -71,25 +73,31 @@ const GroupCard: FC<GroupCardProps> = ({
   group,
   currentCheckedItems,
   onChange,
+  showCheckBox = true,
+  isViewPage = false,
 }) => {
   const [showRoles, setShowRoles] = useState<boolean>(false);
 
   const isChecked = (id: string) => {
-    return currentCheckedItems.some((item) => item.id === id);
+    return Boolean(
+      currentCheckedItems?.some((item) => item.id === id) || isViewPage
+    );
   };
 
   return (
     <Container>
       <CheckBoxComponent key={group.id} showRoles={showRoles}>
         <div className="checkbox-label">
-          <Checkbox
-            key={group.id}
-            checked={isChecked(group.id)}
-            onChange={(e) => onChange(e, group)}
-            className="custom-checkbox"
-            icon={<UnCheckedIcon />}
-            checkedIcon={<CheckedIcon />}
-          />
+          {showCheckBox && (
+            <Checkbox
+              key={group.id}
+              checked={isChecked(group.id)}
+              onChange={(e) => onChange && onChange(e, group)}
+              className="custom-checkbox"
+              icon={<UnCheckedIcon />}
+              checkedIcon={<CheckedIcon />}
+            />
+          )}
           <span className="checklistLabel">{group?.name}</span>
         </div>
         <div className="roles-permissions-dropdown">

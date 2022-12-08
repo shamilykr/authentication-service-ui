@@ -13,6 +13,14 @@ export const GET_USER = gql`
       groups {
         id
         name
+        roles {
+          id
+          name
+          permissions {
+            id
+            name
+          }
+        }
       }
       permissions {
         id

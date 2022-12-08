@@ -46,7 +46,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -274,12 +274,9 @@ const UserForm = (props: UserProps) => {
             </div>
           </form>
         </FormProvider>
-
         <div>
           <Box>
-            <Box
-              sx={{ borderBottom: 1, borderColor: "divider", display: "flex" }}
-            >
+            <Box sx={{ display: "flex" }}>
               <Tabs
                 value={value}
                 onChange={handleTabChange}
