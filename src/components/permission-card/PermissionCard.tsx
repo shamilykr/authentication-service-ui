@@ -91,9 +91,6 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   useEffect(() => {
     setRolePermissions(getUniquePermissionsFromRoles(roles));
-  }, []);
-
-  useEffect(() => {
     setGroupPermissions(getUniquePermissionsFromGroups(groups));
   }, []);
 
