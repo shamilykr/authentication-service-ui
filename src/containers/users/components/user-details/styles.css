@@ -1,41 +1,11 @@
 .cntr {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: aliceblue;
+  background: white;
   border-radius: 20px;
+  padding: 30px;
   overflow: auto;
 }
-
-.user-details {
-  display: flex;
-  max-height: 90%;
-  overflow-y: auto;
-  flex-direction: column;
-  padding-bottom: 20px;
-  width: 90%;
-  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-  background: #fff;
-  border-radius: 20px;
-}
-
-.user-details-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 22px;
-  font-weight: 500;
-  align-items: center;
-  padding-left: 15px;
-  border-bottom: 1px solid #dcdcdc;
-  margin-bottom: 4px;
-}
-
-.user-details-title {
-  display: flex;
-  width: 90%;
-  justify-content: center;
+.group-details {
+  margin-top: 40px;
 }
 
 .name {
@@ -55,13 +25,12 @@
   font-size: 14px;
   word-break: break-word;
   width: fit-content;
+  color: #727782;
 }
 
 .personal-details {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 10px;
+  width: 100%;
 }
 
 .groups-permissions {
@@ -73,24 +42,24 @@
 
 .details {
   display: flex;
-  width: 90%;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.details-cntr {
-  display: flex;
+  width: 40%;
   flex-direction: column;
-  align-items: flex-start;
-  row-gap: 5px;
 }
 
 .contact {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 90%;
-  row-gap: 5px;
+  width: 37%;
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+.contact-number {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #727782;
 }
 
 .user-groups {
@@ -132,23 +101,36 @@
 .divider-horizontal {
   display: none;
 }
-
-#active-user {
-  background-color: #d3f4be;
-  color: #008000d1;
-  max-height: 25px;
+.pending-style {
+  background-color: rgba(244, 148, 3, 0.1) !important;
+  margin-right: 13px;
+  color: #f69a40 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
+  opacity: 0.8;
 }
 
-#inactive-user {
-  background-color: #80000040;
-  color: #8000008c;
-  max-height: 25px;
+.active-user-style {
+  background-color: rgba(10, 170, 161, 0.1) !important;
+  margin-right: 13px;
+  color: #0aaaa1 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
 }
 
-#invited-user {
-  background-color: #efcc2433;
-  color: #d9a034;
-  max-height: 25px;
+.inactive-user-style {
+  background-color: rgba(207, 19, 34, 0.1) !important;
+  margin-right: 13px;
+  color: #cf1322 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
+  width: 84px !important;
 }
 
 @media (max-width: 900px) {

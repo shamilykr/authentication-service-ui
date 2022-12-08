@@ -80,7 +80,6 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
                   className="role-name"
                   defaultText={role?.name}
                 />
-                <Divider sx={{ marginTop: "46px" }} />
               </>
             )}
           </form>
