@@ -6,7 +6,10 @@ const LoginSchema = yup.object({
 });
 
 const ConfirmPasswordSchema = yup.object({
-  password: yup.string().required("Password can not be empty"),
+  password: yup
+    .string()
+    .required("Password can not be empty")
+    .min(10, "Password too short"),
   confirmPassword: yup
     .string()
     .required("Please retype your password.")

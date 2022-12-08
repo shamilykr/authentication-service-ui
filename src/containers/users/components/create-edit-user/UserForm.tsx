@@ -241,7 +241,7 @@ const UserForm = (props: UserProps) => {
                 <div id="form-row">
                   <FormInputText
                     name="firstName"
-                    label="First name*"
+                    label="First Name*"
                     type="text"
                     className="fields three-items-row"
                     defaultText={user?.firstName}
@@ -311,7 +311,7 @@ const UserForm = (props: UserProps) => {
         </div>
       </div>
       <BottomFormController
-        primarybuttonLabel={isEdit ? "Update user" : "Add user"}
+        primarybuttonLabel={isEdit ? "Update User" : "Add User"}
         primaryButtonType="submit"
         formId="add-user-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

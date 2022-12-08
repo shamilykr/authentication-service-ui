@@ -10,7 +10,7 @@ import { GET_GROUPS } from "../../services/queries";
 import TableList from "../../../../components/table";
 import { groupListAtom } from "../../../../states/groupStates";
 import TableChipElement from "../../../../components/table-chip-element";
-import { UserPermissionsAtom } from "../../../../states/permissionsStates";
+import { IsViewGroupsVerifiedAtom, UserPermissionsAtom } from "../../../../states/permissionsStates";
 import AvatarList from "../../../../components/avatar-list/AvatarList";
 import {
   apiRequestAtom,
@@ -26,12 +26,13 @@ const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
+  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-  useQuery(GET_GROUPS, {
+  const { loading } = useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
@@ -110,6 +111,7 @@ const GroupList: React.FC = () => {
 
   return (
     <>
+{!loading && (
       <TableList
         rows={groupList}
         columns={columns}
@@ -126,10 +128,12 @@ const GroupList: React.FC = () => {
         handleRowClick={onGroupClick}
         editPermission={UPDATE_GROUP_PERMISSION}
         deletePermission={DELETE_GROUP_PERMISSION}
+        isViewVerified={isViewGroupsVerified}
         isAddVerified={!isAddVerified}
         actionFlex={0.3}
         cursorType="pointer"
       />
+      )}
     </>
   );
 };

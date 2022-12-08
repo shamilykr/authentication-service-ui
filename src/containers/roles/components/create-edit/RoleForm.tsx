@@ -87,7 +87,7 @@ const RoleForm: FC<RoleFormProps> = ({ name, createRole, editRole }) => {
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={id ? "Update role" : "Create role"}
+        primarybuttonLabel={id ? "Update Role" : "Create Role"}
         primaryButtonType="submit"
         formId="role-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

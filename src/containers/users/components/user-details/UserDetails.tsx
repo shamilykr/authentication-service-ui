@@ -10,7 +10,7 @@ const UserDetails = () => {
   const navigate = useNavigate();
 
   const onBackNavigation = (e: React.MouseEvent<HTMLElement>) => {
-    navigate("/home/users");
+    navigate(-1);
   };
 
   return (

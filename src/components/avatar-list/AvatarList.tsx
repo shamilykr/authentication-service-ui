@@ -16,6 +16,7 @@ const AvatarList = (avatarList: any) => {
               `${item.firstName} ${item.lastName}`?.toUpperCase()
             )}
             className="avatar"
+            key={item?.id}
           />
         ))}
       </AvatarGroup>

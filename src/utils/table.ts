@@ -20,3 +20,14 @@ export function stringAvatar(name: string) {
     children: `${name.split(" ")[0][0]}${name.split(" ")[1][0] || ""}`,
   };
 }
+export function stringSmallAvatar(name: string) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name), //#039be5bf
+      width: "32px",
+      height: "32px",
+      fontSize: "15px",
+    },
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0] || ""}`,
+  };
+}

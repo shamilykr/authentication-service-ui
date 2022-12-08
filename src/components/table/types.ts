@@ -19,6 +19,7 @@ export interface TableProps {
   refetchQuery: DocumentNode;
   editPermission?: string;
   deletePermission?: string;
+  isViewVerified?: boolean;
   isAddVerified?: boolean;
   actionFlex: number;
   cursorType: string;

@@ -23,6 +23,7 @@ const Container = styled.div`
 const SelectAll = styled.div`
   display: flex;
   column-gap: 6px;
+  margin-bottom: 7px;
 `;
 
 const CardsContainer = styled.div`
@@ -67,7 +68,11 @@ const RoleCardsChecklist: FC<Props> = ({
           icon={<UnCheckedIcon />}
           checkedIcon={<CheckedIcon />}
         />
-        <span> Select All</span>
+        <span
+          style={{ marginLeft: "5px", fontSize: "14px", lineHeight: "24px" }}
+        >
+          Select all
+        </span>
       </SelectAll>
       <CardsContainer>
         {roleList?.map((role: Role) => (
@@ -75,6 +80,7 @@ const RoleCardsChecklist: FC<Props> = ({
             role={role}
             checked={isChecked(role.id)}
             onChange={onChange}
+            key={role?.id}
           />
         ))}
       </CardsContainer>

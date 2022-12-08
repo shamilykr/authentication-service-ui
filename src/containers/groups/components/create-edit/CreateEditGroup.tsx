@@ -27,7 +27,6 @@ import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
 import { allUsersAtom } from "../../../../states/userStates";
-import UserCard from "./Usercard";
 import {
   apiRequestAtom,
   toastMessageAtom,
@@ -37,7 +36,10 @@ import {
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "../../../../constants/messages";
 import RoleCardsChecklist from "../../../../components/role-cards-checklist/RoleCardsChecklist";
-
+import { AvatarChecklistComponent } from "../../../../components/avatar-checklist/AvatarChecklist";
+import { GET_USERS } from "../../../users/services/queries";
+import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
+import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -69,22 +71,28 @@ const CreateOrEditGroup = () => {
   const navigate = useNavigate();
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const usersResponse = useRecoilValue(allUsersAtom);
+
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
   const [entityPermissions, setEntityPermissions] = useState<
     EntityPermissionsDetails[]
   >([]);
+  const [allUsers, setAllUsers] = useState<User[]>(usersResponse);
+
   const [users, setUsers] = useState<User[]>([]);
 
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-  const allUsers = useRecoilValue(allUsersAtom);
   const [status, setStatus] = useState<boolean>(false);
 
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
 
+  useEffect(() => {
+    setAllUsers(usersResponse);
+  }, [usersResponse]);
   const [updateGroup, { data: updatedGroupData }] = useMutation(UPDATE_GROUP, {
     onError: (error: ApolloError) => {
       setApiSuccess(false);
@@ -361,6 +369,7 @@ const CreateOrEditGroup = () => {
           sx={{
             display: "flex",
             width: "98.7%",
+            marginBottom: "20px",
           }}
         >
           <Tabs value={value} onChange={handleChange} className="custom-tabs">
@@ -400,12 +409,13 @@ const CreateOrEditGroup = () => {
           <div className="add-members">
             <Grid container spacing={1} width="100%">
               <Grid item xs={10} lg={5}>
-                {/* <ChecklistComponent
+                <AvatarChecklistComponent
                   mapList={allUsers}
                   currentCheckedItems={users}
-                  name="Select members"
                   onChange={onChangeUsers}
-                /> */}
+                  setItemList={setAllUsers}
+                  searchQuery={GET_USERS}
+                />
               </Grid>
               <Divider
                 orientation="vertical"
@@ -413,16 +423,26 @@ const CreateOrEditGroup = () => {
                 sx={{ marginRight: 2 }}
               />
               <Grid item xs={10} lg={6.7}>
-                <div style={{ fontSize: "16px", marginBottom: "10px" }}>
-                  Group Members:
-                </div>
-                <div className="user-cards">
+                <div className="select-member-wrapper">Select Members</div>
+                <div className="selected-members">
                   {users.map((user, index) => (
-                    <UserCard
-                      user={user}
-                      onRemoveUser={removeItem}
-                      key={index}
-                    />
+                    <div
+                      id={user?.id}
+                      className="selected-items"
+                      key={user?.id}
+                    >
+                      <CustomAvatar
+                        firstName={user?.firstName}
+                        lastName={user?.lastName}
+                        email={user?.email}
+                      />
+                      <CrossIcon
+                        className="cross-icon"
+                        onClick={() =>
+                          removeItem({ userId: user?.id as string })
+                        }
+                      />
+                    </div>
                   ))}
                 </div>
               </Grid>

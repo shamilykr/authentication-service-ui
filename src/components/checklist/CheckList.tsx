@@ -43,8 +43,9 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
             className="custom-checkbox"
             icon={<UnCheckedIcon />}
             checkedIcon={<CheckedIcon />}
+            sx={{ mr: "5px" }}
           />
-          <span> Select All</span>
+          <span> Select all</span>
         </div>
       </div>
       <div id="component">
@@ -54,6 +55,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
               group={item}
               currentCheckedItems={currentCheckedItems}
               onChange={onChange}
+              key={item?.id}
             />
           );
         })}

@@ -3,7 +3,7 @@
   border-radius: 5px 5px 0px 0px;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-bottom: 35px;
   border-bottom: none;
   background-color: #e9edf2;
 }
@@ -26,10 +26,6 @@
   position: relative;
 }
 
-.sort {
-  margin-right: 20px;
-}
-
 #add-button {
   height: 49px;
   width: 128px;
@@ -38,7 +34,7 @@
   font-size: 16px;
 }
 
-.sort-filter {
+.sort-button {
   background-color: white;
   height: 40px;
   display: flex;
@@ -48,6 +44,18 @@
   cursor: pointer;
   margin-right: 18px;
   width: 110px;
+}
+
+.filter-button {
+  background-color: white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  cursor: pointer;
+  margin-right: 18px;
+  width: 125px;
 }
 
 .search-sort-filter {
@@ -67,6 +75,105 @@
 
 @media screen and (max-width: 670px) {
   div.search-button {
+    display: none;
+  }
+}
+
+.filter {
+  display: flex;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  min-height: 100%;
+}
+
+#heading-clear-all {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  font-family: "Inter" !important;
+  font-weight: 500;
+}
+
+.filter-by {
+  font-family: "Inter" !important;
+  border-right: 2px solid #bdbcbc14;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.options {
+  margin-left: 23px;
+  font-family: "Inter" !important;
+  margin-top: 10px;
+}
+
+#filter-by-options {
+  height: 56px;
+  width: 310px;
+  left: 8px;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: "Inter" !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+#filter-by-options:hover {
+  background-color: #f3f5f7;
+}
+
+#clear-all {
+  color: #f64040;
+  margin-right: -6px;
+  cursor: pointer;
+}
+
+#avatar-arrow {
+  display: flex;
+  align-items: center;
+}
+
+.css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-family: "Inter" !important;
+  font-weight: 400 !important;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #1a191c;
+  margin-left: 11px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  height: 419px;
+  overflow: auto;
+}
+
+.checked {
+  color: #2653f1 !important;
+}
+
+#filter-button {
+  text-transform: none;
+  font-family: "Inter";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+  height: 40px;
+  width: 135px;
+  border-radius: 6px;
+  padding: 13px 17px 13px 17px;
+}
+
+@media screen and (max-width: 687px) {
+  #account-menu {
     display: none;
   }
 }
