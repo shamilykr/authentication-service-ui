@@ -17,6 +17,10 @@ export const GET_GROUPS = gql`
         firstName
         lastName
       }
+      permissions {
+        id
+        name
+      }
     }
   }
 `;
@@ -36,6 +40,14 @@ export const GET_GROUP = gql`
         status
       }
       roles {
+        id
+        name
+        permissions {
+          id
+          name
+        }
+      }
+      permissions {
         id
         name
       }

@@ -6,13 +6,14 @@ import { styled, Box, Paper, Grid, Divider, Link, Chip } from "@mui/material";
 import { useSetRecoilState } from "recoil";
 
 import { GET_USER } from "../../services/queries";
-import { User, Group, Permission } from "../../../../types/user";
+import { User, Permission } from "../../../../types/user";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
+import { Group } from "../../../../types/group";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",

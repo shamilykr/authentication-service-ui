@@ -1,16 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 
-import { Entity } from "../../types/generic";
-import { User } from "../../types/user";
 import "./styles.css";
 import GroupCard from "../group-card/GroupCard";
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
+import { Group } from "../../types/group";
 
 interface ChecklistProps {
-  mapList: Entity[] | User[];
-  currentCheckedItems: Entity[];
+  mapList: Group[];
+  currentCheckedItems: Group[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
 }
 

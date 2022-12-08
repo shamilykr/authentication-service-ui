@@ -32,18 +32,6 @@ const CreateOrEditRole = () => {
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
-  const handleClick = (permission: Permission) => {
-    if (
-      rolePermissions.map((permission) => permission.id).includes(permission.id)
-    ) {
-      setRolePermissions(
-        rolePermissions.filter(
-          (role_permission) => role_permission.id !== permission.id
-        )
-      );
-    } else setRolePermissions([...rolePermissions, permission]);
-  };
-
   const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
     onError: (error: ApolloError) => {
       setApiSuccess(false);
@@ -134,12 +122,7 @@ const CreateOrEditRole = () => {
       )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
-        {!loading && (
-          <FilterChips
-            selectedPermissions={rolePermissions}
-            handleClick={handleClick}
-          />
-        )}
+        {!loading && <FilterChips userSelectedPermissions={rolePermissions} />}
       </div>
     </div>
   );

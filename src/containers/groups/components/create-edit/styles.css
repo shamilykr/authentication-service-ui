@@ -74,6 +74,10 @@
 .add-members {
 }
 
+.roles-checklist {
+  margin-bottom: 100px;
+}
+
 .roles {
   display: flex;
   flex-direction: row;

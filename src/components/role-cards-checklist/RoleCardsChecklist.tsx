@@ -30,6 +30,7 @@ const CardsContainer = styled.div`
   flex-wrap: wrap;
   column-gap: 16px;
   row-gap: 18px;
+  overflow-y: scroll;
 `;
 
 const RoleCardsChecklist: FC<Props> = ({

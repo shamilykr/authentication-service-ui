@@ -7,8 +7,13 @@ export interface NewEntity {
 export interface Entity {
   id: string;
   name: string;
+  permissions: EntityPermission[];
 }
 
+export interface EntityPermission {
+  id: string;
+  name: string;
+}
 export interface EntityPermissionsDetails {
   id: string;
   name: string;
