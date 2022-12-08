@@ -58,9 +58,9 @@ const UserDetails = () => {
         <div className="details">
           <div style={{ display: "flex" }}>
             <CustomAvatar
-              firstName={user?.firstName}
-              lastName={user?.lastName}
-              email={user?.email}
+              firstName={user?.firstName || ""}
+              lastName={user?.lastName || ""}
+              email={user?.email || ""}
             />
             <Chip
               label={

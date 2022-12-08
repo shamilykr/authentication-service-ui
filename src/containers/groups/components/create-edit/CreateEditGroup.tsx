@@ -23,7 +23,7 @@ import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
 import { EntityPermissionsDetails } from "../../../../types/generic";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
 import { allUsersAtom } from "../../../../states/userStates";
@@ -399,7 +399,7 @@ const CreateOrEditGroup = () => {
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FilterChips
+          <PermissionCards
             userSelectedPermissions={userSelectedPermissions}
             roles={roles}
             setUserSelectedPermissions={setUserSelectedPermissions}

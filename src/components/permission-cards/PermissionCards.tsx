@@ -13,7 +13,7 @@ import { GET_ENTITIES } from "../../containers/entities/services/queries";
 import { Entity } from "../../types/generic";
 import { Group } from "../../types/group";
 
-interface FilterChipsProps {
+interface PermissionCardsProps {
   userSelectedPermissions: Permission[];
   roles?: Role[];
   groups?: Group[];
@@ -29,7 +29,9 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
+const PermissionCards: React.FC<PermissionCardsProps> = (
+  props: PermissionCardsProps
+) => {
   const { userSelectedPermissions, roles, groups, setUserSelectedPermissions } =
     props;
   const [entities, setEntities] = useState<Entity[]>([]);
@@ -60,4 +62,4 @@ const FilterChips: React.FC<FilterChipsProps> = (props: FilterChipsProps) => {
   );
 };
 
-export default FilterChips;
+export default PermissionCards;

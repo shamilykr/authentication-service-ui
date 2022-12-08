@@ -18,7 +18,7 @@ import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
 import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import {
   apiRequestAtom,
   toastMessageAtom,
@@ -298,7 +298,7 @@ const UserForm = (props: UserProps) => {
               </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <FilterChips
+              <PermissionCards
                 userSelectedPermissions={userSelectedPermissions}
                 setUserSelectedPermissions={setUserSelectedPermissions}
                 groups={userGroups}

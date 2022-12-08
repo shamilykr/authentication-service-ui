@@ -12,7 +12,7 @@ import {
 import RoleForm from "./RoleForm";
 import "./styles.css";
 import { Permission } from "../../../../types/user";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import { FieldValues } from "react-hook-form";
 import {
   apiRequestAtom,
@@ -122,7 +122,9 @@ const CreateOrEditRole = () => {
       )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
-        {!loading && <FilterChips userSelectedPermissions={rolePermissions} />}
+        {!loading && (
+          <PermissionCards userSelectedPermissions={rolePermissions} />
+        )}
       </div>
     </div>
   );
