@@ -22,7 +22,7 @@ import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
 import { Role } from "../../../../types/role";
 import apolloClient from "../../../../services/apolloClient";
-import { Entity, EntityPermissionsDetails } from "../../../../types/generic";
+import { EntityPermissionsDetails } from "../../../../types/generic";
 import FilterChips from "../../../../components/filter-chips/FilterChips";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
@@ -113,15 +113,13 @@ const CreateOrEditGroup = () => {
       },
     }
   );
-  const [
-    updateGroupPermissions,
-    { data: updatedGroupPermissionsData },
-  ] = useMutation(UPDATE_GROUP_PERMISSIONS, {
-    onError: (error: ApolloError) => {
-      setApiSuccess(false);
-      setToastMessage(error.message);
-    },
-  });
+  const [updateGroupPermissions, { data: updatedGroupPermissionsData }] =
+    useMutation(UPDATE_GROUP_PERMISSIONS, {
+      onError: (error: ApolloError) => {
+        setApiSuccess(false);
+        setToastMessage(error.message);
+      },
+    });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -437,7 +435,11 @@ const CreateOrEditGroup = () => {
                 <div className="select-member-wrapper">Select Members</div>
                 <div className="selected-members">
                   {users.map((user, index) => (
-                    <div id={user?.id} className="selected-items">
+                    <div
+                      id={user?.id}
+                      className="selected-items"
+                      key={user?.id}
+                    >
                       <CustomAvatar
                         firstName={user?.firstName}
                         lastName={user?.lastName}

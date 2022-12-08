@@ -229,8 +229,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
           {viewStatusFilter && (
             <div className="options">
               <FormGroup>
-                {statusList.map((status: string) => (
+                {statusList.map((status: string, index: number) => (
                   <FormControlLabel
+                    key={`${index}_${status}`}
                     label={status}
                     name={status}
                     control={
@@ -263,6 +264,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
               <FormGroup>
                 {groupList.map((group: any) => (
                   <FormControlLabel
+                    key={group?.id}
                     label={group.name}
                     name={group.name}
                     control={

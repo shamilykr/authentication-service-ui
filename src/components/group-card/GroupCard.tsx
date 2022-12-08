@@ -107,7 +107,7 @@ const GroupCard: FC<GroupCardProps> = ({
         <div className="roles-title">Roles</div>
         <div className="role-cards">
           {group?.roles?.map((role: Role) => (
-            <RoleCard role={role} />
+            <RoleCard role={role} key={role?.id} />
           ))}
         </div>
       </RoleCards>

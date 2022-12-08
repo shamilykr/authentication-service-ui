@@ -69,7 +69,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
       <div id="component">
         {mapList?.map((item: any) => {
           return (
-            <div className="avatar-wrapper">
+            <div className="avatar-wrapper" key={item?.id}>
               <Checkbox
                 value={item?.id}
                 onChange={(e) => onChange(e, item)}

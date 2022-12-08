@@ -1,6 +1,5 @@
-import { Chip } from "@mui/material";
-import React, { FC } from "react";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { Chip, Tooltip } from "@mui/material";
+import { FC, useEffect, useState } from "react";
 
 import "./styles.css";
 interface TableChipElementProps {
@@ -15,55 +14,38 @@ const TableChipElement: FC<TableChipElementProps> = ({
   defaultSize,
 }) => {
   const { row } = rowItems;
+  const [viewMore, setViewMore] = useState("");
 
-  const [viewAllItems, setViewAllItems] = React.useState(false);
-
-  const onClickShowMore = (event: React.MouseEvent) => {
-    setViewAllItems(true);
-    event.stopPropagation();
-  };
-
-  const onCancel = (event: React.MouseEvent) => {
-    setViewAllItems(false);
-    event.stopPropagation();
-  };
-
+  useEffect(() => {
+    let moreItems = "";
+    row[columnName]?.slice(defaultSize, row.length).map((item: any) => {
+      moreItems = moreItems.concat(", ", item.name);
+    });
+    if (moreItems[0] === ",") {
+      moreItems = moreItems.slice(2, moreItems.length);
+    }
+    setViewMore(moreItems);
+  }, [row]);
   return (
     <>
-      {viewAllItems ? (
-        <>
-          {row[columnName]?.map((item: any) => (
+      {row[columnName]?.map(
+        (item: any, i: number) =>
+          i < defaultSize && (
             <Chip
               label={item?.name}
               key={item?.id}
               id={row.status !== "INVITED" ? "chip" : "blurred-chip"}
             />
-          ))}
-          <CancelIcon id="cancel-icon" onClick={onCancel} />
-        </>
-      ) : (
-        <>
-          {row[columnName]?.map(
-            (item: any, i: number) =>
-              i < defaultSize && (
-                <Chip
-                  label={item?.name}
-                  key={item?.id}
-                  id={row.status !== "INVITED" ? "chip" : "blurred-chip"}
-                />
-              )
-          )}
-          {row[columnName]?.length > defaultSize && (
-            <Chip
-              label={`+${row[columnName]?.length - defaultSize}`}
-              key="click-to-see-more"
-              id={
-                row.status !== "INVITED" ? "count-chip" : "blurred-count-chip"
-              }
-              onClick={onClickShowMore}
-            />
-          )}
-        </>
+          )
+      )}
+      {row[columnName]?.length > defaultSize && (
+        <Tooltip title={viewMore} arrow placement="top">
+          <Chip
+            label={`+${row[columnName]?.length - defaultSize}`}
+            key="click-to-see-more"
+            id={row.status !== "INVITED" ? "count-chip" : "blurred-count-chip"}
+          />
+        </Tooltip>
       )}
     </>
   );

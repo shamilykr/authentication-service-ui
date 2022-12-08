@@ -70,7 +70,7 @@ const RoleCard: FC<RoleCardProps> = ({
       <RolePermissions>
         <If condition={role.permissions.length !== 0}>
           {role.permissions.map((permission) => (
-            <CustomChip name={permission.name} />
+            <CustomChip name={permission.name} key={permission?.id} />
           ))}
         </If>
         <If condition={role.permissions.length === 0}>

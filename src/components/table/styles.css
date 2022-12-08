@@ -137,6 +137,10 @@
   align-items: center;
 }
 
+.css-16zo66t-MuiButtonBase-root-MuiButton-root {
+  font-size: 14px;
+}
+
 .css-14301sb-MuiDataGrid-root
   .MuiDataGrid-columnHeader--sorted
   .MuiDataGrid-iconButtonContainer,

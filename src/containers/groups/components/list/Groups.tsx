@@ -32,7 +32,7 @@ const GroupList: React.FC = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-  useQuery(GET_GROUPS, {
+  const { loading } = useQuery(GET_GROUPS, {
     onCompleted: (data) => {
       setGroupList(data?.getGroups);
     },
@@ -111,6 +111,7 @@ const GroupList: React.FC = () => {
 
   return (
     <>
+{!loading && (
       <TableList
         rows={groupList}
         columns={columns}
@@ -132,6 +133,7 @@ const GroupList: React.FC = () => {
         actionFlex={0.3}
         cursorType="pointer"
       />
+      )}
     </>
   );
 };

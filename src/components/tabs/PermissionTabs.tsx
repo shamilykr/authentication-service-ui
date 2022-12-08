@@ -80,7 +80,11 @@ const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
     return (
       <div id="permission-list">
         {getOverallPermissions(permissions)?.map((permission) => (
-          <Chip label={permission} className="permission-chip" />
+          <Chip
+            label={permission}
+            className="permission-chip"
+            key={permission?.id}
+          />
         ))}
       </div>
     );
@@ -90,7 +94,7 @@ const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
     return (
       <div id="permission-list">
         {permissions.map((p: Permission) => (
-          <Chip label={p?.name} className="permission-chip" />
+          <Chip label={p?.name} className="permission-chip" key={p?.id} />
         ))}
       </div>
     );
@@ -100,12 +104,12 @@ const PermissionTabs: React.FC<StyledTabsProps> = ({ permissions }) => {
       <TabsList>
         {permissions.length && <Tab>Overall Permissions</Tab>}
         {permissions.map((item) => (
-          <Tab>{item.name}</Tab>
+          <Tab key={item?.id}>{item.name}</Tab>
         ))}
       </TabsList>
       <TabPanel value={0}>{getOverallPermissionsValues()}</TabPanel>
       {permissions.map((p, index) => (
-        <TabPanel value={index + 1}>
+        <TabPanel value={index + 1} key={p?.id}>
           {getPermissionsValues(p?.permissions)}
         </TabPanel>
       ))}

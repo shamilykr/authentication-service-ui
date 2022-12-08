@@ -31,7 +31,7 @@ const Roles: React.FC = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
-  useQuery(GET_ROLES, {
+  const { loading } = useQuery(GET_ROLES, {
     onCompleted: (data) => {
       setRoleList(data?.getRoles);
     },
@@ -92,6 +92,7 @@ const Roles: React.FC = () => {
 
   return (
     <>
+{!loading && (
       <TableList
         rows={roleList}
         columns={columns}
@@ -112,6 +113,7 @@ const Roles: React.FC = () => {
         actionFlex={0.3}
         cursorType="default"
       />
+      )}
     </>
   );
 };

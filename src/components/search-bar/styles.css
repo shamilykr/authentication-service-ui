@@ -19,13 +19,17 @@
   padding: 9px 11px 9px 17px;
   width: 436px;
   height: 31px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 6px;
 }
 
 .css-1le28he-MuiInputBase-root {
-  font-family: 'Manrope' !important;
+  font-family: "Manrope" !important;
   position: relative;
   left: 32px;
   font-size: 16px !important;
+}
+
+.css-ngazp5-MuiInputBase-input {
+  margin-left: 30px !important;
 }

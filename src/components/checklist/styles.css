@@ -65,7 +65,9 @@
 #selectall {
   margin-left: 10px;
   font-size: 14px;
-  color: grey;
+  color: #727782;
+  font-family: "Manrope" !important;
+  line-height: 24px;
 }
 
 .roles-permissions-dropdown {

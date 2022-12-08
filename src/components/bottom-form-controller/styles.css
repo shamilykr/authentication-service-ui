@@ -13,3 +13,14 @@
 .submit-buttom-style {
   margin-left: 20px;
 }
+
+#cancel-button {
+  font-size: 14px;
+  font-family: "Inter";
+}
+
+#submit-button {
+  font-size: 14px;
+  width: 121px;
+  font-family: "Inter";
+}

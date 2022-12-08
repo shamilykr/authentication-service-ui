@@ -216,6 +216,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Manrope",
+        },
+      },
+    },
   },
 });
 export default theme;

@@ -55,7 +55,7 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={id ? "Update group" : "Create group"}
+        primarybuttonLabel={id ? "Update Group" : "Create Group"}
         primaryButtonType="submit"
         formId="group-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

@@ -34,7 +34,7 @@ const Users: React.FC = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
-  useQuery(GET_USERS, {
+  const { loading } = useQuery(GET_USERS, {
     onCompleted: (data) => {
       setUserList(data?.getUsers);
     },
@@ -118,6 +118,7 @@ const Users: React.FC = () => {
 
   return (
     <>
+{!loading && (
       <TableList
         rows={userList}
         columns={columns}
@@ -139,6 +140,7 @@ const Users: React.FC = () => {
         actionFlex={0.23}
         cursorType="pointer"
       />
+      )}
     </>
   );
 };
