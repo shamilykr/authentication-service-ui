@@ -70,14 +70,15 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
         {mapList?.map((item: any) => {
           return (
             <div className="avatar-wrapper" key={item?.id}>
-              <Checkbox
-                value={item?.id}
-                onChange={(e) => onChange(e, item)}
-                checked={getIsChecked(item)}
-                className="custom-checkbox"
-                icon={<UnCheckedIcon />}
-                checkedIcon={<CheckedIcon />}
-              />
+              <div className="custom-checkbox-item">
+                <Checkbox
+                  value={item?.id}
+                  onChange={(e) => onChange(e, item)}
+                  checked={getIsChecked(item)}
+                  icon={<UnCheckedIcon />}
+                  checkedIcon={<CheckedIcon />}
+                />
+              </div>
 
               <CustomAvatar
                 lastName={item?.lastName}
