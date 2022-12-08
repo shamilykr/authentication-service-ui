@@ -14,8 +14,8 @@ import { Group } from "../../types/group";
 
 interface GroupCardProps {
   group: any;
-  currentCheckedItems: Group[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
+  currentCheckedItems?: Group[];
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
   showCheckBox?: Boolean;
   isViewPage?: Boolean;
 }
