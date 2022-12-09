@@ -8,4 +8,5 @@ export interface Group {
   users?: User[];
   roles?: Role[];
   permissions: Permission[];
+  allPermissions: Permission[];
 }

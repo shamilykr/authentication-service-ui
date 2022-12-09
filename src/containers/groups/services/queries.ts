@@ -21,6 +21,10 @@ export const GET_GROUPS = gql`
         id
         name
       }
+      allPermissions {
+        id
+        name
+      }
     }
   }
 `;
@@ -48,6 +52,10 @@ export const GET_GROUP = gql`
         }
       }
       permissions {
+        id
+        name
+      }
+      allPermissions {
         id
         name
       }

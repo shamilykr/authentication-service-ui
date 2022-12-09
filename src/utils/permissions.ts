@@ -30,7 +30,7 @@ export const getUniquePermissionsFromRoles = (roles: Role[]) => {
 
 export const getUniquePermissionsFromGroups = (groups: Group[]) => {
   const permissionsList = groups?.reduce((acc: Permission[], cur) => {
-    acc.push(...cur.permissions);
+    acc.push(...cur.allPermissions);
     return acc;
   }, []);
   return [
