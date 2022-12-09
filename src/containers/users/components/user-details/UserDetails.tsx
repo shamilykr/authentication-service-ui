@@ -16,6 +16,7 @@ import {
 } from "../../../../states/apiRequestState";
 import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
 import { TabPanel } from "../create-edit-user/UserForm";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const UserDetails = () => {
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Need to update it
+            <PermissionCards userPermissions={user?.permissions} isViewPage />
           </TabPanel>
         </Box>
       </div>

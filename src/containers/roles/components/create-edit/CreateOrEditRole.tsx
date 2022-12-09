@@ -123,7 +123,10 @@ const CreateOrEditRole = () => {
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
         {!loading && (
-          <PermissionCards userSelectedPermissions={rolePermissions} />
+          <PermissionCards
+            userSelectedPermissions={rolePermissions}
+            setUserSelectedPermissions={setRolePermissions}
+          />
         )}
       </div>
     </div>

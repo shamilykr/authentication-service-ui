@@ -170,18 +170,6 @@ const UserForm = (props: UserProps) => {
   const { handleSubmit } = methods;
 
   const onSubmitForm = (inputs: FieldValues) => {
-    //TODO:waiting for backend fix
-    // const isValidUser = mandatoryPermissions.some((mandatoryPermission) =>
-    //   selectedPermissions.some(
-    //     (permission) =>
-    //       permission.name === mandatoryPermission ||
-    //       getOverallPermissions(groupPermissions).some(
-    //         (permission) => permission.name === mandatoryPermission
-    //       )
-    //   )
-    // );
-    // console.log(isValidUser);
-
     if (updateUser) updateUser(inputs, userGroups, userSelectedPermissions);
     else if (createUser)
       createUser(inputs, userGroups, userSelectedPermissions);
@@ -228,8 +216,6 @@ const UserForm = (props: UserProps) => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  const mandatoryPermissions = ["view-user", "view-roles", "view-groups"];
 
   return (
     <>

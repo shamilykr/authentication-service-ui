@@ -1,6 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
+import SquareIcon from "@mui/icons-material/Square";
+
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 
@@ -16,17 +18,19 @@ import { RemovedPermissions } from "../../containers/permissions/constants";
 import { Group } from "../../types/group";
 
 interface PermissionCardProps {
+  entity: Entity;
   roles?: Role[];
   groups?: Group[];
-  userSelectedPermissions: Permission[];
-  entity: Entity;
+  userSelectedPermissions?: Permission[];
   setUserSelectedPermissions?: React.Dispatch<
     React.SetStateAction<Permission[]>
   >;
+  userPermissions?: Permission[];
+  isViewPage?: boolean;
 }
 
-const Container = styled.div`
-  display: flex;
+const Container = styled.div<{ show: boolean }>`
+  display: ${(props) => (props.show ? "flex" : "none")};
   flex-direction: column;
   align-items: flex-start;
   width: 238px;
@@ -55,11 +59,13 @@ const CheckboxContainer = styled.div`
 `;
 
 const PermissionsCard: FC<PermissionCardProps> = ({
+  entity,
   roles = [],
   groups = [],
-  userSelectedPermissions,
-  entity,
+  userSelectedPermissions = [],
   setUserSelectedPermissions = () => null,
+  userPermissions = [],
+  isViewPage = false,
 }) => {
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
@@ -102,22 +108,44 @@ const PermissionsCard: FC<PermissionCardProps> = ({
     );
   };
 
+  const IsUserPermission = (id: string): boolean => {
+    return userPermissions.some((userPermission) => userPermission.id === id);
+  };
+
+  const showEntityPermissions = (): boolean => {
+    const filteredArray = entity.permissions.filter((item1) =>
+      userPermissions.some(
+        (item2) => item2.id === item1.id && item2.name === item1.name
+      )
+    );
+    if (isViewPage) return filteredArray.length !== 0;
+    return true;
+  };
+
   return (
-    <Container>
+    <Container show={showEntityPermissions()}>
       <CollectionName>{entity.name}</CollectionName>
       {entity.permissions.map((permission) => (
         <If condition={!RemovedPermissions.includes(permission.name)}>
-          <CheckboxContainer>
-            <Checkbox
-              value={"all"}
-              className="custom-checkbox"
-              onChange={(e) => onChangePermissions(e, permission)}
-              checked={IsChecked(permission.id)}
-              icon={<UnCheckedIcon />}
-              checkedIcon={<CheckedIcon />}
-            />
-            <div>{permission.name}</div>
-          </CheckboxContainer>
+          <If condition={isViewPage && IsUserPermission(permission.id)}>
+            <CheckboxContainer>
+              <SquareIcon sx={{ width: 10, fill: "#2F6FED" }} />
+              <div>{permission.name}</div>
+            </CheckboxContainer>
+          </If>
+          <If condition={!isViewPage}>
+            <CheckboxContainer>
+              <Checkbox
+                value={"all"}
+                className="custom-checkbox"
+                onChange={(e) => onChangePermissions(e, permission)}
+                checked={IsChecked(permission.id)}
+                icon={<UnCheckedIcon />}
+                checkedIcon={<CheckedIcon />}
+              />
+              <div>{permission.name}</div>
+            </CheckboxContainer>
+          </If>
         </If>
       ))}
     </Container>
