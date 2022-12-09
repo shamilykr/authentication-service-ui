@@ -1,3 +1,4 @@
+import { Group } from "../types/group";
 import { EntityPermissionsDetails, Permission } from "../types/permission";
 import { Role } from "../types/role";
 
@@ -22,7 +23,19 @@ export const getUniquePermissionsFromRoles = (roles: Role[]) => {
   }, []);
   return [
     ...Array.from(
-      new Set(permissionsList?.map((permission: any) => permission.name))
+      new Set(permissionsList?.map((permission: any) => permission))
+    ),
+  ];
+};
+
+export const getUniquePermissionsFromGroups = (groups: Group[]) => {
+  const permissionsList = groups?.reduce((acc: Permission[], cur) => {
+    acc.push(...cur.allPermissions);
+    return acc;
+  }, []);
+  return [
+    ...Array.from(
+      new Set(permissionsList?.map((permission: any) => permission))
     ),
   ];
 };

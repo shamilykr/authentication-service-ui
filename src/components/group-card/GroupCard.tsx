@@ -1,19 +1,20 @@
 import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import { FC, useState } from "react";
+
 import { Role } from "../../types/role";
 import RoleCard from "../role-card/RoleCard";
 import { ReactComponent as DownArrowIcon } from "../../assets/icons/Stroke 1.svg";
 import { getUniquePermissionsFromRoles } from "../../utils/permissions";
-import { Entity } from "../../types/generic";
 import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
 
 import "../checklist/styles.css";
+import { Group } from "../../types/group";
 
 interface GroupCardProps {
   group: any;
-  currentCheckedItems?: Entity[];
+  currentCheckedItems?: Group[];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
   showCheckBox?: Boolean;
   isViewPage?: Boolean;

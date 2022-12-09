@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
 
@@ -22,20 +13,18 @@ import { ApolloError, useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
-import { Group, Permission, User } from "../../../../types/user";
+import { Permission, User } from "../../../../types/user";
 import "./styles.css";
 import apolloClient from "../../../../services/apolloClient";
-import PermissionTabs from "../../../../components/tabs/PermissionTabs";
-import { Entity } from "../../../../types/generic";
 import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
-import { getOverallPermissions } from "../../../../utils/permissions";
 import BottomFormController from "../../../../components/bottom-form-controller";
+import { Group } from "../../../../types/group";
 
 interface UserProps {
   isEdit?: boolean;
@@ -90,26 +79,12 @@ const UserForm = (props: UserProps) => {
     EntityPermissionsDetails[]
   >([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
-  const [selectedPermissions, setSelectedPermissions] = useState<Permission[]>(
-    []
-  );
+  const [userSelectedPermissions, setUserSelectedPermissions] = useState<
+    Permission[]
+  >([]);
   const [status, setStatus] = useState<boolean>(false);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
-
-  const handleClick = (permission: Permission) => {
-    if (
-      selectedPermissions.some(
-        (selected_permission) => selected_permission.id === permission.id
-      )
-    ) {
-      setSelectedPermissions(
-        selectedPermissions.filter(
-          (selected_permission) => selected_permission.id !== permission.id
-        )
-      );
-    } else setSelectedPermissions([...selectedPermissions, permission]);
-  };
 
   useEffect(() => {
     if (
@@ -179,7 +154,7 @@ const UserForm = (props: UserProps) => {
     skip: !id,
     variables: { id: id },
     onCompleted: (data) => {
-      setSelectedPermissions(data?.getUserPermissions);
+      setUserSelectedPermissions(data?.getUserPermissions);
     },
     onError: (error: ApolloError) => {
       setToastMessage(error.message);
@@ -207,8 +182,9 @@ const UserForm = (props: UserProps) => {
     // );
     // console.log(isValidUser);
 
-    if (updateUser) updateUser(inputs, userGroups, selectedPermissions);
-    else if (createUser) createUser(inputs, userGroups, selectedPermissions);
+    if (updateUser) updateUser(inputs, userGroups, userSelectedPermissions);
+    else if (createUser)
+      createUser(inputs, userGroups, userSelectedPermissions);
   };
 
   const removeGroup = (group: Group) => {
@@ -222,7 +198,7 @@ const UserForm = (props: UserProps) => {
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    group?: Entity
+    group?: Group
   ) => {
     const value = event.target.value;
     if (event.target.checked) {
@@ -319,21 +295,13 @@ const UserForm = (props: UserProps) => {
                     onChange={handleChange}
                   />
                 </div>
-                {/* <Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />
-              <div id="user-groups">
-                <Grid item xs={10} lg={6.7} sx={{ paddingLeft: 5 }}>
-                  <div className="header">
-                    Permissions summary of selected roles
-                  </div>
-                  <PermissionTabs permissions={groupPermissions} />
-                </Grid>
-              </div> */}
               </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <FilterChips
-                selectedPermissions={selectedPermissions}
-                handleClick={handleClick}
+              <PermissionCards
+                userSelectedPermissions={userSelectedPermissions}
+                setUserSelectedPermissions={setUserSelectedPermissions}
+                groups={userGroups}
               />
             </TabPanel>
           </Box>

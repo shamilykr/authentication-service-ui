@@ -9,7 +9,7 @@ import {
 } from "../../services/mutations";
 import UserForm from "./UserForm";
 import "./styles.css";
-import { Group, Permission } from "../../../../types/user";
+import { Permission } from "../../../../types/user";
 import { FieldValues } from "react-hook-form";
 import { currentUserAtom } from "../../../../states/loginStates";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -19,6 +19,7 @@ import {
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
 import { USER_UPDATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
+import { Group } from "../../../../types/group";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();

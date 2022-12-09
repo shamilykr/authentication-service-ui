@@ -12,12 +12,13 @@ import "./styles.css";
 import UserForm from "./UserForm";
 import { GroupPermissionsDetails } from "../../../../types/permission";
 import { FieldValues } from "react-hook-form";
-import { Group, Permission } from "../../../../types/user";
+import { Permission } from "../../../../types/user";
 import {
   apiRequestAtom,
   toastMessageAtom,
 } from "../../../../states/apiRequestState";
 import { USER_CREATE_SUCCESS_MESSAGE } from "../../../../constants/messages";
+import { Group } from "../../../../types/group";
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();

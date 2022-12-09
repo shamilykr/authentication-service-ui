@@ -12,7 +12,7 @@ import {
 import RoleForm from "./RoleForm";
 import "./styles.css";
 import { Permission } from "../../../../types/user";
-import FilterChips from "../../../../components/filter-chips/FilterChips";
+import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import { FieldValues } from "react-hook-form";
 import {
   apiRequestAtom,
@@ -31,18 +31,6 @@ const CreateOrEditRole = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
-
-  const handleClick = (permission: Permission) => {
-    if (
-      rolePermissions.map((permission) => permission.id).includes(permission.id)
-    ) {
-      setRolePermissions(
-        rolePermissions.filter(
-          (role_permission) => role_permission.id !== permission.id
-        )
-      );
-    } else setRolePermissions([...rolePermissions, permission]);
-  };
 
   const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
     onError: (error: ApolloError) => {
@@ -135,10 +123,7 @@ const CreateOrEditRole = () => {
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
         {!loading && (
-          <FilterChips
-            selectedPermissions={rolePermissions}
-            handleClick={handleClick}
-          />
+          <PermissionCards userSelectedPermissions={rolePermissions} />
         )}
       </div>
     </div>
