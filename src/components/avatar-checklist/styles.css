@@ -35,6 +35,10 @@
   overflow: auto;
 }
 
+#component::-webkit-scrollbar {
+  display: none;
+}
+
 #selectall-avatar {
   margin-left: 10px;
   font-size: 14px;

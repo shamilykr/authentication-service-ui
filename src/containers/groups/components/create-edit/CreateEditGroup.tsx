@@ -6,10 +6,7 @@ import { FieldValues } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 
-import {
-  GET_ROLES,
-  GET_ROLE_PERMISSIONS,
-} from "../../../roles/services/queries";
+import { GET_ROLES } from "../../../roles/services/queries";
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
@@ -21,8 +18,6 @@ import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
 import { Role } from "../../../../types/role";
-import apolloClient from "../../../../services/apolloClient";
-import { EntityPermissionsDetails } from "../../../../types/generic";
 import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import { Permission, User } from "../../../../types/user";
 import { Group } from "../../../../types/group";
@@ -76,15 +71,11 @@ const CreateOrEditGroup = () => {
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
   const [roles, setRoles] = useState<Role[]>([]);
-  const [entityPermissions, setEntityPermissions] = useState<
-    EntityPermissionsDetails[]
-  >([]);
   const [allUsers, setAllUsers] = useState<User[]>(usersResponse);
 
   const [users, setUsers] = useState<User[]>([]);
 
   const [allRoles, setAllRoles] = useState<Role[]>([]);
-  const [status, setStatus] = useState<boolean>(false);
 
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
@@ -174,11 +165,6 @@ const CreateOrEditGroup = () => {
   }) => {
     if (roleId) {
       setRoles(roles.filter((role: Role) => role.id !== roleId));
-      setEntityPermissions(
-        entityPermissions.filter(
-          (entityObj: EntityPermissionsDetails) => entityObj.id !== roleId
-        )
-      );
     }
 
     if (userId) {
@@ -197,7 +183,7 @@ const CreateOrEditGroup = () => {
         return;
       }
       if (item) {
-        handlePermissions(item);
+        // handlePermissions(item);
         if (roles[0] === null) {
           setRoles([item]);
         } else {
@@ -207,7 +193,6 @@ const CreateOrEditGroup = () => {
     } else {
       if (value === "all") {
         setRoles([]);
-        setEntityPermissions([]);
         return;
       }
       removeItem({ roleId: item?.id as string });
@@ -319,40 +304,6 @@ const CreateOrEditGroup = () => {
         },
       },
     });
-  };
-
-  useEffect(() => {
-    if (
-      (entityPermissions.length === 0 && !status) ||
-      allRoles?.length === roles?.length
-    ) {
-      roles.forEach((role) => handlePermissions(role));
-    } // eslint-disable-next-line
-  }, [roles]);
-
-  const handlePermissions = async (role: Role) => {
-    setStatus(true);
-    try {
-      const response = await apolloClient.query({
-        query: GET_ROLE_PERMISSIONS,
-        variables: {
-          id: role.id,
-        },
-      });
-      if (response?.data?.getRolePermissions) {
-        if (!entityPermissions.some((entityObj) => entityObj.id === role.id))
-          setEntityPermissions((previousState) => [
-            ...previousState,
-            {
-              id: role.id,
-              name: role.name,
-              permissions: response?.data?.getRolePermissions,
-            },
-          ]);
-      }
-    } finally {
-      setStatus(false);
-    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { ApolloError, useQuery } from "@apollo/client";
-import { GridColumns, GridRowId, GridRowParams } from "@mui/x-data-grid";
+import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";

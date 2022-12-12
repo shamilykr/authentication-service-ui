@@ -48,7 +48,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
           <span> Select all</span>
         </div>
       </div>
-      <div id="component">
+      <div className="group-cards-container">
         {mapList?.map((item: any) => {
           return (
             <GroupCard

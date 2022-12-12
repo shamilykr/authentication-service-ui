@@ -8,6 +8,18 @@
   flex-wrap: wrap;
 }
 
+.checklist-container {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+  overflow-y: scroll;
+  margin-bottom: 85px;
+}
+
+.checklist-container::-webkit-scrollbar {
+  display: none;
+}
+
 .options {
   display: flex;
 }

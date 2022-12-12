@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import { checkboxClasses } from "@mui/material";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -138,7 +138,6 @@ const theme = createTheme({
             backgroundColor: "#E9EDF2",
             position: "relative",
             minHeight: "94px !important",
-            position: "relative",
             top: "-2px",
           },
           ". &.MuiSvgIcon-root-MuiSvgIcon": {

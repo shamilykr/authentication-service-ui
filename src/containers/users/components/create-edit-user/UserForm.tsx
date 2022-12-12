@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
 
-import {
-  GET_GROUPS,
-  GET_GROUP_PERMISSIONS,
-} from "../../../groups/services/queries";
+import { GET_GROUPS } from "../../../groups/services/queries";
 import { ApolloError, useQuery } from "@apollo/client";
 import FormInputText from "../../../../components/inputText";
 import { ChecklistComponent } from "../../../../components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
 import { Permission, User } from "../../../../types/user";
 import "./styles.css";
-import apolloClient from "../../../../services/apolloClient";
-import { EntityPermissionsDetails } from "../../../../types/permission";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
 import PermissionCards from "../../../../components/permission-cards/PermissionCards";
 import {
@@ -75,55 +70,12 @@ const UserForm = (props: UserProps) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>([]);
-  const [groupPermissions, setGroupPermissions] = useState<
-    EntityPermissionsDetails[]
-  >([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
-  const [status, setStatus] = useState<boolean>(false);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
-
-  useEffect(() => {
-    if (
-      (groupPermissions.length === 0 && !status) ||
-      allGroups?.length === userGroups?.length
-    ) {
-      userGroups.forEach((group: Group) => {
-        handlePermissions(group);
-      });
-    } // eslint-disable-next-line
-  }, [userGroups]);
-
-  const handlePermissions = async (group: Group) => {
-    setStatus(true);
-    try {
-      const response = await apolloClient.query({
-        query: GET_GROUP_PERMISSIONS,
-        variables: {
-          id: group.id,
-        },
-      });
-      if (response) {
-        if (!groupPermissions.some((groupObj) => groupObj.id === group.id))
-          setGroupPermissions((previousState) => [
-            ...previousState,
-            {
-              id: group.id,
-              name: group.name,
-              permissions: response?.data?.getGroupPermissions,
-            },
-          ]);
-      }
-    } catch (exception: ApolloError | any) {
-      setToastMessage(exception.message);
-      setApiSuccess(false);
-    } finally {
-      setStatus(false);
-    }
-  };
 
   const { data: groupData } = useQuery(GET_GROUPS, {
     onCompleted: (data) => {
@@ -179,9 +131,6 @@ const UserForm = (props: UserProps) => {
     setUserGroups(
       userGroups.filter((groupDetails) => groupDetails.id !== group.id)
     );
-    setGroupPermissions(
-      groupPermissions.filter((permission) => permission.id !== group.id)
-    );
   };
 
   const handleChange = (
@@ -195,13 +144,11 @@ const UserForm = (props: UserProps) => {
       } else {
         if (group) {
           setUserGroups([...userGroups, group]);
-          handlePermissions(group);
         }
       }
     } else {
       if (value === "all") {
         setUserGroups([]);
-        setGroupPermissions([]);
       }
       if (group) removeGroup(group);
     }
@@ -274,7 +221,7 @@ const UserForm = (props: UserProps) => {
             </Box>
             <TabPanel value={value} index={0}>
               <div id="groups-permissions">
-                <div id="user-groups">
+                <div className="checklist-container">
                   <ChecklistComponent
                     mapList={groupData?.getGroups}
                     currentCheckedItems={userGroups}

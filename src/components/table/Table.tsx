@@ -15,7 +15,7 @@ import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useState } from "react";
 import { Tooltip, Button, TextField } from "@mui/material";
 import { ApolloError, useMutation, useQuery } from "@apollo/client";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
@@ -266,34 +266,34 @@ const TableList: FC<TableProps> = ({
 
   return (
     <div className="table-component">
-{isViewVerified ? (
-  <>
-      <TableToolBar
-        text={text}
-        buttonLabel={buttonLabel}
-        searchLabel={searchLabel}
-        setItemList={setItemList}
-        searchQuery={refetchQuery}
-        isAddVerified={isAddVerified}
-        onAdd={onAdd}
-      />
-      <DataGrid
-        rows={rows}
-        columns={final_columns}
-        style={{
-          borderRadius: "0px 0px 5px 5px",
-          cursor: cursorType,
-        }}
-        disableSelectionOnClick
-        onRowClick={handleRowClick}
-        disableColumnMenu
-        pageSize={8}
-        rowsPerPageOptions={[5]}
-        components={{
-          Pagination: CustomPagination,
-        }}
-      />
-       </>
+      {isViewVerified ? (
+        <>
+          <TableToolBar
+            text={text}
+            buttonLabel={buttonLabel}
+            searchLabel={searchLabel}
+            setItemList={setItemList}
+            searchQuery={refetchQuery}
+            isAddVerified={isAddVerified}
+            onAdd={onAdd}
+          />
+          <DataGrid
+            rows={rows}
+            columns={final_columns}
+            style={{
+              borderRadius: "0px 0px 5px 5px",
+              cursor: cursorType,
+            }}
+            disableSelectionOnClick
+            onRowClick={handleRowClick}
+            disableColumnMenu
+            pageSize={8}
+            rowsPerPageOptions={[5]}
+            components={{
+              Pagination: CustomPagination,
+            }}
+          />
+        </>
       ) : (
         <AccessDenied />
       )}
