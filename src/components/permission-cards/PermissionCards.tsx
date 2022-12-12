@@ -1,17 +1,15 @@
-import { ApolloError, useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { useSetRecoilState } from "recoil";
 
 import "./styles.css";
 import styled from "@emotion/styled";
 
 import { Permission } from "../../types/user";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import PermissionsCard from "../permission-card/PermissionCard";
 import { Role } from "../../types/role";
 import { GET_ENTITIES } from "../../containers/entities/services/queries";
 import { Entity } from "../../types/generic";
 import { Group } from "../../types/group";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 interface PermissionCardsProps {
   userSelectedPermissions?: Permission[];
@@ -40,17 +38,10 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
   isViewPage = false,
 }) => {
   const [entities, setEntities] = useState<Entity[]>([]);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-  useQuery(GET_ENTITIES, {
-    onCompleted: (data) => {
-      setEntities(data?.getEntities);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onCompleted = (data: any) => {
+    setEntities(data?.getEntities);
+  };
+  useCustomQuery(GET_ENTITIES, onCompleted);
 
   return (
     <Container>

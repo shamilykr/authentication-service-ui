@@ -159,6 +159,8 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  height: 90%;
 }
 
 #bold {

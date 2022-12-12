@@ -1,7 +1,8 @@
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_ROLE } from "../../services/queries";
 import {
@@ -23,6 +24,7 @@ import {
   ROLE_CREATE_SUCCESS_MESSAGE,
   ROLE_UPDATE_SUCCESS_MESSAGE,
 } from "../../../../constants/messages";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -52,22 +54,20 @@ const CreateOrEditRole = () => {
       },
     });
 
-  const { loading } = useQuery(GET_ROLE, {
-    skip: !id,
-    variables: { id: id },
-    onCompleted: (data) => {
-      setRole(data?.getRole);
-      const permissions = data?.getRole?.permissions.map(
-        (permission: Permission) => permission
-      );
-      setRolePermissions([...permissions]);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetRoleComplete = (data: any) => {
+    setRole(data?.getRole);
+    const permissions = data?.getRole?.permissions.map(
+      (permission: Permission) => permission
+    );
+    setRolePermissions([...permissions]);
+  };
+
+  const { loading } = useCustomQuery(
+    GET_ROLE,
+    onGetRoleComplete,
+    { id: id },
+    !id
+  );
 
   useEffect(() => {
     if (createdRoleData)
@@ -122,11 +122,13 @@ const CreateOrEditRole = () => {
       )}
       <div className="role-permissions">
         <div className="permission-header"> Permissions</div>
-        {!loading && (
+        {!loading ? (
           <PermissionCards
             userSelectedPermissions={rolePermissions}
             setUserSelectedPermissions={setRolePermissions}
           />
+        ) : (
+          <CircularProgress />
         )}
       </div>
     </div>

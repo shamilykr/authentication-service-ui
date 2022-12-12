@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_ROLES } from "../../../roles/services/queries";
 import {
@@ -35,6 +36,7 @@ import { AvatarChecklistComponent } from "../../../../components/avatar-checklis
 import { GET_USERS } from "../../../users/services/queries";
 import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -117,44 +119,38 @@ const CreateOrEditGroup = () => {
     setValue(newValue);
   };
 
-  const { data: roleData } = useQuery(GET_ROLES, {
-    onCompleted: (data) => {
-      setAllRoles(data?.getRoles);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onGetRolesComplete = (data: any) => {
+    setAllRoles(data?.getRoles);
+  };
 
-  const { loading } = useQuery(GET_GROUP, {
-    skip: !id,
-    fetchPolicy: "network-only",
-    variables: { id: id },
-    onCompleted: (data) => {
-      setGroup(data?.getGroup);
-      setRoles([...roles, ...data?.getGroup?.roles]);
-      setUsers([...users, ...data?.getGroup?.users]);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const { data: roleData, loading: rolesLoading } = useCustomQuery(
+    GET_ROLES,
+    onGetRolesComplete
+  );
 
-  useQuery(GET_GROUP_PERMISSIONS, {
-    skip: !id,
-    variables: { id },
-    onCompleted: (data) => {
-      const permissionList = data?.getGroupPermissions;
-      setUserSelectedPermissions(permissionList);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetGroupComplete = (data: any) => {
+    setGroup(data?.getGroup);
+    setRoles([...roles, ...data?.getGroup?.roles]);
+    setUsers([...users, ...data?.getGroup?.users]);
+  };
+  const { loading } = useCustomQuery(
+    GET_GROUP,
+    onGetGroupComplete,
+    { id: id },
+    !id
+  );
+
+  const onGetGroupPermissionsComplete = (data: any) => {
+    const permissionList = data?.getGroupPermissions;
+    setUserSelectedPermissions(permissionList);
+  };
+
+  useCustomQuery(
+    GET_GROUP_PERMISSIONS,
+    onGetGroupPermissionsComplete,
+    { id },
+    !id
+  );
 
   const removeItem = ({
     roleId,
@@ -315,7 +311,7 @@ const CreateOrEditGroup = () => {
           editGroup={onEditGroup}
         />
       )}
-      <div>
+      <div style={{ height: "55%" }}>
         <Box
           sx={{
             display: "flex",
@@ -338,8 +334,8 @@ const CreateOrEditGroup = () => {
             />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          {!loading && (
+        {!rolesLoading ? (
+          <TabPanel value={value} index={0}>
             <div className="roles-checklist">
               <RoleCardsChecklist
                 roleList={roleData?.getRoles}
@@ -347,8 +343,10 @@ const CreateOrEditGroup = () => {
                 onChange={onChange}
               />
             </div>
-          )}
-        </TabPanel>
+          </TabPanel>
+        ) : (
+          <CircularProgress />
+        )}
         <TabPanel value={value} index={1}>
           <PermissionCards
             userSelectedPermissions={userSelectedPermissions}

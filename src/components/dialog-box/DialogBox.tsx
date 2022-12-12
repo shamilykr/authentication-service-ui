@@ -12,7 +12,7 @@ import { DocumentNode } from "@apollo/client";
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
-    background-color: rgba(220, 220, 220, 0.05);
+    background-color: rgb(84 81 81 / 15%);
   }
 `;
 

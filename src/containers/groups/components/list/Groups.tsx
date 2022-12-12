@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { ApolloError, useQuery } from "@apollo/client";
+import { useRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
@@ -16,14 +16,11 @@ import {
 } from "../../../../states/permissionsStates";
 import AvatarList from "../../../../components/avatar-list/AvatarList";
 import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
-import {
   CREATE_GROUP_PERMISSION,
   DELETE_GROUP_PERMISSION,
   UPDATE_GROUP_PERMISSION,
 } from "../../../../constants/permissions";
+import { useCustomQuery } from "../../../../hooks/useQuery";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -31,20 +28,13 @@ const GroupList: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
-  const { loading } = useQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      setGroupList(data?.getGroups);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetGroupsComplete = (data: any) => {
+    setGroupList(data?.getGroups);
+  };
+
+  const { loading } = useCustomQuery(GET_GROUPS, onGetGroupsComplete);
 
   const columns: GridColumns = [
     {
@@ -110,7 +100,7 @@ const GroupList: React.FC = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <TableList
           rows={groupList}
           columns={columns}
@@ -131,6 +121,8 @@ const GroupList: React.FC = () => {
           actionFlex={0.3}
           cursorType="default"
         />
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

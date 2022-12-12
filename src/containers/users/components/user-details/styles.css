@@ -3,6 +3,7 @@
   border-radius: 20px;
   padding: 30px;
   overflow: auto;
+  height: 100%;
 }
 .group-details {
   margin-top: 40px;

@@ -14,7 +14,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useState } from "react";
 import { Tooltip, Button, TextField } from "@mui/material";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
 import { TableProps } from "./types";
@@ -27,6 +27,7 @@ import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 import { ReactComponent as LineIcon } from "../../assets/line.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
 import DialogBox from "../dialog-box";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const TableList: FC<TableProps> = ({
   rows,
@@ -54,38 +55,26 @@ const TableList: FC<TableProps> = ({
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
 
-  useQuery(VERIFY_USER_PERMISSION, {
-    variables: {
-      params: {
-        permissions: [editPermission],
-        operation: "AND",
-      },
+  const onVerifyEditComplete = (data: any) => {
+    setEditVerified(data?.verifyUserPermission);
+  };
+
+  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyEditComplete, {
+    params: {
+      permissions: [editPermission],
+      operation: "AND",
     },
-    onCompleted: (data) => {
-      setEditVerified(data?.verifyUserPermission);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
   });
 
-  useQuery(VERIFY_USER_PERMISSION, {
-    variables: {
-      params: {
-        permissions: [deletePermission],
-        operation: "AND",
-      },
+  const onVerifyDeleteComplete = (data: any) => {
+    setDeleteVerified(data?.verifyUserPermission);
+  };
+
+  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyDeleteComplete, {
+    params: {
+      permissions: [deletePermission],
+      operation: "AND",
     },
-    onCompleted: (data) => {
-      setDeleteVerified(data?.verifyUserPermission);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
   });
 
   const [open, setOpen] = useState(false);

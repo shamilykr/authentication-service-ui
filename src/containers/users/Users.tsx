@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import { useMutation } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { ReactComponent as RefreshIcon } from "../../assets/refresh.svg";
 import { ReactComponent as ContentCopyIcon } from "../../assets/copy.svg";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -21,32 +22,25 @@ import {
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
 } from "../../states/permissionsStates";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
 import {
   CREATE_USER_PERMISSION,
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
 } from "../../constants/permissions";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const navigate = useNavigate();
 
-  const { loading } = useQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUserList(data?.getUsers);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onComplete = (data: any) => {
+    setUserList(data?.getUsers);
+  };
+
+  const { loading } = useCustomQuery(GET_USERS, onComplete);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -121,7 +115,7 @@ const Users: React.FC = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <TableList
           rows={userList}
           columns={columns}
@@ -143,6 +137,8 @@ const Users: React.FC = () => {
           actionFlex={0.23}
           cursorType="pointer"
         />
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

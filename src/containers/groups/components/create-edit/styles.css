@@ -86,6 +86,8 @@
   /* padding: 10px 0px 10px 15px; */
   padding: 17px 8px 30px 30px;
   font-weight: 500;
+  height: 90%;
+  background-color: white;
 }
 
 .add-members {

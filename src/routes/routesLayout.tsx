@@ -14,7 +14,6 @@ const Login = lazy(() => import("../containers/auth/login"));
 const Users = lazy(() => import("../containers/users"));
 const Groups = lazy(() => import("../containers/groups"));
 const Roles = lazy(() => import("../containers/roles"));
-const Permissions = lazy(() => import("../containers/permissions"));
 
 const RoutesLayout: React.FC = () => {
   // const navigate = useNavigate();
@@ -39,7 +38,6 @@ const RoutesLayout: React.FC = () => {
           <Route path={RoutePaths.roles} element={<Roles />} />
           <Route path="roles/add" element={<CreateOrEditRole />}></Route>
           <Route path="roles/edit/:id" element={<CreateOrEditRole />}></Route>
-          <Route path={RoutePaths.permissions} element={<Permissions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,14 +1,10 @@
-import {
-  ApolloError,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from "@apollo/client";
-import React, { useEffect } from "react";
+import { ApolloError, useLazyQuery, useMutation } from "@apollo/client";
+import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
 import { useRecoilState } from "recoil";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { LOGO_URL } from "../../config";
 import CustomerAuth from "../../services/auth";
@@ -32,7 +28,12 @@ import SideBar from "../../components/side-bar";
 import { groupListAtom } from "../../states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
 import { ReactComponent as ArrowIcon } from "../../assets/arrow.svg";
-import { VIEW_GROUP_PERMISSION, VIEW_ROLE_PERMISSION, VIEW_USER_PERMISSION } from "../../constants/permissions";
+import {
+  VIEW_GROUP_PERMISSION,
+  VIEW_ROLE_PERMISSION,
+  VIEW_USER_PERMISSION,
+} from "../../constants/permissions";
+import { useCustomQuery } from "../../hooks/useQuery";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
@@ -49,56 +50,65 @@ const HomePage = () => {
     IsViewPermissionsVerifiedAtom
   );
 
-  const [verifyViewUser] = useLazyQuery(VERIFY_USER_PERMISSION, {
-    variables: {
-      params: {
-        permissions: [VIEW_USER_PERMISSION],
-        operation: "AND",
+  const [verifyViewUser, { loading: userLoading }] = useLazyQuery(
+    VERIFY_USER_PERMISSION,
+    {
+      variables: {
+        params: {
+          permissions: [VIEW_USER_PERMISSION],
+          operation: "AND",
+        },
       },
-    },
-    onCompleted: (data) => {
-      setIsViewUsersVerified(data?.verifyUserPermission);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+      onCompleted: (data) => {
+        setIsViewUsersVerified(data?.verifyUserPermission);
+      },
+      onError: (error: ApolloError) => {
+        setToastMessage(error.message);
+        setApiSuccess(false);
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
-  const [verifyViewGroups] = useLazyQuery(VERIFY_USER_PERMISSION, {
-    variables: {
-      params: {
-        permissions: [VIEW_GROUP_PERMISSION],
-        operation: "AND",
+  const [verifyViewGroups, { loading: groupLoading }] = useLazyQuery(
+    VERIFY_USER_PERMISSION,
+    {
+      variables: {
+        params: {
+          permissions: [VIEW_GROUP_PERMISSION],
+          operation: "AND",
+        },
       },
-    },
-    onCompleted: (data) => {
-      setIsViewGroupsVerified(data?.verifyUserPermission);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+      onCompleted: (data) => {
+        setIsViewGroupsVerified(data?.verifyUserPermission);
+      },
+      onError: (error: ApolloError) => {
+        setToastMessage(error.message);
+        setApiSuccess(false);
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
-  const [verifyViewRoles] = useLazyQuery(VERIFY_USER_PERMISSION, {
-    variables: {
-      params: {
-        permissions: [VIEW_ROLE_PERMISSION],
-        operation: "AND",
+  const [verifyViewRoles, { loading: roleLoading }] = useLazyQuery(
+    VERIFY_USER_PERMISSION,
+    {
+      variables: {
+        params: {
+          permissions: [VIEW_ROLE_PERMISSION],
+          operation: "AND",
+        },
       },
-    },
-    onCompleted: (data) => {
-      setIsViewRolesVerified(data?.verifyUserPermission);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+      onCompleted: (data) => {
+        setIsViewRolesVerified(data?.verifyUserPermission);
+      },
+      onError: (error: ApolloError) => {
+        setToastMessage(error.message);
+        setApiSuccess(false);
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
   const [verifyViewPermissions] = useLazyQuery(VERIFY_USER_PERMISSION, {
     variables: {
@@ -117,25 +127,18 @@ const HomePage = () => {
     fetchPolicy: "network-only",
   });
 
-  useQuery(GET_USERS, {
-    onCompleted: (data) => {
-      setUsers(data?.getUsers);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
-  useQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      setGroupList(data?.getGroups);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-    fetchPolicy: "network-only",
-  });
+  const onGetUsers = (data: any) => {
+    setUsers(data?.getUsers);
+  };
+
+  useCustomQuery(GET_USERS, onGetUsers);
+
+  const onGetGroupsComplete = (data: any) => {
+    setGroupList(data?.getGroups);
+  };
+
+  useCustomQuery(GET_GROUPS, onGetGroupsComplete);
+
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   useEffect(() => {
@@ -250,7 +253,11 @@ const HomePage = () => {
             </div>
             <div className="outlet">
               {CustomerAuth?.isAuthenticated ? (
-                <Outlet />
+                !userLoading && !groupLoading && !roleLoading ? (
+                  <Outlet />
+                ) : (
+                  <CircularProgress />
+                )
               ) : (
                 <Navigate replace to="/login" />
               )}

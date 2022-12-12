@@ -222,6 +222,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          position: "relative",
+          left: "50%",
+          top: "45%",
+        },
+      },
+    },
   },
 });
 export default theme;
