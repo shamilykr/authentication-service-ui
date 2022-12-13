@@ -11,29 +11,29 @@ import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
 import { GET_USERS } from "../users/services/queries";
-import { allUsersAtom } from "../../states/userStates";
-import { currentUserAtom } from "../../states/loginStates";
-import { stringAvatar } from "../../utils/table";
-import Toast from "../../components/toast";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { allUsersAtom } from "states/userStates";
+import { currentUserAtom } from "states/loginStates";
+import { stringAvatar } from "utils/table";
+import Toast from "components/toast";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
   IsViewGroupsVerifiedAtom,
   IsViewPermissionsVerifiedAtom,
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
-} from "../../states/permissionsStates";
-import { VERIFY_USER_PERMISSION } from "../../components/table/services/queries";
-import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
-import SideBar from "../../components/side-bar";
-import { groupListAtom } from "../../states/groupStates";
+} from "states/permissionsStates";
+import { VERIFY_USER_PERMISSION } from "components/table/services/queries";
+import { ReactComponent as MenuIcon } from "assets/menu.svg";
+import SideBar from "components/side-bar";
+import { groupListAtom } from "states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
-import { ReactComponent as ArrowIcon } from "../../assets/arrow.svg";
+import { ReactComponent as ArrowIcon } from "assets/arrow.svg";
 import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
-} from "../../constants/permissions";
-import { useCustomQuery } from "../../hooks/useQuery";
+} from "constants/permissions";
+import { useCustomQuery } from "hooks/useQuery";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);

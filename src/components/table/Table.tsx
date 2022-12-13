@@ -21,13 +21,13 @@ import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import AccessDenied from "../access-denied";
-import { ReactComponent as EditIcon } from "../../assets/edit.svg";
-import { ReactComponent as LineIcon } from "../../assets/line.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/trash.svg";
+import { ReactComponent as EditIcon } from "assets/edit.svg";
+import { ReactComponent as LineIcon } from "assets/line.svg";
+import { ReactComponent as DeleteIcon } from "assets/trash.svg";
 import DialogBox from "../dialog-box";
-import { useCustomQuery } from "../../hooks/useQuery";
+import { useCustomQuery } from "hooks/useQuery";
 
 const TableList: FC<TableProps> = ({
   rows,

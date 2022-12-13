@@ -2,11 +2,11 @@ import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 import "./styles.css";
-import { ReactComponent as UsersIcon } from "../../assets/users.svg";
-import { ReactComponent as GroupsIcon } from "../../assets/groups.svg";
-import { ReactComponent as RolesIcon } from "../../assets/roles.svg";
+import { ReactComponent as UsersIcon } from "assets/users.svg";
+import { ReactComponent as GroupsIcon } from "assets/groups.svg";
+import { ReactComponent as RolesIcon } from "assets/roles.svg";
 
-const SideBar: FC = ({}) => {
+const SideBar: FC = () => {
   return (
     <nav>
       <div className="sideBarContainer">

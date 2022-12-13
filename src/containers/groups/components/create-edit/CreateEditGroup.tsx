@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { GET_ROLES } from "../../../roles/services/queries";
+import { GET_ROLES } from "containers/roles/services/queries";
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
@@ -18,25 +18,22 @@ import {
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
-import { Role } from "../../../../types/role";
-import PermissionCards from "../../../../components/permission-cards/PermissionCards";
-import { Permission, User } from "../../../../types/user";
-import { Group } from "../../../../types/group";
-import { allUsersAtom } from "../../../../states/userStates";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
+import { Role } from "types/role";
+import PermissionCards from "components/permission-cards/PermissionCards";
+import { Permission, User } from "types/user";
+import { Group } from "types/group";
+import { allUsersAtom } from "states/userStates";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
-} from "../../../../constants/messages";
-import RoleCardsChecklist from "../../../../components/role-cards-checklist/RoleCardsChecklist";
-import { AvatarChecklistComponent } from "../../../../components/avatar-checklist/AvatarChecklist";
-import { GET_USERS } from "../../../users/services/queries";
-import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
-import { ReactComponent as CrossIcon } from "../../../../assets/cross-icon.svg";
-import { useCustomQuery } from "../../../../hooks/useQuery";
+} from "constants/messages";
+import RoleCardsChecklist from "components/role-cards-checklist/RoleCardsChecklist";
+import { AvatarChecklistComponent } from "components/avatar-checklist/AvatarChecklist";
+import { GET_USERS } from "containers/users/services/queries";
+import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
+import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
+import { useCustomQuery } from "hooks/useQuery";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;

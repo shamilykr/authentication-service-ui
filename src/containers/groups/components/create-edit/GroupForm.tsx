@@ -3,11 +3,11 @@ import { FC } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import BottomFormController from "../../../../components/bottom-form-controller";
+import BottomFormController from "components/bottom-form-controller";
 
 import "./styles.css";
 import { GroupFormSchema } from "../../groupSchema";
-import FormInputText from "../../../../components/inputText";
+import FormInputText from "components/inputText";
 
 interface GroupFormProps {
   name: string;

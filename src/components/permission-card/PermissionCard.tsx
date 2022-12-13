@@ -3,19 +3,19 @@ import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import SquareIcon from "@mui/icons-material/Square";
 
-import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
 
-import { Permission } from "../../types/permission";
-import { Role } from "../../types/role";
+import { Permission } from "types/permission";
+import { Role } from "types/role";
 import {
   getUniquePermissionsFromGroups,
   getUniquePermissionsFromRoles,
-} from "../../utils/permissions";
-import { Entity } from "../../types/generic";
+} from "utils/permissions";
+import { Entity } from "types/generic";
 import If from "../If/If";
-import { RemovedPermissions } from "../../containers/permissions/constants";
-import { Group } from "../../types/group";
+import { RemovedPermissions } from "containers/permissions/constants";
+import { Group } from "types/group";
 
 interface PermissionCardProps {
   entity: Entity;

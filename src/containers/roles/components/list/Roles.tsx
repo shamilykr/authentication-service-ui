@@ -7,19 +7,19 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "./roles.css";
 import { GET_ROLES } from "../../services/queries";
 import { DELETE_ROLE } from "../../services/mutations";
-import { RolesListAtom } from "../../../../states/roleStates";
-import TableList from "../../../../components/table";
+import { RolesListAtom } from "states/roleStates";
+import TableList from "components/table";
 import {
   IsViewRolesVerifiedAtom,
   UserPermissionsAtom,
-} from "../../../../states/permissionsStates";
-import TableChipElement from "../../../../components/table-chip-element";
+} from "states/permissionsStates";
+import TableChipElement from "components/table-chip-element";
 import {
   CREATE_ROLE_PERMISSION,
   DELETE_ROLE_PERMISSION,
   UPDATE_ROLE_PERMISSION,
-} from "../../../../constants/permissions";
-import { useCustomQuery } from "../../../../hooks/useQuery";
+} from "constants/permissions";
+import { useCustomQuery } from "hooks/useQuery";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();

@@ -2,10 +2,10 @@ import { FC } from "react";
 import { Avatar, Box, Card, Chip, IconButton } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import { stringAvatar } from "../../../../utils/table";
+import { stringAvatar } from "utils/table";
 import "./styles.css";
-import { User } from "../../../../types/user";
-import { getFullName } from "../../../../utils/user";
+import { User } from "types/user";
+import { getFullName } from "utils/user";
 
 interface UserCardProps {
   user: User;

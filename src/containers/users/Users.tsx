@@ -5,29 +5,29 @@ import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
-import { ReactComponent as RefreshIcon } from "../../assets/refresh.svg";
-import { ReactComponent as ContentCopyIcon } from "../../assets/copy.svg";
+import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
+import { ReactComponent as ContentCopyIcon } from "assets/copy.svg";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
 import "./styles.css";
 import { DELETE_USER } from "./services/mutations";
-import { userListAtom } from "../../states/userStates";
-import TableList from "../../components/table/Table";
-import TableChipElement from "../../components/table-chip-element";
-import { stringAvatar } from "../../utils/table";
+import { userListAtom } from "states/userStates";
+import TableList from "components/table/Table";
+import TableChipElement from "components/table-chip-element";
+import { stringAvatar } from "utils/table";
 import "./components/create-edit-user/styles.css";
 import {
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
-} from "../../states/permissionsStates";
+} from "states/permissionsStates";
 import {
   CREATE_USER_PERMISSION,
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
-} from "../../constants/permissions";
-import { useCustomQuery } from "../../hooks/useQuery";
+} from "constants/permissions";
+import { useCustomQuery } from "hooks/useQuery";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);

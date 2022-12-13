@@ -7,20 +7,17 @@ import { useSetRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_GROUPS } from "../../../groups/services/queries";
-import FormInputText from "../../../../components/inputText";
-import { ChecklistComponent } from "../../../../components/checklist/CheckList";
+import FormInputText from "components/inputText";
+import { ChecklistComponent } from "components/checklist/CheckList";
 import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
-import { Permission, User } from "../../../../types/user";
+import { Permission, User } from "types/user";
 import "./styles.css";
 import { AddUserformSchema, EditUserformSchema } from "../../userSchema";
-import PermissionCards from "../../../../components/permission-cards/PermissionCards";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
-import BottomFormController from "../../../../components/bottom-form-controller";
-import { useCustomQuery } from "../../../../hooks/useQuery";
-import { Group } from "../../../../types/group";
+import PermissionCards from "components/permission-cards/PermissionCards";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import BottomFormController from "components/bottom-form-controller";
+import { useCustomQuery } from "hooks/useQuery";
+import { Group } from "types/group";
 
 interface UserProps {
   isEdit?: boolean;

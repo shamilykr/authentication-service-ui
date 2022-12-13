@@ -1,6 +1,6 @@
 import { useQuery, ApolloError } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
-import { apiRequestAtom, toastMessageAtom } from "../states/apiRequestState";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 
 export const useCustomQuery = (
   query: any,

@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import "./styles.css";
 import styled from "@emotion/styled";
 
-import { Permission } from "../../types/user";
+import { Permission } from "types/user";
 import PermissionsCard from "../permission-card/PermissionCard";
-import { Role } from "../../types/role";
-import { GET_ENTITIES } from "../../containers/entities/services/queries";
-import { Entity } from "../../types/generic";
-import { Group } from "../../types/group";
-import { useCustomQuery } from "../../hooks/useQuery";
+import { Role } from "types/role";
+import { GET_ENTITIES } from "containers/entities/services/queries";
+import { Entity } from "types/generic";
+import { Group } from "types/group";
+import { useCustomQuery } from "hooks/useQuery";
 
 interface PermissionCardsProps {
   userSelectedPermissions?: Permission[];

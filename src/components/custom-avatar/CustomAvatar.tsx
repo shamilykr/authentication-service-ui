@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 
 import "./styles.css";
 
-import { stringSmallAvatar } from "../../utils/table";
+import { stringSmallAvatar } from "utils/table";
 
 interface AvatarProps {
   firstName?: string;

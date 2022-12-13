@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Permission } from "../types/user";
+import { Permission } from "types/user";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();

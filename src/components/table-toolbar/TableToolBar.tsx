@@ -11,11 +11,11 @@ import React, { FC, useState } from "react";
 import { TableToolBarProps } from "./types";
 import "./styles.css";
 import SearchBar from "../search-bar/SearchBar";
-import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
-import { ReactComponent as SortIcon } from "../../assets/sort.svg";
-import { ReactComponent as FilterIcon } from "../../assets/filter.svg";
-import { ReactComponent as LeftArrowIcon } from "../../assets/arrow-left.svg";
-import { groupListAtom } from "../../states/groupStates";
+import { ReactComponent as PlusIcon } from "assets/plus.svg";
+import { ReactComponent as SortIcon } from "assets/sort.svg";
+import { ReactComponent as FilterIcon } from "assets/filter.svg";
+import { ReactComponent as LeftArrowIcon } from "assets/arrow-left.svg";
+import { groupListAtom } from "states/groupStates";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   text,

@@ -1,6 +1,6 @@
-import { Group } from "../types/group";
-import { EntityPermissionsDetails, Permission } from "../types/permission";
-import { Role } from "../types/role";
+import { Group } from "types/group";
+import { EntityPermissionsDetails, Permission } from "types/permission";
+import { Role } from "types/role";
 
 export const getOverallPermissions = (
   permissions: EntityPermissionsDetails[]

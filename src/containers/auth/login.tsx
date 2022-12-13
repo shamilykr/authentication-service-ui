@@ -9,12 +9,12 @@ import { LOGIN, SET_PASSWORD } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
-import { UserPermissionsAtom } from "../../states/permissionsStates";
-import { currentUserAtom } from "../../states/loginStates";
+import { UserPermissionsAtom } from "states/permissionsStates";
+import { currentUserAtom } from "states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
-import { apiRequestAtom, toastMessageAtom } from "../../states/apiRequestState";
-import Toast from "../../components/toast";
-import { PASSWORD_SET_MESSAGE } from "../../constants/messages";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import Toast from "components/toast";
+import { PASSWORD_SET_MESSAGE } from "constants/messages";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

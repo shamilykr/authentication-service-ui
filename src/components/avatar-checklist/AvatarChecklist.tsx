@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { DocumentNode } from "graphql";
-import { User } from "../../types/user";
+import { User } from "types/user";
 import "./styles.css";
-import { ReactComponent as UnCheckedIcon } from "../../assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "../../assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
 import { CustomAvatar } from "../custom-avatar/CustomAvatar";
 import SearchBar from "../search-bar/SearchBar";
 

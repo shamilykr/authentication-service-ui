@@ -12,19 +12,16 @@ import {
 } from "../../services/mutations";
 import RoleForm from "./RoleForm";
 import "./styles.css";
-import { Permission } from "../../../../types/user";
-import PermissionCards from "../../../../components/permission-cards/PermissionCards";
+import { Permission } from "types/user";
+import PermissionCards from "components/permission-cards/PermissionCards";
 import { FieldValues } from "react-hook-form";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
-import { Role } from "../../../../types/role";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { Role } from "types/role";
 import {
   ROLE_CREATE_SUCCESS_MESSAGE,
   ROLE_UPDATE_SUCCESS_MESSAGE,
-} from "../../../../constants/messages";
-import { useCustomQuery } from "../../../../hooks/useQuery";
+} from "constants/messages";
+import { useCustomQuery } from "hooks/useQuery";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();

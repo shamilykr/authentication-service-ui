@@ -7,20 +7,20 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "./styles.css";
 import { DELETE_GROUP } from "../../services/mutations";
 import { GET_GROUPS } from "../../services/queries";
-import TableList from "../../../../components/table";
-import { groupListAtom } from "../../../../states/groupStates";
-import TableChipElement from "../../../../components/table-chip-element";
+import TableList from "components/table";
+import { groupListAtom } from "states/groupStates";
+import TableChipElement from "components/table-chip-element";
 import {
   IsViewGroupsVerifiedAtom,
   UserPermissionsAtom,
-} from "../../../../states/permissionsStates";
-import AvatarList from "../../../../components/avatar-list/AvatarList";
+} from "states/permissionsStates";
+import AvatarList from "components/avatar-list/AvatarList";
 import {
   CREATE_GROUP_PERMISSION,
   DELETE_GROUP_PERMISSION,
   UPDATE_GROUP_PERMISSION,
-} from "../../../../constants/permissions";
-import { useCustomQuery } from "../../../../hooks/useQuery";
+} from "constants/permissions";
+import { useCustomQuery } from "hooks/useQuery";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();

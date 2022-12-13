@@ -2,21 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import "./styles.css";
 import { useState } from "react";
-import GroupCard from "../../../../components/group-card/GroupCard";
+import GroupCard from "components/group-card/GroupCard";
 import { ApolloError, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 
 import { GET_USER } from "../../services/queries";
-import { User } from "../../../../types/user";
+import { User } from "types/user";
 import { useParams } from "react-router-dom";
 import "./styles.css";
-import {
-  apiRequestAtom,
-  toastMessageAtom,
-} from "../../../../states/apiRequestState";
-import { CustomAvatar } from "../../../../components/custom-avatar/CustomAvatar";
+import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { TabPanel } from "../create-edit-user/UserForm";
-import PermissionCards from "../../../../components/permission-cards/PermissionCards";
+import PermissionCards from "components/permission-cards/PermissionCards";
 
 const UserDetails = () => {
   const navigate = useNavigate();

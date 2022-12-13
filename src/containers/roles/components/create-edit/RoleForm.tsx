@@ -2,14 +2,14 @@ import { FC, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import BottomFormController from "../../../../components/bottom-form-controller";
+import BottomFormController from "components/bottom-form-controller";
 
 import { RoleFormSchema } from "../../roleSchema";
 import "./styles.css";
-import FormInputText from "../../../../components/inputText";
-import { Role } from "../../../../types/role";
+import FormInputText from "components/inputText";
+import { Role } from "types/role";
 import { GET_ROLE } from "../../services/queries";
-import { useCustomQuery } from "../../../../hooks/useQuery";
+import { useCustomQuery } from "hooks/useQuery";
 
 interface RoleFormProps {
   name: string;

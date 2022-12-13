@@ -2,7 +2,7 @@ import React from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useRecoilState } from "recoil";
 
-import { apiRequestAtom } from "../../states/apiRequestState";
+import { apiRequestAtom } from "states/apiRequestState";
 
 type ToastProps = {
   isOpen: boolean;
