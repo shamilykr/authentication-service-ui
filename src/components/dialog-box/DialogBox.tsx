@@ -45,26 +45,25 @@ const DialogBox: React.FC<DialogProps> = ({
       onClose={handleClose}
     >
       <DialogTitle>
-        <>Delete {entity}</>
+        <>Confirm the Deletion!</>
       </DialogTitle>
       <DialogContentText sx={{ width: "84%" }}>
         <>
-          {" "}
-          Are you sure you want to delete the {entity?.toLowerCase()}{" "}
-          {entityName}?
+          Deleting {entity?.toLowerCase()} will remove all it’s details. Do you
+          really want to delete the {entity?.toLowerCase()}?
         </>
       </DialogContentText>
       <DialogActions>
-        <Button onClick={handleClose}>No</Button>
+        <Button onClick={handleClose}>No, keep it</Button>
         <Button
-          variant="outlined"
+          variant="contained"
           sx={{
             height: "30px",
           }}
           onClick={onConfirm}
           autoFocus
         >
-          Yes
+          Yes, Delete it
         </Button>
       </DialogActions>
     </StyledDialog>
