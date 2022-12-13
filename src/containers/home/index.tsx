@@ -1,4 +1,4 @@
-import { ApolloError, useLazyQuery, useMutation } from "@apollo/client";
+import { ApolloError, useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
@@ -34,6 +34,7 @@ import {
   VIEW_USER_PERMISSION,
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
+import { useCustomMutation } from "hooks/useMutation";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
@@ -148,16 +149,12 @@ const HomePage = () => {
     verifyViewPermissions();
   }, [currentUserDetails.permissions]);
 
-  const [logout] = useMutation(LOGOUT, {
-    onCompleted: () => {
-      CustomerAuth.clearTokens();
-      navigate("/login");
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onLogoutCompleted = () => {
+    CustomerAuth.clearTokens();
+    navigate("/login");
+  };
+  const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
+
   const handleRedirection = (path: string) => {
     let redirectUrl = "/home/users";
     redirectUrl =

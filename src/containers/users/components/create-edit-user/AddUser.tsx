@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ApolloError, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
@@ -16,6 +15,7 @@ import { Permission } from "types/user";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { USER_CREATE_SUCCESS_MESSAGE } from "constants/messages";
 import { Group } from "types/group";
+import { useCustomMutation } from "hooks/useMutation";
 
 const AddUser: React.FC = () => {
   const navigate = useNavigate();
@@ -26,33 +26,12 @@ const AddUser: React.FC = () => {
   >([]);
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [permissions, setPermissions] = useState<string[]>([]);
-  const [createUser, { error: createUserError, data }] = useMutation(
-    CREATE_USER,
-    {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    }
-  );
-  const [updateUserGroups, { error: groupUpdateError }] = useMutation(
-    UPDATE_USER_GROUPS,
-    {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    }
-  );
-  const [updateUserPermissions, { error: permissionUpdateError }] = useMutation(
-    UPDATE_USER_PERMISSIONS,
-    {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    }
-  );
+  const [createUser, { error: createUserError, data }] =
+    useCustomMutation(CREATE_USER);
+  const [updateUserGroups, { error: groupUpdateError }] =
+    useCustomMutation(UPDATE_USER_GROUPS);
+  const [updateUserPermissions, { error: permissionUpdateError }] =
+    useCustomMutation(UPDATE_USER_PERMISSIONS);
 
   useEffect(() => {
     if (data) updateUserInfo(); // eslint-disable-next-line

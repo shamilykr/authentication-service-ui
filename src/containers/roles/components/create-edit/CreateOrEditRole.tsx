@@ -1,4 +1,3 @@
-import { ApolloError, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
@@ -22,6 +21,7 @@ import {
   ROLE_UPDATE_SUCCESS_MESSAGE,
 } from "constants/messages";
 import { useCustomQuery } from "hooks/useQuery";
+import { useCustomMutation } from "hooks/useMutation";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -31,25 +31,12 @@ const CreateOrEditRole = () => {
   const [role, setRole] = useState<Role>();
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
 
-  const [createRole, { data: createdRoleData }] = useMutation(CREATE_ROLE, {
-    onError: (error: ApolloError) => {
-      setApiSuccess(false);
-      setToastMessage(error.message);
-    },
-  });
-  const [updateRole, { data: updatedRoleData }] = useMutation(UPDATE_ROLE, {
-    onError: (error: ApolloError) => {
-      setApiSuccess(false);
-      setToastMessage(error.message);
-    },
-  });
+  const [createRole, { data: createdRoleData }] =
+    useCustomMutation(CREATE_ROLE);
+  const [updateRole, { data: updatedRoleData }] =
+    useCustomMutation(UPDATE_ROLE);
   const [updateRolePermissions, { data: updatedRolePermissionsData }] =
-    useMutation(UPDATE_ROLE_PERMISSIONS, {
-      onError: (error: ApolloError) => {
-        setApiSuccess(false);
-        setToastMessage(error.message);
-      },
-    });
+    useCustomMutation(UPDATE_ROLE_PERMISSIONS);
 
   const onGetRoleComplete = (data: any) => {
     setRole(data?.getRole);

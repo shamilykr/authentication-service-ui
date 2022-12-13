@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useMutation } from "@apollo/client";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +27,7 @@ import {
   UPDATE_USER_PERMISSION,
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
+import { useCustomMutation } from "hooks/useMutation";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
@@ -171,9 +171,11 @@ const CheckAccess = (props: any) => {
   const [isLinkCopied, setIsLinkCopied] = React.useState(false);
   const [isLinkRefreshed, setIsLinkRefreshed] = React.useState(false);
 
-  const [refreshInviteToken, { data }] = useMutation(REFRESH_INVITE_TOKEN, {
-    refetchQueries: [{ query: GET_USERS }],
-  });
+  const [refreshInviteToken, { data }] = useCustomMutation(
+    REFRESH_INVITE_TOKEN,
+    undefined,
+    [{ query: GET_USERS }]
+  );
 
   const onCopyInviteLink = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
