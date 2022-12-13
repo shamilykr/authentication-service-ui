@@ -5,8 +5,25 @@ import "./styles.css";
 import { ReactComponent as UsersIcon } from "assets/users.svg";
 import { ReactComponent as GroupsIcon } from "assets/groups.svg";
 import { ReactComponent as RolesIcon } from "assets/roles.svg";
+import {
+  groupFilterAtom,
+  searchAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "../../states/searchSortFilterStates";
+import { useSetRecoilState } from "recoil";
 
-const SideBar: FC = () => {
+const SideBar: FC = ({}) => {
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
+  const clearAll = () => {
+    setCheckedGroups([]);
+    setCheckedStatus([]);
+    setCount(0);
+    setSearchValue("");
+  };
   return (
     <nav>
       <div className="sideBarContainer">
@@ -15,6 +32,7 @@ const SideBar: FC = () => {
           className={({ isActive }) =>
             isActive ? "active-text-link" : "text-link"
           }
+          onClick={clearAll}
         >
           <UsersIcon className="sidebar-icon" />
           Users
@@ -24,6 +42,7 @@ const SideBar: FC = () => {
           className={({ isActive }) =>
             isActive ? "active-text-link" : "text-link"
           }
+          onClick={clearAll}
         >
           <GroupsIcon className="sidebar-icon" />
           Groups
@@ -34,6 +53,7 @@ const SideBar: FC = () => {
           className={({ isActive }) =>
             isActive ? "active-text-link" : "text-link"
           }
+          onClick={clearAll}
         >
           <RolesIcon className="sidebar-icon" />
           Roles

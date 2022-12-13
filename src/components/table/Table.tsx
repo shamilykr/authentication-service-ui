@@ -30,6 +30,7 @@ import DialogBox from "../dialog-box";
 import { useCustomQuery } from "hooks/useQuery";
 
 const TableList: FC<TableProps> = ({
+  field,
   rows,
   columns,
   text,
@@ -119,9 +120,9 @@ const TableList: FC<TableProps> = ({
     const [pageValue, setPageValue] = useState(1);
     return (
       <>
-        <div className="pagination-count">{`Total ${count} item${
-          count > 1 && "s"
-        }`}</div>
+        <div className="pagination-count">
+          Total {`${count}`} item{count > 1 && `s`}
+        </div>
         <Pagination
           color="primary"
           variant="outlined"
@@ -265,6 +266,7 @@ const TableList: FC<TableProps> = ({
             searchQuery={refetchQuery}
             isAddVerified={isAddVerified}
             onAdd={onAdd}
+            field={field}
           />
           <DataGrid
             rows={rows}

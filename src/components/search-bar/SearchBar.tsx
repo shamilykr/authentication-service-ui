@@ -1,10 +1,12 @@
 import { InputBase } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
 import { ReactComponent as SearchIcon } from "assets/search.svg";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
+import { useRecoilState } from "recoil";
+import { searchAtom } from "../../states/searchSortFilterStates";
+import { useUsersFetch } from "../../hooks/usersFetch";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -14,16 +16,22 @@ const SearchBar: FC<SearchBarProps> = ({
   customBarStyle,
   customIconStyle,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-
-  const [searchItemQuery] = useLazyQuery(searchQuery, {
-    variables: {
-      value: searchValue,
-    },
-    onCompleted: (data) => {
-      setItemList(data);
-    },
+  const [searchValue, setSearchValue] = useRecoilState(searchAtom);
+  const [field, setField] = useState("");
+  useEffect(() => {
+    if (searchLabel.includes("First Name")) {
+      setField("firstName");
+    } else {
+      setField("name");
+    }
+  }, []);
+  const fetchUsers = useUsersFetch({
+    userParams: { setList: setItemList, query: searchQuery, field: field },
   });
+
+  useEffect(() => {
+    fetchUsers();
+  }, [searchValue]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,10 +41,6 @@ const SearchBar: FC<SearchBarProps> = ({
     }, 1000);
     return () => clearTimeout(delayDebounce);
   };
-
-  useEffect(() => {
-    if (searchValue.length !== 0) searchItemQuery(); // eslint-disable-next-line
-  }, [searchValue]);
 
   return (
     <div className="search" style={customSearchStyle}>

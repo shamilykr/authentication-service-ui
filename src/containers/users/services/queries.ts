@@ -32,19 +32,12 @@ export const GET_USER = gql`
 `;
 
 export const GET_USERS = gql`
-  query getUsers($value: String) {
-    getUsers(
-      input: {
-        search: {
-          or: {
-            firstName: { contains: $value }
-            middleName: { contains: $value }
-            lastName: { contains: $value }
-            email: { contains: $value }
-          }
-        }
-      }
-    ) {
+  query getUsers(
+    $search: UserSearchInput
+    $filter: FilterInput
+    $sort: SortInput
+  ) {
+    getUsers(input: { search: $search, filter: $filter, sort: $sort }) {
       id
       email
       firstName

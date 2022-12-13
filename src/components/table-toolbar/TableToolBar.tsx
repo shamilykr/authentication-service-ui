@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useRecoilState } from "recoil";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { TableToolBarProps } from "./types";
 import "./styles.css";
@@ -16,8 +16,15 @@ import { ReactComponent as SortIcon } from "assets/sort.svg";
 import { ReactComponent as FilterIcon } from "assets/filter.svg";
 import { ReactComponent as LeftArrowIcon } from "assets/arrow-left.svg";
 import { groupListAtom } from "states/groupStates";
+import {
+  groupFilterAtom,
+  sortCountAtom,
+  statusFilterAtom,
+} from "states/searchSortFilterStates";
+import { useUsersFetch } from "hooks/usersFetch";
 
 const TableToolBar: FC<TableToolBarProps> = ({
+  field,
   text,
   searchLabel,
   buttonLabel,
@@ -30,8 +37,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
   const [viewStatusFilter, setStatusFilter] = useState(true);
   const [viewGroupFilter, setGroupFilter] = useState(false);
   const open = Boolean(anchorEl);
-  const statusList = ["Active", "Inactive", "Invited"];
+  const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
+  const [count, setCount] = useRecoilState(sortCountAtom);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
     setCurrentCheckedStatus(checkedStatus);
@@ -41,8 +49,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setAnchorEl(null);
     handleCancel();
   };
-  const [checkedStatus, setCheckedStatus] = useState([]);
-  const [checkedGroups, setCheckedGroups] = useState([]);
+
+  const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
+  const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
   const [currentCheckedStatus, setCurrentCheckedStatus] = useState([]);
   const [currentCheckedGroups, setCurrentCheckedGroups] = useState([]);
 
@@ -83,8 +92,20 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const handleSave = () => {
     setAnchorEl(null);
+    fetchUsers();
   };
 
+  const fetchUsers = useUsersFetch({
+    userParams: { setList: setItemList, query: searchQuery, field: field },
+  });
+  useEffect(() => {
+    fetchUsers();
+  }, [count]);
+
+  const onSort = () => {
+    if (count === 2) setCount(1);
+    else setCount(count + 1);
+  };
   return (
     <div className="table-toolbar">
       <div className="search-sort-filter">
@@ -93,7 +114,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           setItemList={setItemList}
           searchQuery={searchQuery}
         />
-        <div className="sort-button">
+        <div className="sort-button" onClick={onSort}>
           <SortIcon id="sort-filter-icon" />
           Sort by
         </div>
@@ -272,15 +293,15 @@ const TableToolBar: FC<TableToolBarProps> = ({
                         sx={{ color: "#7E818D" }}
                         onChange={(e) => {
                           onAddFilter(
-                            group.name,
+                            group.id,
                             e,
                             checkedGroups,
                             setCheckedGroups
                           );
                         }}
-                        checked={handleCheckedItems(group.name, checkedGroups)}
+                        checked={handleCheckedItems(group.id, checkedGroups)}
                         className={
-                          handleCheckedItems(group.name, checkedGroups) === true
+                          handleCheckedItems(group.id, checkedGroups) === true
                             ? "checked"
                             : "unchecked"
                         }

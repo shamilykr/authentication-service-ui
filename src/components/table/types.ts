@@ -7,6 +7,7 @@ import {
 import { DocumentNode } from "graphql";
 
 export interface TableProps {
+  field: string;
   rows: GridRowsProp;
   columns: GridColumns;
   buttonLabel: string;

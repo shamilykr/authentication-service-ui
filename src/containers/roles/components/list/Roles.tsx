@@ -107,6 +107,7 @@ const Roles: React.FC = () => {
           isAddVerified={!isAddVerified}
           actionFlex={0.3}
           cursorType="default"
+          field="name"
         />
       ) : (
         <CircularProgress />

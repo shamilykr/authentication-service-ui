@@ -136,6 +136,7 @@ const Users: React.FC = () => {
           isAddVerified={!isAddVerified}
           actionFlex={0.23}
           cursorType="pointer"
+          field="firstName"
         />
       ) : (
         <CircularProgress />
