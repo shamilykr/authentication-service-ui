@@ -34,7 +34,8 @@ const Container = styled.div<{ show: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   width: 238px;
-  height: 206px;
+  height: fit-content;
+  padding-bottom: 10px;
   box-sizing: border-box;
   border: 1px solid #d2d5dd;
   border-radius: 6px;
