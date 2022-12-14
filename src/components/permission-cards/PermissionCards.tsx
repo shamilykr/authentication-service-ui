@@ -10,7 +10,7 @@ import { GET_ENTITIES } from "containers/entities/services/queries";
 import { Entity } from "types/generic";
 import { Group } from "types/group";
 import { useCustomQuery } from "hooks/useQuery";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 import { IsViewEntitiesVerifiedAtom } from "states/permissionsStates";
 
 interface PermissionCardsProps {
@@ -66,7 +66,13 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
         </>
       ) : (
         <div style={{ width: "100%" }}>
-          <AccessDenied customStyle={{ fontSize: 16 }} />
+          <DisplayMessage
+            customStyle={{ fontSize: 16 }}
+            altMessage="Access Denied"
+            image="./assets/access-denied.png"
+            heading="Access Denied"
+            description="Sorry, you are not allowed to view this page."
+          />
         </div>
       )}
     </Container>

@@ -1,4 +1,4 @@
-.access-denied {
+.display-message {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -6,37 +6,37 @@
   justify-content: center;
 }
 
-#access-denied {
+#display-message {
   width: 33%;
 }
 
-#access-denied-heading {
+#display-message-heading {
   font-size: 22px;
   letter-spacing: 1px;
   font-weight: 900;
   margin-bottom: 7px;
 }
 
-#access-denied-description {
+#display-message-description {
   font-size: 22px;
   letter-spacing: 1px;
   margin-top: 0px;
 }
 
 @media screen and (max-width: 848px) {
-  #access-denied-description {
+  #display-message-description {
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 687px) {
-  #access-denied-description {
+  #display-message-description {
     font-size: 10px;
   }
 }
 
 @media screen and (max-width: 593px) {
-  .access-denied {
+  .display-message {
     align-items: normal;
   }
 }

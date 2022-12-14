@@ -21,7 +21,7 @@ import {
   UPDATE_GROUP_PERMISSION,
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -105,7 +105,12 @@ const GroupList: React.FC = () => {
   if (!isViewGroupsVerified && !loading)
     return (
       <div className="table-component">
-        <AccessDenied />
+        <DisplayMessage
+          altMessage="Access Denied"
+          image="./assets/access-denied.png"
+          heading="Access Denied"
+          description="Sorry, you are not allowed to view this page."
+        />
       </div>
     );
   return (

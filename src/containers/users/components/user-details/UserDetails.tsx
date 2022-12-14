@@ -17,6 +17,7 @@ import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
 import If from "components/If/If";
+import DisplayMessage from "components/display-message";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -55,7 +56,6 @@ const UserDetails = () => {
       setApiSuccess(false);
     },
   });
-
   const getClassName = () => {
     if (user?.status === "ACTIVE") return "active-user-style";
     else if (user?.status === "INACTIVE") return "inactive-user-style";
@@ -124,20 +124,48 @@ const UserDetails = () => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <div id="groups-permissions">
-              <div id="user-groups">
-                {user?.groups?.map((item: any) => {
-                  return (
-                    <div style={{ marginTop: 15 }}>
-                      <GroupCard group={item} showCheckBox={false} isViewPage />
-                    </div>
-                  );
-                })}
+            {user?.groups && (user?.groups).length > 0 ? (
+              <div id="groups-permissions">
+                <div id="user-groups">
+                  {user?.groups?.map((item: any) => {
+                    return (
+                      <div style={{ marginTop: 15 }}>
+                        <GroupCard
+                          group={item}
+                          showCheckBox={false}
+                          isViewPage
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : (
+              <DisplayMessage
+                customStyle={{ fontSize: 16 }}
+                altMessage="No groups to show"
+                image="./assets/nothing-to-show.png"
+                heading="No Groups to Show"
+                description="Sorry, there are no groups associated with this user."
+                imageStyles={{ width: "27%" }}
+                containerStyles={{ marginTop: "83px" }}
+              />
+            )}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <PermissionCards userPermissions={user?.permissions} isViewPage />
+            {user?.permissions && (user?.permissions).length > 0 ? (
+              <PermissionCards userPermissions={user?.permissions} isViewPage />
+            ) : (
+              <DisplayMessage
+                customStyle={{ fontSize: 16 }}
+                altMessage="No permissions to show"
+                image="./assets/nothing-to-show.png"
+                heading="No Permissions to Show"
+                description="Sorry, there are no permissions associated with this user."
+                imageStyles={{ width: "27%" }}
+                containerStyles={{ marginTop: "83px" }}
+              />
+            )}
           </TabPanel>
         </Box>
       </div>

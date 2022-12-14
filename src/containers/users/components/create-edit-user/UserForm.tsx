@@ -18,7 +18,7 @@ import PermissionCards from "components/permission-cards/PermissionCards";
 import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 
 interface UserProps {
   isEdit?: boolean;
@@ -225,7 +225,13 @@ const UserForm = (props: UserProps) => {
                         onChange={handleChange}
                       />
                     ) : (
-                      <AccessDenied customStyle={{ fontSize: 16 }} />
+                      <DisplayMessage
+                        customStyle={{ fontSize: 16 }}
+                        altMessage="Access Denied"
+                        image="./assets/access-denied.png"
+                        heading="Access Denied"
+                        description="Sorry, you are not allowed to view this page."
+                      />
                     )}
                   </div>
                 </div>

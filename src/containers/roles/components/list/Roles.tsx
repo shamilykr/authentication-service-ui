@@ -19,7 +19,7 @@ import {
   DELETE_ROLE_PERMISSION,
   UPDATE_ROLE_PERMISSION,
 } from "constants/permissions";
-import AccessDenied from "components/access-denied";
+import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
 
 const Roles: React.FC = () => {
@@ -91,7 +91,12 @@ const Roles: React.FC = () => {
   if (!isViewRolesVerified && !loading)
     return (
       <div className="table-component">
-        <AccessDenied />
+        <DisplayMessage
+          altMessage="Access Denied"
+          image="./assets/access-denied.png"
+          heading="Access Denied"
+          description="Sorry, you are not allowed to view this page."
+        />
       </div>
     );
   return (

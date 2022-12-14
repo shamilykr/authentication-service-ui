@@ -21,7 +21,7 @@ import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
 import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
-import AccessDenied from "../access-denied";
+import DisplayMessage from "../display-message";
 import { ReactComponent as EditIcon } from "assets/edit.svg";
 import { ReactComponent as LineIcon } from "assets/line.svg";
 import { ReactComponent as DeleteIcon } from "assets/trash.svg";
@@ -283,7 +283,12 @@ const TableList: FC<TableProps> = ({
           />
         </>
       ) : (
-        <AccessDenied />
+        <DisplayMessage
+          altMessage="Access Denied"
+          image="./assets/access-denied.png"
+          heading="Access Denied"
+          description="Sorry, you are not allowed to view this page."
+        />
       )}
     </div>
   );
