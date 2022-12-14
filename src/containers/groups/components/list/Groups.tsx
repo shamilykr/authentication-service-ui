@@ -21,6 +21,7 @@ import {
   UPDATE_GROUP_PERMISSION,
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
+import AccessDenied from "components/access-denied";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -34,7 +35,12 @@ const GroupList: React.FC = () => {
     setGroupList(data?.getGroups);
   };
 
-  const { loading } = useCustomQuery(GET_GROUPS, onGetGroupsComplete);
+  const { loading } = useCustomQuery(
+    GET_GROUPS,
+    onGetGroupsComplete,
+    null,
+    !isViewGroupsVerified
+  );
 
   const columns: GridColumns = [
     {
@@ -86,18 +92,22 @@ const GroupList: React.FC = () => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line
-    userPermissions.map((item: any) => {
+    userPermissions.forEach((item: any) => {
       if (item?.name.includes(CREATE_GROUP_PERMISSION)) {
         setAddVerified(true);
       }
-    }); // eslint-disable-next-line
-  }, []);
+    });
+  }, [userPermissions]);
 
   const setItemList = (data: any) => {
     setGroupList(data.getGroups);
   };
-
+  if (!isViewGroupsVerified && !loading)
+    return (
+      <div className="table-component">
+        <AccessDenied />
+      </div>
+    );
   return (
     <>
       {!loading ? (

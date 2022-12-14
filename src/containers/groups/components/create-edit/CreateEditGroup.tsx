@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -12,7 +13,11 @@ import {
   UPDATE_GROUP_PERMISSIONS,
   UPDATE_GROUP_ROLES,
 } from "../../services/mutations";
-
+import {
+  IsViewRolesVerifiedAtom,
+  IsViewUsersVerifiedAtom,
+} from "states/permissionsStates";
+import AccessDenied from "components/access-denied";
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
@@ -65,6 +70,8 @@ const CreateOrEditGroup = () => {
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const usersResponse = useRecoilValue(allUsersAtom);
+  const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
+  const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
 
   const [value, setValue] = useState(0);
   const [group, setGroup] = useState<Group>();
@@ -101,7 +108,9 @@ const CreateOrEditGroup = () => {
 
   const { data: roleData, loading: rolesLoading } = useCustomQuery(
     GET_ROLES,
-    onGetRolesComplete
+    onGetRolesComplete,
+    null,
+    !isViewRolesVerified
   );
 
   const onGetGroupComplete = (data: any) => {
@@ -313,11 +322,15 @@ const CreateOrEditGroup = () => {
         {!rolesLoading ? (
           <TabPanel value={value} index={0}>
             <div className="roles-checklist">
-              <RoleCardsChecklist
-                roleList={roleData?.getRoles}
-                currentCheckedItems={roles}
-                onChange={onChange}
-              />
+              {isViewRolesVerified ? (
+                <RoleCardsChecklist
+                  roleList={roleData?.getRoles}
+                  currentCheckedItems={roles}
+                  onChange={onChange}
+                />
+              ) : (
+                <AccessDenied customStyle={{ fontSize: 16 }} />
+              )}
             </div>
           </TabPanel>
         ) : (
@@ -332,46 +345,50 @@ const CreateOrEditGroup = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <div className="add-members">
-            <Grid container spacing={1} width="100%">
-              <Grid item xs={10} lg={5}>
-                <AvatarChecklistComponent
-                  mapList={allUsers}
-                  currentCheckedItems={users}
-                  onChange={onChangeUsers}
-                  setItemList={setAllUsers}
-                  searchQuery={GET_USERS}
+            {isViewUsersVerified ? (
+              <Grid container spacing={1} width="100%">
+                <Grid item xs={10} lg={5}>
+                  <AvatarChecklistComponent
+                    mapList={allUsers}
+                    currentCheckedItems={users}
+                    onChange={onChangeUsers}
+                    setItemList={setAllUsers}
+                    searchQuery={GET_USERS}
+                  />
+                </Grid>
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{ marginRight: 2 }}
                 />
+                <Grid item xs={10} lg={6.7}>
+                  <div className="select-member-wrapper">Select Members</div>
+                  <div className="selected-members">
+                    {users.map((user, index) => (
+                      <div
+                        id={user?.id}
+                        className="selected-items"
+                        key={user?.id}
+                      >
+                        <CustomAvatar
+                          firstName={user?.firstName}
+                          lastName={user?.lastName}
+                          email={user?.email}
+                        />
+                        <CrossIcon
+                          className="cross-icon"
+                          onClick={() =>
+                            removeItem({ userId: user?.id as string })
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </Grid>
               </Grid>
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ marginRight: 2 }}
-              />
-              <Grid item xs={10} lg={6.7}>
-                <div className="select-member-wrapper">Select Members</div>
-                <div className="selected-members">
-                  {users.map((user, index) => (
-                    <div
-                      id={user?.id}
-                      className="selected-items"
-                      key={user?.id}
-                    >
-                      <CustomAvatar
-                        firstName={user?.firstName}
-                        lastName={user?.lastName}
-                        email={user?.email}
-                      />
-                      <CrossIcon
-                        className="cross-icon"
-                        onClick={() =>
-                          removeItem({ userId: user?.id as string })
-                        }
-                      />
-                    </div>
-                  ))}
-                </div>
-              </Grid>
-            </Grid>
+            ) : (
+              <AccessDenied customStyle={{ fontSize: 16 }} />
+            )}
           </div>
         </TabPanel>
       </div>

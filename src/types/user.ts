@@ -16,3 +16,8 @@ export interface Permission {
   id: string;
   name: string;
 }
+
+export interface userPermission {
+  name: string;
+  __typename: string;
+}

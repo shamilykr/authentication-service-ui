@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./styles.css";
 import styled from "@emotion/styled";
-
+import { useRecoilState } from "recoil";
 import { Permission } from "types/user";
 import PermissionsCard from "../permission-card/PermissionCard";
 import { Role } from "types/role";
@@ -10,6 +10,8 @@ import { GET_ENTITIES } from "containers/entities/services/queries";
 import { Entity } from "types/generic";
 import { Group } from "types/group";
 import { useCustomQuery } from "hooks/useQuery";
+import AccessDenied from "components/access-denied";
+import { IsViewEntitiesVerifiedAtom } from "states/permissionsStates";
 
 interface PermissionCardsProps {
   userSelectedPermissions?: Permission[];
@@ -38,24 +40,35 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
   isViewPage = false,
 }) => {
   const [entities, setEntities] = useState<Entity[]>([]);
+  const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
+
   const onCompleted = (data: any) => {
     setEntities(data?.getEntities);
   };
-  useCustomQuery(GET_ENTITIES, onCompleted);
+
+  useCustomQuery(GET_ENTITIES, onCompleted, null, !isViewEntitiesVerified);
 
   return (
     <Container>
-      {entities.map((entity) => (
-        <PermissionsCard
-          entity={entity}
-          roles={roles}
-          groups={groups}
-          userSelectedPermissions={userSelectedPermissions}
-          setUserSelectedPermissions={setUserSelectedPermissions}
-          userPermissions={userPermissions}
-          isViewPage={isViewPage}
-        />
-      ))}
+      {isViewEntitiesVerified ? (
+        <>
+          {entities.map((entity) => (
+            <PermissionsCard
+              entity={entity}
+              roles={roles}
+              groups={groups}
+              userSelectedPermissions={userSelectedPermissions}
+              setUserSelectedPermissions={setUserSelectedPermissions}
+              userPermissions={userPermissions}
+              isViewPage={isViewPage}
+            />
+          ))}
+        </>
+      ) : (
+        <div style={{ width: "100%" }}>
+          <AccessDenied customStyle={{ fontSize: 16 }} />
+        </div>
+      )}
     </Container>
   );
 };

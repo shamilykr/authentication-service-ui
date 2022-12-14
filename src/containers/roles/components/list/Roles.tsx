@@ -19,6 +19,7 @@ import {
   DELETE_ROLE_PERMISSION,
   UPDATE_ROLE_PERMISSION,
 } from "constants/permissions";
+import AccessDenied from "components/access-denied";
 import { useCustomQuery } from "hooks/useQuery";
 
 const Roles: React.FC = () => {
@@ -33,9 +34,20 @@ const Roles: React.FC = () => {
   const onGetRolesComplete = (data: any) => {
     setRoleList(data?.getRoles);
   };
+  const { loading } = useCustomQuery(
+    GET_ROLES,
+    onGetRolesComplete,
+    null,
+    !isViewRolesVerified
+  );
 
-  const { loading } = useCustomQuery(GET_ROLES, onGetRolesComplete);
-
+  useEffect(() => {
+    userPermissions.forEach((item: any) => {
+      if (item?.name.includes(CREATE_ROLE_PERMISSION)) {
+        setAddVerified(true);
+      }
+    });
+  }, [userPermissions]);
   const setItemList = (data: any) => {
     setRoleList(data.getRoles);
   };
@@ -76,15 +88,12 @@ const Roles: React.FC = () => {
     navigate(`edit/${id}`);
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line
-    userPermissions.map((item: any) => {
-      if (item?.name.includes(CREATE_ROLE_PERMISSION)) {
-        setAddVerified(true);
-      }
-    }); // eslint-disable-next-line
-  }, []);
-
+  if (!isViewRolesVerified && !loading)
+    return (
+      <div className="table-component">
+        <AccessDenied />
+      </div>
+    );
   return (
     <>
       {!loading ? (

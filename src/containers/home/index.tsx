@@ -10,8 +10,6 @@ import { LOGO_URL } from "../../config";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import { LOGOUT } from "../auth/services/mutations";
-import { GET_USERS } from "../users/services/queries";
-import { allUsersAtom } from "states/userStates";
 import { currentUserAtom } from "states/loginStates";
 import { stringAvatar } from "utils/table";
 import Toast from "components/toast";
@@ -21,6 +19,7 @@ import {
   IsViewPermissionsVerifiedAtom,
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
+  IsViewEntitiesVerifiedAtom,
 } from "states/permissionsStates";
 import { VERIFY_USER_PERMISSION } from "components/table/services/queries";
 import { ReactComponent as MenuIcon } from "assets/menu.svg";
@@ -32,8 +31,8 @@ import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
+  VIEW_ENTITY_PERMISSION,
 } from "constants/permissions";
-import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 
 const HomePage = () => {
@@ -42,15 +41,24 @@ const HomePage = () => {
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
 
-  const setUsers = useSetRecoilState(allUsersAtom);
-
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
   const setIsViewRolesVerified = useSetRecoilState(IsViewRolesVerifiedAtom);
   const setIsViewPermissionsVerified = useSetRecoilState(
     IsViewPermissionsVerifiedAtom
   );
+  const setisViewEntitiesVerified = useSetRecoilState(
+    IsViewEntitiesVerifiedAtom
+  );
+  const onGetGroupsComplete = (data: any) => {
+    setGroupList(data?.getGroups);
+  };
 
+  const [getGroups] = useLazyQuery(GET_GROUPS, {
+    onCompleted: (data) => {
+      onGetGroupsComplete(data);
+    },
+  });
   const [verifyViewUser, { loading: userLoading }] = useLazyQuery(
     VERIFY_USER_PERMISSION,
     {
@@ -82,6 +90,7 @@ const HomePage = () => {
       },
       onCompleted: (data) => {
         setIsViewGroupsVerified(data?.verifyUserPermission);
+        if (data?.verifyUserPermission) getGroups();
       },
       onError: (error: ApolloError) => {
         setToastMessage(error.message);
@@ -127,18 +136,22 @@ const HomePage = () => {
     },
     fetchPolicy: "network-only",
   });
-
-  const onGetUsers = (data: any) => {
-    setUsers(data?.getUsers);
-  };
-
-  useCustomQuery(GET_USERS, onGetUsers);
-
-  const onGetGroupsComplete = (data: any) => {
-    setGroupList(data?.getGroups);
-  };
-
-  useCustomQuery(GET_GROUPS, onGetGroupsComplete);
+  const [verifyViewEntityPermisiion] = useLazyQuery(VERIFY_USER_PERMISSION, {
+    variables: {
+      params: {
+        permissions: [VIEW_ENTITY_PERMISSION],
+        operation: "AND",
+      },
+    },
+    onCompleted: (data) => {
+      setisViewEntitiesVerified(data?.verifyUserPermission);
+    },
+    onError: (error: ApolloError) => {
+      setToastMessage(error.message);
+      setApiSuccess(false);
+    },
+    fetchPolicy: "network-only",
+  });
 
   const [currentUserDetails] = useRecoilState(currentUserAtom);
 
@@ -147,6 +160,7 @@ const HomePage = () => {
     verifyViewGroups();
     verifyViewRoles();
     verifyViewPermissions();
+    verifyViewEntityPermisiion();
   }, [currentUserDetails.permissions]);
 
   const onLogoutCompleted = () => {

@@ -5,7 +5,7 @@ import { useState } from "react";
 import GroupCard from "components/group-card/GroupCard";
 import { ApolloError, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
-
+import { VERIFY_USER_PERMISSION } from "components/table/services/queries";
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
 import { useParams } from "react-router-dom";
@@ -14,10 +14,14 @@ import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { TabPanel } from "../create-edit-user/UserForm";
 import PermissionCards from "components/permission-cards/PermissionCards";
+import { UPDATE_USER_PERMISSION } from "constants/permissions";
+import { useCustomQuery } from "hooks/useQuery";
+import If from "components/If/If";
 
 const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isEditVerified, setEditVerified] = useState(true);
 
   const [user, setUser] = useState<User>();
   const setToastMessage = useSetRecoilState(toastMessageAtom);
@@ -29,6 +33,16 @@ const UserDetails = () => {
   const onRedirectToEdit = (e: React.MouseEvent<HTMLElement>) => {
     navigate(`/home/users/add/${id}`);
   };
+  const onVerifyEditComplete = (data: any) => {
+    setEditVerified(data?.verifyUserPermission);
+  };
+
+  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyEditComplete, {
+    params: {
+      permissions: [UPDATE_USER_PERMISSION],
+      operation: "AND",
+    },
+  });
 
   useQuery(GET_USER, {
     variables: { id: id },
@@ -83,16 +97,18 @@ const UserDetails = () => {
           >
             Cancel
           </Button>
-          <div className="submit-buttom-style">
-            <Button
-              variant="contained"
-              id="submit-button"
-              onClick={onRedirectToEdit}
-              sx={{ textTransform: "none" }}
-            >
-              Edit user
-            </Button>
-          </div>
+          <If condition={isEditVerified}>
+            <div className="submit-buttom-style">
+              <Button
+                variant="contained"
+                id="submit-button"
+                onClick={onRedirectToEdit}
+                sx={{ textTransform: "none" }}
+              >
+                Edit user
+              </Button>
+            </div>
+          </If>
         </div>
       </div>
       <div className="group-details">
