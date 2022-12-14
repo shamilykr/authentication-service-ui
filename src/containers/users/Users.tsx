@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ import TableList from "components/table/Table";
 import TableChipElement from "components/table-chip-element";
 import { stringAvatar } from "utils/table";
 import "./components/create-edit-user/styles.css";
+import { allUsersAtom } from "states/userStates";
 import {
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
@@ -28,6 +29,7 @@ import {
 } from "constants/permissions";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
+import AccessDenied from "components/access-denied";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
@@ -35,12 +37,18 @@ const Users: React.FC = () => {
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
   const navigate = useNavigate();
-
+  const setUsers = useSetRecoilState(allUsersAtom);
   const onComplete = (data: any) => {
     setUserList(data?.getUsers);
+    setUsers(data?.getUsers);
   };
 
-  const { loading } = useCustomQuery(GET_USERS, onComplete);
+  const { loading } = useCustomQuery(
+    GET_USERS,
+    onComplete,
+    null,
+    !isViewUsersVerified
+  );
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -51,13 +59,13 @@ const Users: React.FC = () => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line
-    userPermissions.map((item: any) => {
-      if (item?.name.includes(CREATE_USER_PERMISSION)) {
-        setAddVerified(true);
-      }
-    }); // eslint-disable-next-line
-  }, []);
+    if (userPermissions)
+      userPermissions.forEach((item: any) => {
+        if (item?.name.includes(CREATE_USER_PERMISSION)) {
+          setAddVerified(true);
+        }
+      });
+  }, [userPermissions]);
 
   const setItemList = (data: any) => {
     setUserList(data.getUsers);
@@ -112,7 +120,12 @@ const Users: React.FC = () => {
   const onUserClick = (params: any) => {
     navigate(`./${params.id}`);
   };
-
+  if (!isViewUsersVerified && !loading)
+    return (
+      <div className="table-component">
+        <AccessDenied />
+      </div>
+    );
   return (
     <>
       {!loading ? (

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSetRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { IsViewGroupsVerifiedAtom } from "states/permissionsStates";
 import { GET_GROUPS } from "../../../groups/services/queries";
 import FormInputText from "components/inputText";
 import { ChecklistComponent } from "components/checklist/CheckList";
@@ -18,6 +20,7 @@ import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
+import AccessDenied from "components/access-denied";
 
 interface UserProps {
   isEdit?: boolean;
@@ -69,6 +72,8 @@ const UserForm = (props: UserProps) => {
   const [user, setUser] = useState<User>();
   const [userGroups, setUserGroups] = useState<Group[]>([]);
   const [allGroups, setAllGroups] = useState<Group[]>([]);
+  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
+
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
@@ -82,7 +87,9 @@ const UserForm = (props: UserProps) => {
 
   const { data: groupData, loading: groupsLoading } = useCustomQuery(
     GET_GROUPS,
-    onGetGroupsComplete
+    onGetGroupsComplete,
+    null,
+    !isViewGroupsVerified
   );
 
   const onGetUserComplete = (data: any) => {
@@ -215,11 +222,15 @@ const UserForm = (props: UserProps) => {
               <TabPanel value={value} index={0}>
                 <div id="groups-permissions">
                   <div className="checklist-container">
-                    <ChecklistComponent
-                      mapList={groupData?.getGroups}
-                      currentCheckedItems={userGroups}
-                      onChange={handleChange}
-                    />
+                    {isViewGroupsVerified ? (
+                      <ChecklistComponent
+                        mapList={groupData?.getGroups}
+                        currentCheckedItems={userGroups}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      <AccessDenied customStyle={{ fontSize: 16 }} />
+                    )}
                   </div>
                 </div>
               </TabPanel>
