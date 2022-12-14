@@ -190,7 +190,7 @@ const UserForm = (props: UserProps) => {
                   />
                   <FormInputText
                     name="phone"
-                    label="Phone Number"
+                    label="Phone Number*"
                     type="text"
                     className="fields three-items-row"
                   />

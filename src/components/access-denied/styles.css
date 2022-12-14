@@ -1,4 +1,4 @@
-.access-denied{
+.access-denied {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -6,19 +6,37 @@
   justify-content: center;
 }
 
-#access-denied{
+#access-denied {
   width: 33%;
 }
 
-#access-denied-heading{
+#access-denied-heading {
   font-size: 22px;
   letter-spacing: 1px;
   font-weight: 900;
   margin-bottom: 7px;
 }
 
-#access-denied-description{
+#access-denied-description {
   font-size: 22px;
   letter-spacing: 1px;
   margin-top: 0px;
+}
+
+@media screen and (max-width: 848px) {
+  #access-denied-description {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 687px) {
+  #access-denied-description {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 593px) {
+  .access-denied {
+    align-items: normal;
+  }
 }

@@ -142,13 +142,7 @@
 }
 
 #add {
-  /* border-radius: 20px;
-  border: 1px solid rgb(23, 119, 240);
-  color: rgb(23, 119, 240);
-  height: 40px;
-  width: 80px; */
   margin-left: 10px;
-  /* font-size: 15px; */
 }
 
 #legend {
@@ -223,4 +217,8 @@
 
 .custom-tabs button:last-of-type {
   margin-right: 0;
+}
+
+.css-1pkapie-MuiFormControl-root-MuiTextField-root {
+  margin-right: 50px !important;
 }

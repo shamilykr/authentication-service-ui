@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextField } from "@mui/material";
 
@@ -11,6 +12,21 @@ export interface FormInputProps {
   defaultText?: string;
   autoComplete?: string;
 }
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#2F6FED",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#2F6FED",
+    },
+    "&:hover fieldset": {
+      borderColor: "#2F6FED",
+    },
+    fontFamily: "Manrope",
+  },
+});
 
 const FormInputText = ({
   name,
@@ -31,7 +47,7 @@ const FormInputText = ({
         fieldState: { error },
         formState,
       }) => (
-        <TextField
+        <StyledTextField
           name={name}
           helperText={error ? error.message : null}
           error={!!error}
