@@ -119,10 +119,12 @@ const TableToolBar: FC<TableToolBarProps> = ({
           Sort by
         </div>
 
-        <div className="filter-button" onClick={handleClick}>
-          <FilterIcon id="sort-filter-icon" />
-          Add Filter
-        </div>
+        {field === "firstName" && (
+          <div className="filter-button" onClick={handleClick}>
+            <FilterIcon id="sort-filter-icon" />
+            Add Filter
+          </div>
+        )}
       </div>
       {!isAddVerified && (
         <div className="toolbar-button">

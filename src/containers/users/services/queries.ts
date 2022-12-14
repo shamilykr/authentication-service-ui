@@ -21,6 +21,14 @@ export const GET_USER = gql`
             name
           }
         }
+        permissions {
+          id
+          name
+        }
+        allPermissions {
+          id
+          name
+        }
       }
       permissions {
         id

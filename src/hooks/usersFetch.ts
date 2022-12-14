@@ -27,6 +27,7 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
     onCompleted: (data) => {
       usersFetchProps.userParams.setList(data);
     },
+    fetchPolicy: "network-only",
   });
   const fetchUsers = () => {
     let search = {};
