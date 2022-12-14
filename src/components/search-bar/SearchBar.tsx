@@ -19,7 +19,10 @@ const SearchBar: FC<SearchBarProps> = ({
   const [searchValue, setSearchValue] = useRecoilState(searchAtom);
   const [field, setField] = useState("");
   useEffect(() => {
-    if (searchLabel.includes("First Name")) {
+    if (
+      searchLabel.includes("First Name") ||
+      searchLabel.includes("Search Members")
+    ) {
       setField("firstName");
     } else {
       setField("name");
