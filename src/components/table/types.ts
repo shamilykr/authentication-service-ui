@@ -5,6 +5,7 @@ import {
   GridRowsProp,
 } from "@mui/x-data-grid";
 import { DocumentNode } from "graphql";
+import { SetterOrUpdater } from "recoil";
 
 export interface TableProps {
   field: string;
@@ -24,6 +25,13 @@ export interface TableProps {
   isAddVerified?: boolean;
   actionFlex: number;
   cursorType: string;
+  filterList?: any;
+  firstFilterName?: string;
+  firstFilter?: never[];
+  setFirstFilter?: SetterOrUpdater<never[]>;
+  secondFilter?: never[];
+  secondFilterName?: string;
+  setSecondFilter?: SetterOrUpdater<never[]>;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;
   onEdit: (id: GridRowId) => void;

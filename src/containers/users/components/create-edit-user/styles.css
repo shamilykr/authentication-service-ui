@@ -12,7 +12,6 @@
   margin-top: 10px;
   width: 100%;
   padding-right: 5px;
-  overflow-y: scroll;
   margin-bottom: 100px;
 }
 
@@ -155,6 +154,7 @@
   flex-direction: column;
   background-color: white;
   height: 90%;
+  overflow-y: hidden;
 }
 
 #bold {

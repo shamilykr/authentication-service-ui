@@ -3,20 +3,21 @@ import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import "./styles.css";
 import { useState, useEffect } from "react";
 import GroupCard from "components/group-card/GroupCard";
-import { ApolloError, useQuery } from "@apollo/client";
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { UserPermissionsAtom } from "states/permissionsStates";
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
 import { useParams } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import "./styles.css";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { TabPanel } from "../create-edit-user/UserForm";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import If from "components/If/If";
 import DisplayMessage from "components/display-message";
+import { useCustomQuery } from "hooks/useQuery";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -25,8 +26,6 @@ const UserDetails = () => {
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [user, setUser] = useState<User>();
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [value, setValue] = useState(0);
   const onBackNavigation = (e: React.MouseEvent<HTMLElement>) => {
     navigate(-1);
@@ -43,17 +42,10 @@ const UserDetails = () => {
         }
       });
   }, [userPermissions]);
-  useQuery(GET_USER, {
-    variables: { id: id },
-    fetchPolicy: "network-only",
-    onCompleted: (data) => {
-      setUser(data?.getUser);
-    },
-    onError: (error: ApolloError) => {
-      setToastMessage(error.message);
-      setApiSuccess(false);
-    },
-  });
+  const onCompleted = (data: any) => {
+    setUser(data?.getUser);
+  };
+  const { loading } = useCustomQuery(GET_USER, onCompleted, { id: id });
   const getClassName = () => {
     if (user?.status === "ACTIVE") return "active-user-style";
     else if (user?.status === "INACTIVE") return "inactive-user-style";
@@ -67,11 +59,13 @@ const UserDetails = () => {
       <div className="personal-details">
         <div className="details">
           <div style={{ display: "flex" }}>
-            <CustomAvatar
-              firstName={user?.firstName || ""}
-              lastName={user?.lastName || ""}
-              email={user?.email || ""}
-            />
+            {!loading && (
+              <CustomAvatar
+                firstName={user?.firstName || ""}
+                lastName={user?.lastName || ""}
+                email={user?.email || ""}
+              />
+            )}
             <Chip
               label={
                 user?.status &&
@@ -110,7 +104,7 @@ const UserDetails = () => {
         </div>
       </div>
       <div className="group-details">
-        <Box>
+        <Box sx={{ height: "100%" }}>
           <Box sx={{ display: "flex" }}>
             <Tabs
               value={value}
@@ -122,32 +116,36 @@ const UserDetails = () => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            {user?.groups && (user?.groups).length > 0 ? (
-              <div id="groups-permissions">
-                <div id="user-groups">
-                  {user?.groups?.map((item: any) => {
-                    return (
-                      <div style={{ marginTop: 15 }}>
-                        <GroupCard
-                          group={item}
-                          showCheckBox={false}
-                          isViewPage
-                        />
-                      </div>
-                    );
-                  })}
+            {!loading ? (
+              user?.groups && (user?.groups).length > 0 ? (
+                <div id="groups-permissions">
+                  <div id="user-groups">
+                    {user?.groups?.map((item: any) => {
+                      return (
+                        <div style={{ marginTop: 15 }}>
+                          <GroupCard
+                            group={item}
+                            showCheckBox={false}
+                            isViewPage
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <DisplayMessage
+                  customStyle={{ fontSize: 16 }}
+                  altMessage="No groups to show"
+                  image="./assets/nothing-to-show.png"
+                  heading="No Groups to Show"
+                  description="Sorry, there are no groups associated with this user."
+                  imageStyles={{ width: "27%" }}
+                  containerStyles={{ marginTop: "83px" }}
+                />
+              )
             ) : (
-              <DisplayMessage
-                customStyle={{ fontSize: 16 }}
-                altMessage="No groups to show"
-                image="./assets/nothing-to-show.png"
-                heading="No Groups to Show"
-                description="Sorry, there are no groups associated with this user."
-                imageStyles={{ width: "27%" }}
-                containerStyles={{ marginTop: "83px" }}
-              />
+              <CircularProgress sx={{ top: "35%", marginTop: "225px" }} />
             )}
           </TabPanel>
           <TabPanel value={value} index={1}>

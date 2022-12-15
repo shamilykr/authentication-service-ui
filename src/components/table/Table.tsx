@@ -36,6 +36,13 @@ const TableList: FC<TableProps> = ({
   count,
   actionFlex,
   cursorType,
+  filterList,
+  firstFilter,
+  firstFilterName,
+  setFirstFilter,
+  secondFilter,
+  secondFilterName,
+  setSecondFilter,
   setItemList,
   onAdd,
   onEdit,
@@ -254,6 +261,13 @@ const TableList: FC<TableProps> = ({
             isAddVerified={isAddVerified}
             onAdd={onAdd}
             field={field}
+            filterList={filterList}
+            firstFilter={firstFilter}
+            secondFilter={secondFilter}
+            setFirstFilter={setFirstFilter}
+            setSecondFilter={setSecondFilter}
+            firstFilterName={firstFilterName}
+            secondFilterName={secondFilterName}
           />
           <DataGrid
             rows={rows}

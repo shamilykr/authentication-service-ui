@@ -329,7 +329,7 @@ const CreateOrEditGroup = () => {
           <TabPanel
             value={value}
             index={0}
-            style={{ height: "120%", overflowY: "scroll" }}
+            style={{ height: "128%", overflowY: "scroll" }}
           >
             <div className="roles-checklist">
               {isViewRolesVerified ? (
