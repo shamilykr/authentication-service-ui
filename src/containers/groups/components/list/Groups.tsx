@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -20,13 +20,13 @@ import {
   DELETE_GROUP_PERMISSION,
   UPDATE_GROUP_PERMISSION,
 } from "constants/permissions";
-import { useCustomQuery } from "hooks/useQuery";
 import DisplayMessage from "components/display-message";
+import { useLazyQuery } from "@apollo/client";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
-  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [isAddVerified, setAddVerified] = useState(false);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
@@ -35,12 +35,17 @@ const GroupList: React.FC = () => {
     setGroupList(data?.getGroups);
   };
 
-  const { loading } = useCustomQuery(
-    GET_GROUPS,
-    onGetGroupsComplete,
-    null,
-    !isViewGroupsVerified
-  );
+  const [getGroups, { loading }] = useLazyQuery(GET_GROUPS, {
+    onCompleted: (data) => {
+      onGetGroupsComplete(data);
+    },
+  });
+
+  useEffect(() => {
+    if (isViewGroupsVerified) {
+      getGroups();
+    }
+  }, [isViewGroupsVerified, getGroups]);
 
   const columns: GridColumns = [
     {

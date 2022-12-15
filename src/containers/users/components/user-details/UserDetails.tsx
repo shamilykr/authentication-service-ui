@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import "./styles.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GroupCard from "components/group-card/GroupCard";
 import { ApolloError, useQuery } from "@apollo/client";
-import { useSetRecoilState } from "recoil";
-import { VERIFY_USER_PERMISSION } from "components/table/services/queries";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { UserPermissionsAtom } from "states/permissionsStates";
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
 import { useParams } from "react-router-dom";
@@ -15,7 +15,6 @@ import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { TabPanel } from "../create-edit-user/UserForm";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
-import { useCustomQuery } from "hooks/useQuery";
 import If from "components/If/If";
 import DisplayMessage from "components/display-message";
 
@@ -23,6 +22,7 @@ const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isEditVerified, setEditVerified] = useState(true);
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [user, setUser] = useState<User>();
   const setToastMessage = useSetRecoilState(toastMessageAtom);
@@ -34,17 +34,15 @@ const UserDetails = () => {
   const onRedirectToEdit = (e: React.MouseEvent<HTMLElement>) => {
     navigate(`/home/users/add/${id}`);
   };
-  const onVerifyEditComplete = (data: any) => {
-    setEditVerified(data?.verifyUserPermission);
-  };
 
-  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyEditComplete, {
-    params: {
-      permissions: [UPDATE_USER_PERMISSION],
-      operation: "AND",
-    },
-  });
-
+  useEffect(() => {
+    if (userPermissions)
+      userPermissions.forEach((item: any) => {
+        if (item?.name.includes(UPDATE_USER_PERMISSION)) {
+          setEditVerified(true);
+        }
+      });
+  }, [userPermissions]);
   useQuery(GET_USER, {
     variables: { id: id },
     fetchPolicy: "network-only",

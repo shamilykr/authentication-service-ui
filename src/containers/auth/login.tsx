@@ -8,17 +8,23 @@ import { LOGIN, SET_PASSWORD } from "./services/mutations";
 import CustomerAuth from "../../services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
-import { UserPermissionsAtom } from "states/permissionsStates";
+import {
+  UserPermissionsAtom,
+  IsViewUsersVerifiedAtom,
+} from "states/permissionsStates";
 import { currentUserAtom } from "states/loginStates";
 import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import Toast from "components/toast";
 import { PASSWORD_SET_MESSAGE } from "constants/messages";
 import { useCustomMutation } from "hooks/useMutation";
+import { VIEW_USER_PERMISSION } from "constants/permissions";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
+
   const inviteToken: string | null = searchParams.get("token");
   const setUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const setCurrentUserDetails = useSetRecoilState(currentUserAtom);
@@ -39,6 +45,13 @@ const Login: React.FC = () => {
         refreshToken: refreshToken,
       });
       setUserPermissions(user?.permissions);
+      if (user?.permissions) {
+        user?.permissions.forEach((item: any) => {
+          if (item?.name.includes(VIEW_USER_PERMISSION)) {
+            setIsViewUsersVerified(true);
+          }
+        });
+      }
       setCurrentUserDetails(user);
       navigate("/home/users");
     } // eslint-disable-next-line

@@ -8,6 +8,7 @@ export const GET_ENTITIES = gql`
       permissions {
         id
         name
+        label
       }
     }
   }

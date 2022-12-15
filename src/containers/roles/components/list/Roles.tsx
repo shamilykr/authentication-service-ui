@@ -20,7 +20,7 @@ import {
   UPDATE_ROLE_PERMISSION,
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
-import { useCustomQuery } from "hooks/useQuery";
+import { useLazyQuery } from "@apollo/client";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -34,12 +34,18 @@ const Roles: React.FC = () => {
   const onGetRolesComplete = (data: any) => {
     setRoleList(data?.getRoles);
   };
-  const { loading } = useCustomQuery(
-    GET_ROLES,
-    onGetRolesComplete,
-    null,
-    !isViewRolesVerified
-  );
+
+  const [getRoles, { loading }] = useLazyQuery(GET_ROLES, {
+    onCompleted: (data) => {
+      onGetRolesComplete(data);
+    },
+  });
+
+  useEffect(() => {
+    if (isViewRolesVerified) {
+      getRoles();
+    }
+  }, [isViewRolesVerified, getRoles]);
 
   useEffect(() => {
     userPermissions.forEach((item: any) => {
