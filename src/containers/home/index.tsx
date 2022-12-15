@@ -64,6 +64,9 @@ const HomePage = () => {
   useEffect(() => {
     if (userPermissions)
       userPermissions.forEach((item: any) => {
+        if (item?.name.includes(VIEW_USER_PERMISSION)) {
+          setIsViewUsersVerified(true);
+        }
         if (item?.name.includes(VIEW_GROUP_PERMISSION)) {
           setIsViewGroupsVerified(true);
           getGroups();
@@ -81,6 +84,7 @@ const HomePage = () => {
   }, [
     userPermissions,
     getGroups,
+    setIsViewUsersVerified,
     setIsViewGroupsVerified,
     setIsViewPermissionsVerified,
     setisViewEntitiesVerified,
