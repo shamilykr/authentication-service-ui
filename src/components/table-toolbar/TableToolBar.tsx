@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useRecoilState } from "recoil";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Avatar } from "@mui/material";
 
 import { TableToolBarProps } from "./types";

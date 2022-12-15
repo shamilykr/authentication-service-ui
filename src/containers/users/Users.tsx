@@ -59,6 +59,7 @@ const Users: React.FC = () => {
     onCompleted: (data) => {
       onComplete(data);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {

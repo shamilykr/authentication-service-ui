@@ -41,13 +41,14 @@ const Roles: React.FC = () => {
     onCompleted: (data) => {
       onGetRolesComplete(data);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    if (isViewRolesVerified) {
+    if (isViewRolesVerified && roleCount === 0) {
       getRoles();
     }
-  }, [isViewRolesVerified, getRoles]);
+  }, [isViewRolesVerified, getRoles, roleCount]);
 
   useEffect(() => {
     userPermissions.forEach((item: any) => {

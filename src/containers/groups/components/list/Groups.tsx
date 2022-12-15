@@ -41,13 +41,14 @@ const GroupList: React.FC = () => {
     onCompleted: (data) => {
       onGetGroupsComplete(data);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    if (isViewGroupsVerified) {
+    if (isViewGroupsVerified && groupCount === 0) {
       getGroups();
     }
-  }, [isViewGroupsVerified, getGroups]);
+  }, [isViewGroupsVerified, getGroups, groupCount]);
 
   const columns: GridColumns = [
     {
