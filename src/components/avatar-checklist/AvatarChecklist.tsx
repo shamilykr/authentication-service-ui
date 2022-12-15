@@ -48,7 +48,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
       <div id="titlebar">
         <SearchBar
           searchLabel="Search Members"
-          setItemList={(response) => setItemList(response?.getUsers)}
+          setItemList={(response) => setItemList(response?.getUsers?.results)}
           searchQuery={searchQuery}
           customSearchStyle={{ width: "70%" }}
           customBarStyle={{ border: "1px solid #d2d5dd" }}

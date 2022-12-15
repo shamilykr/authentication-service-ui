@@ -18,7 +18,11 @@ interface usersFetchProps {
   userParams: userParamsProps;
 }
 
-export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
+interface ApiParams {
+  searchText?: any;
+  countValue?: number;
+}
+export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [searchValue] = useRecoilState(searchAtom);
   const [checkedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups] = useRecoilState(groupFilterAtom);
@@ -29,27 +33,32 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
     },
     fetchPolicy: "network-only",
   });
-  const fetchUsers = () => {
+  const fetchEntities = ({ searchText = null, countValue = 0 }: ApiParams) => {
     let search = {};
-    if (searchValue.length !== 0) {
+    if (
+      (searchValue && searchValue.length !== 0) ||
+      (searchText && searchText?.length !== 0)
+    ) {
+      const searchParams = searchText ?? searchValue;
       if (usersFetchProps.userParams.field === "name")
-        search = { or: { name: { contains: searchValue } } };
+        search = { or: { name: { contains: searchParams } } };
       else {
         search = {
           or: {
-            firstName: { contains: searchValue },
-            middleName: { contains: searchValue },
-            lastName: { contains: searchValue },
-            email: { contains: searchValue },
+            firstName: { contains: searchParams },
+            middleName: { contains: searchParams },
+            lastName: { contains: searchParams },
+            email: { contains: searchParams },
           },
         };
       }
     }
     let sort = {};
-    if (count !== 0) {
+    if (count !== 0 || countValue !== 0) {
+      const countParams = countValue !== 0 ? countValue : count;
       let direction = {
         field: usersFetchProps.userParams.field,
-        direction: count === 1 ? SortDirection.ASC : SortDirection.DESC,
+        direction: countParams === 1 ? SortDirection.ASC : SortDirection.DESC,
       };
       sort = { ...sort, ...direction };
     }
@@ -84,5 +93,5 @@ export const useUsersFetch = (usersFetchProps: usersFetchProps) => {
     filterQuery({ variables: variables });
   };
 
-  return fetchUsers;
+  return fetchEntities;
 };

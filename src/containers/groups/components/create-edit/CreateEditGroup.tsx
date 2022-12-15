@@ -109,7 +109,7 @@ const CreateOrEditGroup = () => {
   };
 
   const onGetRolesComplete = (data: any) => {
-    setAllRoles(data?.getRoles);
+    setAllRoles(data?.getRoles?.results);
   };
 
   const { data: roleData, loading: rolesLoading } = useCustomQuery(
@@ -334,7 +334,7 @@ const CreateOrEditGroup = () => {
             <div className="roles-checklist">
               {isViewRolesVerified ? (
                 <RoleCardsChecklist
-                  roleList={roleData?.getRoles}
+                  roleList={roleData?.getRoles?.results}
                   currentCheckedItems={roles}
                   onChange={onChange}
                 />

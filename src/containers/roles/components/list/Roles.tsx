@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { GridColumns, GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -26,13 +26,15 @@ const Roles: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = React.useState(false);
+  const [roleCount, setRoleCount] = useState(0);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [roleList, setRoleList] = useRecoilState(RolesListAtom);
 
   const onGetRolesComplete = (data: any) => {
-    setRoleList(data?.getRoles);
+    setRoleList(data?.getRoles?.results);
+    setRoleCount(data?.getRoles?.totalCount);
   };
 
   const [getRoles, { loading }] = useLazyQuery(GET_ROLES, {
@@ -55,7 +57,8 @@ const Roles: React.FC = () => {
     });
   }, [userPermissions]);
   const setItemList = (data: any) => {
-    setRoleList(data.getRoles);
+    setRoleList(data.getRoles?.results);
+    setRoleCount(data?.getRoles?.totalCount);
   };
 
   const columns: GridColumns = [
@@ -112,7 +115,7 @@ const Roles: React.FC = () => {
           rows={roleList}
           columns={columns}
           text="All Roles"
-          count={roleList.length}
+          count={roleCount}
           buttonLabel="Add Role"
           searchLabel="Search Role"
           setItemList={setItemList}

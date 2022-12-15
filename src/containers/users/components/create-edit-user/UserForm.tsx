@@ -77,7 +77,7 @@ const UserForm = (props: UserProps) => {
   >([]);
 
   const onGetGroupsComplete = (data: any) => {
-    const groups = data?.getGroups.map((group: Group) => group);
+    const groups = data?.getGroups?.results?.map((group: Group) => group);
     setAllGroups([...groups]);
   };
 
@@ -220,7 +220,7 @@ const UserForm = (props: UserProps) => {
                   <div className="checklist-container">
                     {isViewGroupsVerified ? (
                       <ChecklistComponent
-                        mapList={groupData?.getGroups}
+                        mapList={groupData?.getGroups?.results}
                         currentCheckedItems={userGroups}
                         onChange={handleChange}
                       />

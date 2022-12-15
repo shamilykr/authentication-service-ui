@@ -8,7 +8,7 @@ import { Avatar } from "@mui/material";
 import "./styles.css";
 import Filter from "components/filter/Filter";
 import { ReactComponent as LeftArrowIcon } from "assets/arrow-left.svg";
-import { useUsersFetch } from "hooks/usersFetch";
+import { useFetchEntities } from "hooks/useFetchEntities";
 import { DocumentNode } from "graphql";
 
 interface FilterDropdownProps {
@@ -22,6 +22,7 @@ interface FilterDropdownProps {
   filterList?: any;
   open: boolean;
   anchorEl: any;
+  setCount?: (val?: number) => void;
   onApply: (count: number) => void;
   firstFilterName: string;
   secondFilterName: string;
@@ -34,6 +35,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   secondFilter,
   setSecondFilter,
   searchQuery,
+  setCount,
   setItemList,
   field,
   filterList,
@@ -98,7 +100,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     }
     handleClose();
   };
-  const fetchUsers = useUsersFetch({
+  const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field },
   });
 
@@ -107,7 +109,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
       (firstFilter as unknown as never[]).length +
         (secondFilter as unknown as never[]).length
     );
-    fetchUsers();
+    fetchEntities({});
   };
   return (
     <Menu
