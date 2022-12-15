@@ -32,7 +32,7 @@ const TableChipElement: FC<TableChipElementProps> = ({
         (item: any, i: number) =>
           i < defaultSize && (
             <Chip
-              label={item?.name}
+              label={item?.label ?? item?.name}
               key={item?.id}
               id={row.status !== "INVITED" ? "chip" : "blurred-chip"}
             />

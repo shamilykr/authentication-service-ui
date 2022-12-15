@@ -27,9 +27,9 @@ import {
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
 } from "constants/permissions";
-import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 import DisplayMessage from "components/display-message";
+import { useLazyQuery } from "@apollo/client";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = React.useState(false);
@@ -43,12 +43,17 @@ const Users: React.FC = () => {
     setUsers(data?.getUsers);
   };
 
-  const { loading } = useCustomQuery(
-    GET_USERS,
-    onComplete,
-    null,
-    !isViewUsersVerified
-  );
+  const [getUsers, { loading }] = useLazyQuery(GET_USERS, {
+    onCompleted: (data) => {
+      onComplete(data);
+    },
+  });
+
+  useEffect(() => {
+    if (isViewUsersVerified) {
+      getUsers();
+    }
+  }, [isViewUsersVerified, getUsers]);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -120,7 +125,7 @@ const Users: React.FC = () => {
   const onUserClick = (params: any) => {
     navigate(`./${params.id}`);
   };
-  if (!isViewUsersVerified && !loading)
+  if (!isViewUsersVerified)
     return (
       <div className="table-component">
         <DisplayMessage

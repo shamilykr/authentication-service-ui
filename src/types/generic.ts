@@ -13,6 +13,7 @@ export interface Entity {
 export interface EntityPermission {
   id: string;
   name: string;
+  label?: string;
 }
 export interface EntityPermissionsDetails {
   id: string;

@@ -8,6 +8,7 @@ export const GET_ROLES = gql`
       permissions {
         id
         name
+        label
       }
     }
   }
@@ -21,6 +22,7 @@ export const GET_ROLE = gql`
       permissions {
         id
         name
+        label
       }
     }
   }

@@ -131,7 +131,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
           <If condition={isViewPage && IsUserPermission(permission.id)}>
             <CheckboxContainer>
               <SquareIcon sx={{ width: 10, fill: "#2F6FED" }} />
-              <div>{permission.name}</div>
+              <div>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
           </If>
           <If condition={!isViewPage}>
@@ -144,7 +144,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}
               />
-              <div>{permission.name}</div>
+              <div>{permission.label ?? permission.name}</div>
             </CheckboxContainer>
           </If>
         </If>

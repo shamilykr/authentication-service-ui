@@ -85,7 +85,10 @@ const RoleCard: FC<RoleCardProps> = ({
         <RolePermissions>
           <If condition={role.permissions.length !== 0}>
             {mappingArray.map((permission) => (
-              <CustomChip name={permission.name} key={permission?.id} />
+              <CustomChip
+                name={permission.label ?? permission.name}
+                key={permission?.id}
+              />
             ))}
             <If condition={arryLength > 5}>
               <Button
@@ -106,7 +109,10 @@ const RoleCard: FC<RoleCardProps> = ({
         <CustomDialog title="Permissions" handleClose={() => setOpen(false)}>
           <DialogContent>
             {role.permissions.map((permission) => (
-              <CustomChip name={permission.name} key={permission?.id} />
+              <CustomChip
+                name={permission.label ?? permission.name}
+                key={permission?.id}
+              />
             ))}
           </DialogContent>
         </CustomDialog>

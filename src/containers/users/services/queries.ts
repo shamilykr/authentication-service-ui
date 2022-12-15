@@ -19,20 +19,24 @@ export const GET_USER = gql`
           permissions {
             id
             name
+            label
           }
         }
         permissions {
           id
           name
+          label
         }
         allPermissions {
           id
           name
+          label
         }
       }
       permissions {
         id
         name
+        label
       }
       inviteToken
     }

@@ -12,21 +12,20 @@ import {
 } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Tooltip, Button, TextField } from "@mui/material";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 
+import { UserPermissionsAtom } from "states/permissionsStates";
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
-import { VERIFY_USER_PERMISSION } from "./services/queries";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import DisplayMessage from "../display-message";
 import { ReactComponent as EditIcon } from "assets/edit.svg";
 import { ReactComponent as LineIcon } from "assets/line.svg";
 import { ReactComponent as DeleteIcon } from "assets/trash.svg";
 import DialogBox from "../dialog-box";
-import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 
 const TableList: FC<TableProps> = ({
@@ -55,32 +54,23 @@ const TableList: FC<TableProps> = ({
   const [isDeleteVerified, setDeleteVerified] = React.useState(true);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
-
-  const onVerifyEditComplete = (data: any) => {
-    setEditVerified(data?.verifyUserPermission);
-  };
-
-  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyEditComplete, {
-    params: {
-      permissions: [editPermission],
-      operation: "AND",
-    },
-  });
-
-  const onVerifyDeleteComplete = (data: any) => {
-    setDeleteVerified(data?.verifyUserPermission);
-  };
-
-  useCustomQuery(VERIFY_USER_PERMISSION, onVerifyDeleteComplete, {
-    params: {
-      permissions: [deletePermission],
-      operation: "AND",
-    },
-  });
+  const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
   const [entityName, setEntityName] = useState<string>("");
+
+  useEffect(() => {
+    if (userPermissions)
+      userPermissions.forEach((item: any) => {
+        if (item?.name.includes(editPermission)) {
+          setEditVerified(true);
+        }
+        if (item?.name.includes(deletePermission)) {
+          setDeleteVerified(true);
+        }
+      });
+  }, [editPermission, deletePermission, userPermissions]);
 
   const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);

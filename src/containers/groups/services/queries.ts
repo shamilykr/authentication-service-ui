@@ -11,6 +11,7 @@ export const GET_GROUPS = gql`
         permissions {
           id
           name
+          label
         }
       }
       users {
@@ -20,10 +21,12 @@ export const GET_GROUPS = gql`
       permissions {
         id
         name
+        label
       }
       allPermissions {
         id
         name
+        label
       }
     }
   }
@@ -49,15 +52,18 @@ export const GET_GROUP = gql`
         permissions {
           id
           name
+          label
         }
       }
       permissions {
         id
         name
+        label
       }
       allPermissions {
         id
         name
+        label
       }
     }
   }
