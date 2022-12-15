@@ -98,3 +98,7 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+.individual-permission {
+  font-size: 14px;
+  margin-top: 20px;
+}

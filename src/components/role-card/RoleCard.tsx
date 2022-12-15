@@ -50,7 +50,7 @@ const RolePermissions = styled.div`
 `;
 
 const DialogContent = styled.div`
-  width: 98%;
+  width: 93%;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

@@ -8,10 +8,11 @@ import { ReactComponent as DownArrowIcon } from "assets/icons/Stroke 1.svg";
 import { getUniquePermissionsFromRoles } from "utils/permissions";
 import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
-
+import If from "../If/If";
+import CustomDialog from "components/CustomDialog";
 import "../checklist/styles.css";
 import { Group } from "types/group";
-
+import CustomChip from "../custom-chip/CustomChip";
 interface GroupCardProps {
   group: any;
   currentCheckedItems?: Group[];
@@ -69,6 +70,14 @@ const RoleCards = styled.div<{ showRoles: boolean }>`
   border-top: none;
 `;
 
+const DialogContent = styled.div`
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0px 20px 30px 20px;
+`;
 const GroupCard: FC<GroupCardProps> = ({
   group,
   currentCheckedItems,
@@ -77,6 +86,7 @@ const GroupCard: FC<GroupCardProps> = ({
   isViewPage = false,
 }) => {
   const [showRoles, setShowRoles] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const isChecked = (id: string) => {
     return Boolean(
@@ -85,42 +95,68 @@ const GroupCard: FC<GroupCardProps> = ({
   };
 
   return (
-    <Container>
-      <CheckBoxComponent key={group.id} showRoles={showRoles}>
-        <div className="checkbox-label">
-          {showCheckBox && (
-            <Checkbox
-              key={group.id}
-              checked={isChecked(group.id)}
-              onChange={(e) => onChange && onChange(e, group)}
-              className="custom-checkbox"
-              icon={<UnCheckedIcon />}
-              checkedIcon={<CheckedIcon />}
+    <>
+      <Container>
+        <CheckBoxComponent key={group.id} showRoles={showRoles}>
+          <div className="checkbox-label">
+            {showCheckBox && (
+              <Checkbox
+                key={group.id}
+                checked={isChecked(group.id)}
+                onChange={(e) => onChange && onChange(e, group)}
+                className="custom-checkbox"
+                icon={<UnCheckedIcon />}
+                checkedIcon={<CheckedIcon />}
+              />
+            )}
+            <span className="checklistLabel">{group?.name}</span>
+          </div>
+          <div className="roles-permissions-dropdown">
+            <RolesPermissionsTab checked={isChecked(group.id)}>
+              {`${group?.roles?.length} Roles & ${
+                getUniquePermissionsFromRoles(group?.roles).length
+              } Permissions`}
+            </RolesPermissionsTab>
+            <StyledDownArrowIcon
+              onClick={() => setShowRoles(!showRoles)}
+              showRoles={showRoles}
             />
-          )}
-          <span className="checklistLabel">{group?.name}</span>
-        </div>
-        <div className="roles-permissions-dropdown">
-          <RolesPermissionsTab checked={isChecked(group.id)}>
-            {`${group?.roles?.length} Roles & ${
-              getUniquePermissionsFromRoles(group?.roles).length
-            } Permissions`}
-          </RolesPermissionsTab>
-          <StyledDownArrowIcon
-            onClick={() => setShowRoles(!showRoles)}
-            showRoles={showRoles}
-          />
-        </div>
-      </CheckBoxComponent>
-      <RoleCards showRoles={showRoles}>
-        <div className="roles-title">Roles</div>
-        <div className="role-cards">
-          {group?.roles?.map((role: Role) => (
-            <RoleCard role={role} key={role?.id} />
-          ))}
-        </div>
-      </RoleCards>
-    </Container>
+          </div>
+        </CheckBoxComponent>
+        <RoleCards showRoles={showRoles}>
+          <div className="roles-title">Roles</div>
+          <div className="role-cards">
+            {group?.roles?.map((role: Role) => (
+              <RoleCard role={role} key={role?.id} />
+            ))}
+          </div>
+          <div className="individual-permission">
+            <span
+              style={{ color: "#2F6FED", cursor: "pointer" }}
+              onClick={() => setOpenModal(true)}
+            >
+              View
+            </span>{" "}
+            individual permissions
+          </div>
+        </RoleCards>
+      </Container>
+      <If condition={openModal}>
+        <CustomDialog
+          title="Permissions"
+          handleClose={() => setOpenModal(false)}
+        >
+          <DialogContent>
+            {group?.permissions.map((permission: any) => (
+              <CustomChip
+                name={permission.label ?? permission.name}
+                key={permission?.id}
+              />
+            ))}
+          </DialogContent>
+        </CustomDialog>
+      </If>
+    </>
   );
 };
 
