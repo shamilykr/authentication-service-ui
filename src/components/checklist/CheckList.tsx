@@ -33,7 +33,7 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
   }, [mapList, currentCheckedItems]);
 
   return (
-    <div id="add-items">
+    <div id="add-items-checklist">
       <div id="titlebar">
         <div id="selectall">
           <Checkbox
