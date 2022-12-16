@@ -27,6 +27,12 @@ import { ReactComponent as LineIcon } from "assets/line.svg";
 import { ReactComponent as DeleteIcon } from "assets/trash.svg";
 import DialogBox from "../dialog-box";
 import { useCustomMutation } from "hooks/useMutation";
+import {
+  statusFilterAtom,
+  groupFilterAtom,
+  sortCountAtom,
+  searchAtom,
+} from "states/searchSortFilterStates";
 
 const TableList: FC<TableProps> = ({
   field,
@@ -57,11 +63,15 @@ const TableList: FC<TableProps> = ({
   handleRowClick,
   entity,
 }) => {
-  const [isEditVerified, setEditVerified] = React.useState(true);
-  const [isDeleteVerified, setDeleteVerified] = React.useState(true);
+  const [isEditVerified, setEditVerified] = React.useState(false);
+  const [isDeleteVerified, setDeleteVerified] = React.useState(false);
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
+  const setCheckedStatus = useSetRecoilState(statusFilterAtom);
+  const setCheckedGroups = useSetRecoilState(groupFilterAtom);
+  const setCount = useSetRecoilState(sortCountAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
 
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
@@ -106,6 +116,15 @@ const TableList: FC<TableProps> = ({
     });
     handleClose();
   };
+
+  useEffect(() => {
+    return () => {
+      setCheckedGroups([]);
+      setCheckedStatus([]);
+      setCount(0);
+      setSearchValue("");
+    };
+  }, []);
 
   function CustomPagination() {
     const apiRef = useGridApiContext();
@@ -154,6 +173,7 @@ const TableList: FC<TableProps> = ({
                 minWidth: "32px !important",
                 height: "35px !important",
               }}
+              id="go-button"
               onClick={() => apiRef.current.setPage(pageValue - 1)}
             >
               Go

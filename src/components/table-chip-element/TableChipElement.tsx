@@ -19,7 +19,7 @@ const TableChipElement: FC<TableChipElementProps> = ({
   useEffect(() => {
     let moreItems = "";
     row[columnName]?.slice(defaultSize, row.length).map((item: any) => {
-      moreItems = moreItems.concat(", ", item.name);
+      moreItems = moreItems.concat(", ", item?.label ?? item.name);
     });
     if (moreItems[0] === ",") {
       moreItems = moreItems.slice(2, moreItems.length);

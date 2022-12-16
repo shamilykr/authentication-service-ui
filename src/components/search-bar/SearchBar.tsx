@@ -4,7 +4,7 @@ import { ReactComponent as SearchIcon } from "assets/search.svg";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { searchAtom } from "../../states/searchSortFilterStates";
 import { useFetchEntities } from "../../hooks/useFetchEntities";
 
@@ -16,7 +16,7 @@ const SearchBar: FC<SearchBarProps> = ({
   customBarStyle,
   customIconStyle,
 }) => {
-  const [searchValue, setSearchValue] = useRecoilState(searchAtom);
+  const setSearchValue = useSetRecoilState(searchAtom);
   const [field, setField] = useState("");
   useEffect(() => {
     if (

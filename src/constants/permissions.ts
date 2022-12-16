@@ -11,3 +11,4 @@ export const VIEW_USER_PERMISSION = "view-user";
 export const VIEW_GROUP_PERMISSION = "view-groups";
 export const VIEW_ROLE_PERMISSION = "view-roles";
 export const VIEW_ENTITY_PERMISSION = "view-entities";
+export const VIEW_PERMISSIONS_PERMISSION = "view-permissions";

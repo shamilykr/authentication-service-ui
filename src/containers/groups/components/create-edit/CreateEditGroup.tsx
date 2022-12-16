@@ -14,7 +14,6 @@ import {
   UPDATE_GROUP_ROLES,
 } from "../../services/mutations";
 import {
-  IsViewPermissionsVerifiedAtom,
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
@@ -74,9 +73,6 @@ const CreateOrEditGroup = () => {
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const usersResponse = useRecoilValue(allUsersAtom);
   const [isViewRolesVerified] = useRecoilState(IsViewRolesVerifiedAtom);
-  const [isViewPermissionsVerified] = useRecoilState(
-    IsViewPermissionsVerifiedAtom
-  );
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
 
   const [value, setValue] = useState(0);
@@ -345,6 +341,8 @@ const CreateOrEditGroup = () => {
                   image="./assets/access-denied.png"
                   heading="Access Denied"
                   description="Sorry, you are not allowed to view this page."
+                  // className="access-denied-mini"
+                  containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
                 />
               )}
             </div>
@@ -366,6 +364,7 @@ const CreateOrEditGroup = () => {
               image="./assets/access-denied.png"
               heading="Access Denied"
               description="Sorry, you are not allowed to view this page."
+              className="access-denied-mini"
             />
           )}
         </TabPanel>
@@ -419,6 +418,7 @@ const CreateOrEditGroup = () => {
                 image="./assets/access-denied.png"
                 heading="Access Denied"
                 description="Sorry, you are not allowed to view this page."
+                className="access-denied-mini"
               />
             )}
           </div>

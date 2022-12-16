@@ -3,6 +3,12 @@
   background-color: white;
 }
 
+.denied-table-component {
+  height: 96.5%;
+  background-color: white;
+  border-radius: 6px;
+}
+
 .table-list-header {
   font-size: 16px;
   font-weight: bolder !important;
@@ -78,6 +84,12 @@
   width: 76px;
 }
 
+#go-button:hover {
+  background-color: #2f6fed;
+  color: white;
+  box-shadow: 2px 2px 0px rgb(0 0 0 / 14%);
+}
+
 .MuiDataGrid-cell:focus {
   outline: none !important;
 }
@@ -96,8 +108,8 @@
 }
 
 .css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
-  color: #1890ff !important;
-  border-color: #1890ff !important;
+  color: #2f6fed !important;
+  border-color: #2f6fed !important;
 }
 
 .css-204u17-MuiDataGrid-main {

@@ -12,7 +12,7 @@ import { LOGOUT } from "../auth/services/mutations";
 import { currentUserAtom } from "states/loginStates";
 import { stringAvatar } from "utils/table";
 import Toast from "components/toast";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { toastMessageAtom } from "states/apiRequestState";
 import {
   IsViewGroupsVerifiedAtom,
   IsViewPermissionsVerifiedAtom,
@@ -21,7 +21,6 @@ import {
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import { VERIFY_USER_PERMISSION } from "components/table/services/queries";
 import { ReactComponent as MenuIcon } from "assets/menu.svg";
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
@@ -32,12 +31,12 @@ import {
   VIEW_ROLE_PERMISSION,
   VIEW_USER_PERMISSION,
   VIEW_ENTITY_PERMISSION,
+  VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
 
 const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
@@ -62,7 +61,7 @@ const HomePage = () => {
     },
   });
   useEffect(() => {
-    if (userPermissions)
+    if (userPermissions) {
       userPermissions.forEach((item: any) => {
         if (item?.name.includes(VIEW_USER_PERMISSION)) {
           setIsViewUsersVerified(true);
@@ -74,13 +73,14 @@ const HomePage = () => {
         if (item?.name.includes(VIEW_ROLE_PERMISSION)) {
           setIsViewRolesVerified(true);
         }
-        if (item?.name.includes(VERIFY_USER_PERMISSION)) {
+        if (item?.name.includes(VIEW_PERMISSIONS_PERMISSION)) {
           setIsViewPermissionsVerified(true);
         }
         if (item?.name.includes(VIEW_ENTITY_PERMISSION)) {
           setisViewEntitiesVerified(true);
         }
       });
+    }
   }, [
     userPermissions,
     getGroups,

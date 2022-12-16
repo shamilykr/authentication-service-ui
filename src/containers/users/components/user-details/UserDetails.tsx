@@ -4,7 +4,11 @@ import "./styles.css";
 import { useState, useEffect } from "react";
 import GroupCard from "components/group-card/GroupCard";
 import { useRecoilState } from "recoil";
-import { UserPermissionsAtom } from "states/permissionsStates";
+import {
+  IsViewEntitiesVerifiedAtom,
+  IsViewGroupsVerifiedAtom,
+  UserPermissionsAtom,
+} from "states/permissionsStates";
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
 import { useParams } from "react-router-dom";
@@ -23,6 +27,8 @@ const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isEditVerified, setEditVerified] = useState(true);
+  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
+  const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
 
   const [user, setUser] = useState<User>();
@@ -117,31 +123,43 @@ const UserDetails = () => {
           </Box>
           <TabPanel value={value} index={0}>
             {!loading ? (
-              user?.groups && (user?.groups).length > 0 ? (
-                <div id="groups-permissions">
-                  <div id="user-groups">
-                    {user?.groups?.map((item: any) => {
-                      return (
-                        <div style={{ marginTop: 15 }}>
-                          <GroupCard
-                            group={item}
-                            showCheckBox={false}
-                            isViewPage
-                          />
-                        </div>
-                      );
-                    })}
+              isViewGroupsVerified ? (
+                user?.groups && (user?.groups).length > 0 ? (
+                  <div id="groups-permissions">
+                    <div id="user-groups">
+                      {user?.groups?.map((item: any) => {
+                        return (
+                          <div style={{ marginTop: 15 }}>
+                            <GroupCard
+                              group={item}
+                              showCheckBox={false}
+                              isViewPage
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <DisplayMessage
+                    customStyle={{ fontSize: 16 }}
+                    altMessage="No groups to show"
+                    image="./assets/nothing-to-show.png"
+                    heading="No Groups to Show"
+                    description="Sorry, there are no groups associated with this user."
+                    imageStyles={{ width: "27%" }}
+                    containerStyles={{ marginTop: "83px" }}
+                  />
+                )
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="No groups to show"
-                  image="./assets/nothing-to-show.png"
-                  heading="No Groups to Show"
-                  description="Sorry, there are no groups associated with this user."
-                  imageStyles={{ width: "27%" }}
-                  containerStyles={{ marginTop: "83px" }}
+                  altMessage="Access Denied"
+                  image="./assets/access-denied.png"
+                  heading="Access Denied"
+                  description="Sorry, you are not allowed to view this page."
+                  imageStyles={{ width: "33%" }}
+                  className="access-denied-mini"
                 />
               )
             ) : (
@@ -149,17 +167,32 @@ const UserDetails = () => {
             )}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {user?.permissions && (user?.permissions).length > 0 ? (
-              <PermissionCards userPermissions={user?.permissions} isViewPage />
+            {isViewEntitiesVerified ? (
+              user?.permissions && (user?.permissions).length > 0 ? (
+                <PermissionCards
+                  userPermissions={user?.permissions}
+                  isViewPage
+                />
+              ) : (
+                <DisplayMessage
+                  customStyle={{ fontSize: 16 }}
+                  altMessage="No permissions to show"
+                  image="./assets/no-permissions.png"
+                  heading="No Permissions to Show"
+                  description="Sorry, there are no permissions associated with this user."
+                  imageStyles={{ width: "17%" }}
+                  containerStyles={{ marginTop: "83px" }}
+                />
+              )
             ) : (
               <DisplayMessage
                 customStyle={{ fontSize: 16 }}
-                altMessage="No permissions to show"
-                image="./assets/nothing-to-show.png"
-                heading="No Permissions to Show"
-                description="Sorry, there are no permissions associated with this user."
-                imageStyles={{ width: "27%" }}
-                containerStyles={{ marginTop: "83px" }}
+                altMessage="Access Denied"
+                image="./assets/access-denied.png"
+                heading="Access Denied"
+                description="Sorry, you are not allowed to view this page."
+                imageStyles={{ width: "33%" }}
+                className="access-denied-mini"
               />
             )}
           </TabPanel>

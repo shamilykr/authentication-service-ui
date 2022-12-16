@@ -139,6 +139,7 @@ const theme = createTheme({
             position: "relative",
             minHeight: "94px !important",
             top: "-2px",
+            cursor: "default",
           },
           ". &.MuiSvgIcon-root-MuiSvgIcon": {
             color: "#039be5 !important",

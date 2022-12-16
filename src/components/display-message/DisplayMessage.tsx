@@ -9,6 +9,7 @@ interface DisplayMessageProps {
   description: string;
   imageStyles?: any;
   containerStyles?: any;
+  className?: string;
 }
 const DisplayMessage: React.FC<DisplayMessageProps> = ({
   customStyle,
@@ -18,9 +19,13 @@ const DisplayMessage: React.FC<DisplayMessageProps> = ({
   description,
   imageStyles,
   containerStyles,
+  className,
 }) => {
   return (
-    <div className="display-message" style={containerStyles}>
+    <div
+      className={className ? `${className}` : "display-message"}
+      style={containerStyles}
+    >
       <img
         src={image}
         alt={altMessage}

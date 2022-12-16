@@ -113,7 +113,7 @@ const GroupList: React.FC = () => {
   };
   if (!isViewGroupsVerified && !loading)
     return (
-      <div className="table-component">
+      <div className="denied-table-component">
         <DisplayMessage
           altMessage="Access Denied"
           image="./assets/access-denied.png"

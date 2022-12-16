@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Permission, userPermission } from "types/user";
+import { Permission } from "types/user";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
@@ -19,7 +19,7 @@ export const RolePermissionsAtom = atom<Permission[]>({
   default: [],
 });
 
-export const UserPermissionsAtom = atom<userPermission[]>({
+export const UserPermissionsAtom = atom<Permission[]>({
   key: "UserPermissions",
   default: [],
   effects_UNSTABLE: [persistAtom],
