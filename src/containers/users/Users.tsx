@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
@@ -37,7 +37,8 @@ import { groupListAtom } from "states/groupStates";
 import { useLazyQuery } from "@apollo/client";
 
 const Users: React.FC = () => {
-  const [isAddVerified, setAddVerified] = React.useState(false);
+  const [isAddVerified, setAddVerified] = useState(false);
+  const [usersCount, setUsersCount] = useState(0);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
@@ -47,22 +48,25 @@ const Users: React.FC = () => {
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
   const setUsers = useSetRecoilState(allUsersAtom);
+
   const onComplete = (data: any) => {
-    setUserList(data?.getUsers);
-    setUsers(data?.getUsers);
+    setUserList(data?.getUsers?.results);
+    setUsers(data?.getUsers?.results);
+    setUsersCount(data?.getUsers?.totalCount);
   };
 
   const [getUsers, { loading }] = useLazyQuery(GET_USERS, {
     onCompleted: (data) => {
       onComplete(data);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    if (isViewUsersVerified) {
+    if (isViewUsersVerified && usersCount === 0) {
       getUsers();
     }
-  }, [isViewUsersVerified, getUsers]);
+  }, [isViewUsersVerified, getUsers, usersCount]);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -82,7 +86,8 @@ const Users: React.FC = () => {
   }, [userPermissions]);
 
   const setItemList = (data: any) => {
-    setUserList(data.getUsers);
+    setUserList(data?.getUsers?.results);
+    setUsersCount(data?.getUsers?.totalCount);
   };
 
   const columns: GridColumns = [
@@ -134,7 +139,7 @@ const Users: React.FC = () => {
   const onUserClick = (params: any) => {
     navigate(`./${params.id}`);
   };
-  if (!isViewUsersVerified)
+  if (!isViewUsersVerified && !loading)
     return (
       <div className="table-component">
         <DisplayMessage
@@ -152,7 +157,7 @@ const Users: React.FC = () => {
           rows={userList}
           columns={columns}
           text="All Users"
-          count={userList.length}
+          count={usersCount}
           setItemList={setItemList}
           onAdd={onAdd}
           onEdit={onEdit}

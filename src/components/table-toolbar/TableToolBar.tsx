@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useRecoilState } from "recoil";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Avatar } from "@mui/material";
 
 import { TableToolBarProps } from "./types";
@@ -10,7 +10,7 @@ import { ReactComponent as PlusIcon } from "assets/plus.svg";
 import { ReactComponent as SortIcon } from "assets/sort.svg";
 import { ReactComponent as FilterIcon } from "assets/filter.svg";
 import { sortCountAtom } from "states/searchSortFilterStates";
-import { useUsersFetch } from "hooks/usersFetch";
+import { useFetchEntities } from "hooks/useFetchEntities";
 import FilterDropdown from "components/filter-dropdown";
 
 const TableToolBar: FC<TableToolBarProps> = ({
@@ -62,16 +62,14 @@ const TableToolBar: FC<TableToolBarProps> = ({
     handleClose();
   };
 
-  const fetchUsers = useUsersFetch({
+  const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field },
   });
-  useEffect(() => {
-    fetchUsers();
-  }, [count]);
 
   const onSort = () => {
-    if (count === 2) setCount(1);
-    else setCount(count + 1);
+    const countValue = count === 2 ? 1 : 2;
+    setCount(countValue);
+    fetchEntities({ countValue: countValue });
   };
   return (
     <div className="table-toolbar">

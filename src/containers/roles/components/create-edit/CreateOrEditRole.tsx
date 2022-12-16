@@ -102,6 +102,8 @@ const CreateOrEditRole = () => {
           name={role?.name || ""}
           createRole={onCreateRole}
           editRole={onEditRole}
+          role={role}
+          loading={loading}
         />
       )}
       <div className="role-permissions">

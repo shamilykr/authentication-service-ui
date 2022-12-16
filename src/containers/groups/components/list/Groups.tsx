@@ -27,25 +27,28 @@ const GroupList: React.FC = () => {
   const navigate = useNavigate();
 
   const [isAddVerified, setAddVerified] = useState(false);
+  const [groupCount, setGroupCount] = useState(0);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
   const onGetGroupsComplete = (data: any) => {
-    setGroupList(data?.getGroups);
+    setGroupList(data?.getGroups?.results);
+    setGroupCount(data?.getGroups?.totalCount);
   };
 
   const [getGroups, { loading }] = useLazyQuery(GET_GROUPS, {
     onCompleted: (data) => {
       onGetGroupsComplete(data);
     },
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    if (isViewGroupsVerified) {
+    if (isViewGroupsVerified && groupCount === 0) {
       getGroups();
     }
-  }, [isViewGroupsVerified, getGroups]);
+  }, [isViewGroupsVerified, getGroups, groupCount]);
 
   const columns: GridColumns = [
     {
@@ -105,7 +108,8 @@ const GroupList: React.FC = () => {
   }, [userPermissions]);
 
   const setItemList = (data: any) => {
-    setGroupList(data.getGroups);
+    setGroupList(data?.getGroups?.results);
+    setGroupCount(data?.getGroups?.totalCount);
   };
   if (!isViewGroupsVerified && !loading)
     return (
@@ -125,7 +129,7 @@ const GroupList: React.FC = () => {
           rows={groupList}
           columns={columns}
           text="All Groups"
-          count={groupList.length}
+          count={groupCount}
           buttonLabel="Add Group"
           searchLabel="Search Group"
           setItemList={setItemList}

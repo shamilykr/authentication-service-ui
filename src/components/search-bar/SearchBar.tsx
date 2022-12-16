@@ -6,7 +6,7 @@ import { SearchBarProps } from "./types";
 import "./styles.css";
 import { useRecoilState } from "recoil";
 import { searchAtom } from "../../states/searchSortFilterStates";
-import { useUsersFetch } from "../../hooks/usersFetch";
+import { useFetchEntities } from "../../hooks/useFetchEntities";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,
@@ -28,19 +28,19 @@ const SearchBar: FC<SearchBarProps> = ({
       setField("name");
     }
   }, []);
-  const fetchUsers = useUsersFetch({
+  const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: searchQuery, field: field },
   });
-
-  useEffect(() => {
-    fetchUsers();
-  }, [searchValue]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    const delayedSearch = (text?: string) => {
+      fetchEntities({ searchText: text });
+    };
     const delayDebounce = setTimeout(() => {
       setSearchValue(e.target.value);
+      delayedSearch(e.target.value);
     }, 1000);
     return () => clearTimeout(delayDebounce);
   };

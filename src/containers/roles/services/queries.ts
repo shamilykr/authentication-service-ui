@@ -1,14 +1,21 @@
 import { gql } from "@apollo/client";
 
 export const GET_ROLES = gql`
-  query getRoles($search: RoleSearchInput, $sort: SortInput) {
-    getRoles(input: { search: $search, sort: $sort }) {
-      id
-      name
-      permissions {
+  query getRoles(
+    $search: RoleSearchInput
+    $sort: SortInput
+    $pagination: PaginationInput
+  ) {
+    getRoles(input: { search: $search, sort: $sort, pagination: $pagination }) {
+      totalCount
+      results {
         id
         name
-        label
+        permissions {
+          id
+          name
+          label
+        }
       }
     }
   }

@@ -48,19 +48,30 @@ export const GET_USERS = gql`
     $search: UserSearchInput
     $filter: FilterInput
     $sort: SortInput
+    $pagination: PaginationInput
   ) {
-    getUsers(input: { search: $search, filter: $filter, sort: $sort }) {
-      id
-      email
-      firstName
-      middleName
-      lastName
-      status
-      groups {
-        id
-        name
+    getUsers(
+      input: {
+        search: $search
+        filter: $filter
+        sort: $sort
+        pagination: $pagination
       }
-      inviteToken
+    ) {
+      totalCount
+      results {
+        id
+        email
+        firstName
+        middleName
+        lastName
+        status
+        groups {
+          id
+          name
+        }
+        inviteToken
+      }
     }
   }
 `;

@@ -1,32 +1,41 @@
 import { gql } from "@apollo/client";
 
 export const GET_GROUPS = gql`
-  query getGroups($search: GroupSearchInput, $sort: SortInput) {
-    getGroups(input: { search: $search, sort: $sort }) {
-      id
-      name
-      roles {
+  query getGroups(
+    $search: GroupSearchInput
+    $sort: SortInput
+    $pagination: PaginationInput
+  ) {
+    getGroups(
+      input: { search: $search, sort: $sort, pagination: $pagination }
+    ) {
+      totalCount
+      results {
         id
         name
+        roles {
+          id
+          name
+          permissions {
+            id
+            name
+            label
+          }
+        }
+        users {
+          firstName
+          lastName
+        }
         permissions {
           id
           name
           label
         }
-      }
-      users {
-        firstName
-        lastName
-      }
-      permissions {
-        id
-        name
-        label
-      }
-      allPermissions {
-        id
-        name
-        label
+        allPermissions {
+          id
+          name
+          label
+        }
       }
     }
   }
