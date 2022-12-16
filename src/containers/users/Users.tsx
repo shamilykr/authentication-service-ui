@@ -7,6 +7,7 @@ import { Tooltip } from "@mui/material";
 import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
 import { ReactComponent as ContentCopyIcon } from "assets/copy.svg";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLazyQuery } from "@apollo/client";
 
 import { GET_USERS } from "./services/queries";
 import { REFRESH_INVITE_TOKEN } from "../auth/services/mutations";
@@ -17,7 +18,6 @@ import TableList from "components/table/Table";
 import TableChipElement from "components/table-chip-element";
 import { stringAvatar } from "utils/table";
 import "./components/create-edit-user/styles.css";
-import { allUsersAtom } from "states/userStates";
 import {
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
@@ -34,7 +34,6 @@ import {
   statusFilterAtom,
 } from "states/searchSortFilterStates";
 import { groupListAtom } from "states/groupStates";
-import { useLazyQuery } from "@apollo/client";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -47,11 +46,9 @@ const Users: React.FC = () => {
   const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
-  const setUsers = useSetRecoilState(allUsersAtom);
 
   const onComplete = (data: any) => {
     setUserList(data?.getUsers?.results);
-    setUsers(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
   };
 
