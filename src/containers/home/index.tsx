@@ -34,13 +34,28 @@ import {
   VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
+import { GET_CURRENT_USER } from "containers/auth/services/queries";
 
 const HomePage = () => {
+  const [currentUserDetails, setCurrentUserDetails] =
+    useRecoilState(currentUserAtom);
+  const [userPermissions, setUserPermissions] =
+    useRecoilState(UserPermissionsAtom);
+
+  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
+    onCompleted: (data) => {
+      setCurrentUserDetails(data.getCurrentUser);
+      setUserPermissions(data.getCurrentUser?.permissions);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
   const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
-  const [userPermissions] = useRecoilState(UserPermissionsAtom);
-  const [currentUserDetails] = useRecoilState(currentUserAtom);
 
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
@@ -93,6 +108,8 @@ const HomePage = () => {
 
   const onLogoutCompleted = () => {
     CustomerAuth.clearTokens();
+    setCurrentUserDetails([]);
+    setUserPermissions([]);
     setIsViewGroupsVerified(false);
     setIsViewUsersVerified(false);
     setIsViewPermissionsVerified(false);
