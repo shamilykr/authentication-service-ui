@@ -184,7 +184,11 @@ const TableList: FC<TableProps> = ({
                 height: "35px !important",
               }}
               id="go-button"
-              onClick={() => setCurrentPage(pageValue)}
+              onClick={() => {
+                setCurrentPage(pageValue);
+                setPageValue(pageValue);
+                fetchEntities({ page: pageValue - 1 });
+              }}
             >
               Go
             </Button>

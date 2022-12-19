@@ -22,7 +22,7 @@ interface usersFetchProps {
 interface ApiParams {
   searchText?: any;
   countValue?: number;
-  page?: number;
+  page?: any;
 }
 export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [searchValue] = useRecoilState(searchAtom);
@@ -39,7 +39,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const fetchEntities = ({
     searchText = null,
     countValue = 0,
-    page = 0,
+    page = null,
   }: ApiParams) => {
     let search = {};
     if (
@@ -97,8 +97,11 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     if (Object.keys(search).length > 0) {
       variables = { ...variables, search: search };
     }
-    if (page === 0) setCurrentPage(1);
-    variables = { ...variables, pagination: { offset: page * 8, limit: 8 } };
+    if (page === null) setCurrentPage(1);
+    variables = {
+      ...variables,
+      pagination: { offset: page ? page * 8 : 0, limit: 8 },
+    };
 
     filterQuery({ variables: variables });
   };
