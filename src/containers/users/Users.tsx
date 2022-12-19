@@ -61,7 +61,7 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     if (isViewUsersVerified && usersCount === 0) {
-      getUsers();
+      getUsers({ variables: { pagination: { limit: 8, offset: 0 } } });
     }
   }, [isViewUsersVerified, getUsers, usersCount]);
 
