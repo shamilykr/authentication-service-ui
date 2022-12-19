@@ -50,7 +50,10 @@ const Login: React.FC = () => {
   }, [data]);
 
   useEffect(() => {
-    if (passwordCreatedData) navigate("/"); // eslint-disable-next-line
+    if (passwordCreatedData)
+      setTimeout(() => {
+        navigate("/");
+      }, 1000); // eslint-disable-next-line
   }, [passwordCreatedData]);
 
   const onLogin = (data: FieldValues) => {

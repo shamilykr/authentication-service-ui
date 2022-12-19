@@ -28,6 +28,9 @@ const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
       <div className="logo">
         <img alt="logo" src={LOGO_URL} />
       </div>
+      <div className="password-message">
+        Set your password to activate your account.
+      </div>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <FormInputText

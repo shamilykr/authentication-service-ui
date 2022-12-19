@@ -181,9 +181,6 @@ const HomePage = () => {
               <div className="navLogo">
                 <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
               </div>
-              <div className="menu-icon">
-                <MenuIcon />
-              </div>
             </div>
             <div className="nav-user-details">
               <SideBar />

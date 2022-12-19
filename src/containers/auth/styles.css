@@ -5,8 +5,16 @@
 }
 
 .containerLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 50%;
   margin-top: 275px;
+}
+
+.password-message {
+  display: flex;
+  justify-content: center;
 }
 
 .textBox {
@@ -38,6 +46,6 @@
 
 #login-image {
   padding: 10px 10px 0px 10px;
-  width:100%;
+  width: 100%;
   height: 98vh;
 }
