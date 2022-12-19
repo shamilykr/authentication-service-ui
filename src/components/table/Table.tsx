@@ -4,12 +4,6 @@ import {
   GridColumns,
   GridRowId,
 } from "@mui/x-data-grid";
-import {
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useEffect, useState } from "react";
@@ -72,7 +66,6 @@ const TableList: FC<TableProps> = ({
   const setCheckedStatus = useSetRecoilState(statusFilterAtom);
   const setCheckedGroups = useSetRecoilState(groupFilterAtom);
   const setCount = useSetRecoilState(sortCountAtom);
-  // const [currentPage, setCurrentPage] = useState(1);
   const setSearchValue = useSetRecoilState(searchAtom);
 
   const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
@@ -133,9 +126,6 @@ const TableList: FC<TableProps> = ({
   }, []);
 
   function CustomPagination() {
-    // const apiRef = useGridApiContext();
-    // // const page = useGridSelector(apiRef, gridPageSelector);
-    // // const pageCount = useGridSelector(apiRef, gridPageCountSelector);
     const [pageValue, setPageValue] = useState(1);
     return (
       <>
@@ -153,7 +143,6 @@ const TableList: FC<TableProps> = ({
           // @ts-expect-error
           renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
           onChange={(event, value) => {
-            console.log("value", value);
             setPageValue(value);
             setCurrentPage(value);
             fetchEntities({ page: value - 1 });
