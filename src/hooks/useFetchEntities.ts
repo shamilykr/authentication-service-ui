@@ -1,11 +1,12 @@
 import { useLazyQuery, DocumentNode } from "@apollo/client";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
 import { FilterConditions, SortDirection } from "../services/constants";
 import {
   groupFilterAtom,
   searchAtom,
   sortCountAtom,
   statusFilterAtom,
+  paginationAtom,
 } from "../states/searchSortFilterStates";
 
 interface userParamsProps {
@@ -21,19 +22,25 @@ interface usersFetchProps {
 interface ApiParams {
   searchText?: any;
   countValue?: number;
+  page?: any;
 }
 export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [searchValue] = useRecoilState(searchAtom);
   const [checkedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups] = useRecoilState(groupFilterAtom);
   const [count] = useRecoilState(sortCountAtom);
+  const setCurrentPage = useSetRecoilState(paginationAtom);
   const [filterQuery] = useLazyQuery(usersFetchProps.userParams.query, {
     onCompleted: (data) => {
       usersFetchProps.userParams.setList(data);
     },
     fetchPolicy: "network-only",
   });
-  const fetchEntities = ({ searchText = null, countValue = 0 }: ApiParams) => {
+  const fetchEntities = ({
+    searchText = null,
+    countValue = 0,
+    page = null,
+  }: ApiParams) => {
     let search = {};
     if (
       (searchValue && searchValue.length !== 0) ||
@@ -58,7 +65,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
       const countParams = countValue !== 0 ? countValue : count;
       let direction = {
         field: usersFetchProps.userParams.field,
-        direction: countParams === 1 ? SortDirection.ASC : SortDirection.DESC,
+        direction: countParams === 1 ? SortDirection.DESC : SortDirection.ASC,
       };
       sort = { ...sort, ...direction };
     }
@@ -90,6 +97,12 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     if (Object.keys(search).length > 0) {
       variables = { ...variables, search: search };
     }
+    if (page === null) setCurrentPage(1);
+    variables = {
+      ...variables,
+      pagination: { offset: page ? page * 8 : 0, limit: 8 },
+    };
+
     filterQuery({ variables: variables });
   };
 

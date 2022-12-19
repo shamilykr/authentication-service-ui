@@ -19,3 +19,8 @@ export const searchAtom = atom({
   key: "search",
   default: "",
 });
+
+export const paginationAtom = atom({
+  key: "pagination",
+  default: 1,
+});

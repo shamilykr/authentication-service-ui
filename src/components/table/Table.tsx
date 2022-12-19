@@ -4,12 +4,6 @@ import {
   GridColumns,
   GridRowId,
 } from "@mui/x-data-grid";
-import {
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import React, { FC, useEffect, useState } from "react";
@@ -32,8 +26,9 @@ import {
   groupFilterAtom,
   sortCountAtom,
   searchAtom,
+  paginationAtom,
 } from "states/searchSortFilterStates";
-
+import { useFetchEntities } from "hooks/useFetchEntities";
 const TableList: FC<TableProps> = ({
   field,
   rows,
@@ -72,10 +67,13 @@ const TableList: FC<TableProps> = ({
   const setCount = useSetRecoilState(sortCountAtom);
   const setSearchValue = useSetRecoilState(searchAtom);
 
+  const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
   const [entityName, setEntityName] = useState<string>("");
-
+  const fetchEntities = useFetchEntities({
+    userParams: { setList: setItemList, query: refetchQuery, field: field },
+  });
   useEffect(() => {
     if (userPermissions)
       userPermissions.forEach((item: any) => {
@@ -120,15 +118,13 @@ const TableList: FC<TableProps> = ({
     return () => {
       setCheckedGroups([]);
       setCheckedStatus([]);
+      setCurrentPage(1);
       setCount(0);
       setSearchValue("");
     };
   }, []);
 
   function CustomPagination() {
-    const apiRef = useGridApiContext();
-    const page = useGridSelector(apiRef, gridPageSelector);
-    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
     const [pageValue, setPageValue] = useState(1);
     return (
       <>
@@ -139,13 +135,16 @@ const TableList: FC<TableProps> = ({
           color="primary"
           variant="outlined"
           shape="rounded"
-          page={page + 1}
-          count={pageCount}
+          page={currentPage}
+          count={
+            count % 8 > 0 ? Math.floor(count / 8) + 1 : Math.floor(count / 8)
+          }
           // @ts-expect-error
           renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
           onChange={(event, value) => {
-            apiRef.current.setPage(value - 1);
             setPageValue(value);
+            setCurrentPage(value);
+            fetchEntities({ page: value - 1 });
           }}
         />
         <div className="go-to-page">
@@ -173,7 +172,11 @@ const TableList: FC<TableProps> = ({
                 height: "35px !important",
               }}
               id="go-button"
-              onClick={() => apiRef.current.setPage(pageValue - 1)}
+              onClick={() => {
+                setCurrentPage(pageValue);
+                setPageValue(pageValue);
+                fetchEntities({ page: pageValue - 1 });
+              }}
             >
               Go
             </Button>
