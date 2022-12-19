@@ -4,7 +4,7 @@ import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 
 export const useCustomQuery = (
   query: any,
-  onComplete: any,
+  onComplete?: any,
   variables?: any,
   skip?: boolean | undefined
 ) => {
