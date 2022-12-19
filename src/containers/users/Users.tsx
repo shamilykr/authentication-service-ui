@@ -19,6 +19,7 @@ import TableChipElement from "components/table-chip-element";
 import { stringAvatar } from "utils/table";
 import "./components/create-edit-user/styles.css";
 import {
+  IsViewGroupsVerifiedAtom,
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
@@ -39,6 +40,7 @@ const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
   const [usersCount, setUsersCount] = useState(0);
   const [isViewUsersVerified] = useRecoilState(IsViewUsersVerifiedAtom);
+  const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [userList, setUserList] = useRecoilState(userListAtom);
   const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
@@ -153,7 +155,6 @@ const Users: React.FC = () => {
         <TableList
           rows={userList}
           columns={columns}
-          text="All Users"
           count={usersCount}
           setItemList={setItemList}
           onAdd={onAdd}
@@ -176,8 +177,8 @@ const Users: React.FC = () => {
           setFirstFilter={setCheckedStatus}
           secondFilter={checkedGroups}
           setSecondFilter={setCheckedGroups}
-          firstFilterName="Status"
-          secondFilterName="Groups"
+          filterName={["Status", "Groups"]}
+          isViewFilterVerified={isViewGroupsVerified}
         />
       ) : (
         <CircularProgress />

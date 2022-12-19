@@ -121,7 +121,11 @@ const UserDetails = () => {
               <Tab label="Permissions" />
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0}>
+          <TabPanel
+            value={value}
+            index={0}
+            style={{ height: "125%", overflowY: "scroll" }}
+          >
             {!loading ? (
               isViewGroupsVerified ? (
                 user?.groups && (user?.groups).length > 0 ? (

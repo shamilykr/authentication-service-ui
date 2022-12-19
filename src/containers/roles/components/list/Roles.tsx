@@ -115,7 +115,6 @@ const Roles: React.FC = () => {
         <TableList
           rows={roleList}
           columns={columns}
-          text="All Roles"
           count={roleCount}
           buttonLabel="Add Role"
           searchLabel="Search Role"

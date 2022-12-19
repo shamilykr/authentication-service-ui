@@ -128,7 +128,6 @@ const GroupList: React.FC = () => {
         <TableList
           rows={groupList}
           columns={columns}
-          text="All Groups"
           count={groupCount}
           buttonLabel="Add Group"
           searchLabel="Search Group"

@@ -15,19 +15,18 @@ import FilterDropdown from "components/filter-dropdown";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
-  text,
   filterList,
   firstFilter,
-  firstFilterName,
+  filterName,
   setFirstFilter,
   secondFilter,
-  secondFilterName,
   setSecondFilter,
   searchLabel,
   buttonLabel,
   setItemList,
   searchQuery,
   isAddVerified,
+  isViewFilterVerified,
   onAdd,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -137,9 +136,9 @@ const TableToolBar: FC<TableToolBarProps> = ({
           open={open}
           anchorEl={anchorEl}
           onApply={onApply}
-          firstFilterName={firstFilterName as unknown as string}
-          secondFilterName={secondFilterName as unknown as string}
+          filterName={filterName as unknown as string[]}
           currentFilters={[currentFirstFilter, currentSecondFilter]}
+          isViewFilterVerified={isViewFilterVerified}
         />
       )}
     </div>

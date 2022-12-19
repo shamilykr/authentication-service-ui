@@ -38,17 +38,16 @@ const TableList: FC<TableProps> = ({
   field,
   rows,
   columns,
-  text,
   count,
   actionFlex,
   cursorType,
   filterList,
   firstFilter,
-  firstFilterName,
+  filterName,
   setFirstFilter,
   secondFilter,
-  secondFilterName,
   setSecondFilter,
+  isViewFilterVerified,
   setItemList,
   onAdd,
   onEdit,
@@ -273,7 +272,6 @@ const TableList: FC<TableProps> = ({
       {isViewVerified ? (
         <>
           <TableToolBar
-            text={text}
             buttonLabel={buttonLabel}
             searchLabel={searchLabel}
             setItemList={setItemList}
@@ -286,8 +284,8 @@ const TableList: FC<TableProps> = ({
             secondFilter={secondFilter}
             setFirstFilter={setFirstFilter}
             setSecondFilter={setSecondFilter}
-            firstFilterName={firstFilterName}
-            secondFilterName={secondFilterName}
+            filterName={filterName}
+            isViewFilterVerified={isViewFilterVerified}
           />
           <DataGrid
             rows={rows}

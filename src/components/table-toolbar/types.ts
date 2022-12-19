@@ -4,17 +4,16 @@ import { SetterOrUpdater } from "recoil";
 export interface TableToolBarProps {
   field: string;
   buttonLabel: string;
-  text: string;
   searchLabel: string;
   searchQuery: DocumentNode;
   setItemList: any;
   firstFilter?: never[];
-  firstFilterName?: string;
-  secondFilterName?: string;
+  filterName?: string[];
   setFirstFilter?: SetterOrUpdater<never[]>;
   secondFilter?: never[];
   setSecondFilter?: SetterOrUpdater<never[]>;
   isAddVerified?: boolean;
   filterList?: any;
+  isViewFilterVerified?: boolean;
   onAdd?: () => void;
 }

@@ -12,7 +12,6 @@ export interface TableProps {
   rows: GridRowsProp;
   columns: GridColumns;
   buttonLabel: string;
-  text: string;
   count: number;
   searchLabel: string;
   setItemList: (data: any) => void;
@@ -26,11 +25,11 @@ export interface TableProps {
   actionFlex: number;
   cursorType: string;
   filterList?: any;
-  firstFilterName?: string;
+  filterName?: string[];
   firstFilter?: never[];
+  isViewFilterVerified?: boolean;
   setFirstFilter?: SetterOrUpdater<never[]>;
   secondFilter?: never[];
-  secondFilterName?: string;
   setSecondFilter?: SetterOrUpdater<never[]>;
   handleRowClick?: (params: GridRowParams) => void;
   onAdd: () => void;

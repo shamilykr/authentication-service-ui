@@ -16,16 +16,15 @@ interface FilterDropdownProps {
   setFirstFilter?: SetterOrUpdater<never[]>;
   secondFilter?: never[];
   setSecondFilter?: SetterOrUpdater<never[]>;
+  isViewFilterVerified?: boolean;
   searchQuery: DocumentNode;
   setItemList: any;
   field: string;
   filterList?: any;
   open: boolean;
   anchorEl: any;
-  setCount?: (val?: number) => void;
   onApply: (count: number) => void;
-  firstFilterName: string;
-  secondFilterName: string;
+  filterName: string[];
   currentFilters: any;
 }
 
@@ -35,16 +34,15 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   secondFilter,
   setSecondFilter,
   searchQuery,
-  setCount,
   setItemList,
   field,
   filterList,
   open,
   anchorEl,
   onApply,
-  firstFilterName,
-  secondFilterName,
+  filterName,
   currentFilters,
+  isViewFilterVerified,
 }) => {
   const [viewFirstFilter, setViewFirstFilter] = useState(true);
   const [viewSecondFilter, setViewSecondFilter] = useState(false);
@@ -162,7 +160,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               id="filter-by-options"
               onClick={() => switchFilter(true, false)}
             >
-              <div>{firstFilterName}</div>
+              <div>{filterName[0]}</div>
               <div id="avatar-arrow">
                 <Avatar
                   sx={{
@@ -179,27 +177,29 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
                 <LeftArrowIcon />
               </div>
             </MenuItem>
-            <MenuItem
-              id="filter-by-options"
-              onClick={() => switchFilter(false, true)}
-            >
-              <div>{secondFilterName}</div>
-              <div id="avatar-arrow">
-                <Avatar
-                  sx={{
-                    mr: "12px !important",
-                    backgroundColor: "#2653F1",
-                    color: "white",
-                    width: "24px !important",
-                    height: "24px !important",
-                    fontSize: "14px !important",
-                  }}
-                >
-                  {(secondFilter as unknown as never[]).length}
-                </Avatar>
-                <LeftArrowIcon />
-              </div>
-            </MenuItem>
+            {isViewFilterVerified && (
+              <MenuItem
+                id="filter-by-options"
+                onClick={() => switchFilter(false, true)}
+              >
+                <div>{filterName[1]}</div>
+                <div id="avatar-arrow">
+                  <Avatar
+                    sx={{
+                      mr: "12px !important",
+                      backgroundColor: "#2653F1",
+                      color: "white",
+                      width: "24px !important",
+                      height: "24px !important",
+                      fontSize: "14px !important",
+                    }}
+                  >
+                    {(secondFilter as unknown as never[]).length}
+                  </Avatar>
+                  <LeftArrowIcon />
+                </div>
+              </MenuItem>
+            )}
           </div>
           <div style={{ position: "fixed", top: "382px" }}>
             <MenuItem>
