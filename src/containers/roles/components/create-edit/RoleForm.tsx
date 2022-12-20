@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import BottomFormController from "components/bottom-form-controller";
 
-import { RoleFormSchema } from "../../roleSchema";
+import { RoleFormSchema } from "utils/roles";
 import "./styles.css";
 import FormInputText from "components/inputText";
 import { Role } from "types/role";

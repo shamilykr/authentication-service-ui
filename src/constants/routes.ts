@@ -8,4 +8,12 @@ export const RoutePaths = {
   groups: "groups",
   roles: "roles",
   permissions: "permissions",
+  homeUrl: "/home/*",
+  userDetail: "users/:id",
+  addUser: "users/add",
+  editUser: "users/add/:id",
+  addGroup: "groups/add",
+  editGroup: "groups/edit/:id",
+  addRole: "roles/add",
+  editRole: "roles/edit/:id",
 };

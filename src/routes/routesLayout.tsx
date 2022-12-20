@@ -5,7 +5,7 @@ import UserDetails from "../containers/users/components/user-details/UserDetails
 import CreateOrEditRole from "../containers/roles/components/create-edit/CreateOrEditRole";
 import AddUser from "../containers/users/components/create-edit-user/AddUser";
 import EditUser from "../containers/users/components/create-edit-user/EditUser";
-import { RoutePaths } from "./routePaths";
+import { RoutePaths } from "constants/routes";
 import CreateOrEditGroup from "../containers/groups/components/create-edit/CreateEditGroup";
 
 const NotFound = lazy(() => import("../components/NotFound"));
@@ -16,8 +16,6 @@ const Groups = lazy(() => import("../containers/groups"));
 const Roles = lazy(() => import("../containers/roles"));
 
 const RoutesLayout: React.FC = () => {
-  // const navigate = useNavigate();
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
@@ -27,17 +25,29 @@ const RoutesLayout: React.FC = () => {
         />
         <Route path={RoutePaths.login} element={<Login />} />
         <Route path={RoutePaths.confirmpassword} element={<Login />} />
-        <Route path="/home/*" element={<HomePage />}>
+        <Route path={RoutePaths.homeUrl} element={<HomePage />}>
           <Route path={RoutePaths.users} element={<Users />} />
-          <Route path="users/:id" element={<UserDetails />}></Route>
-          <Route path="users/add" element={<AddUser />} />
-          <Route path="users/add/:id" element={<EditUser />} />
+          <Route path={RoutePaths.userDetail} element={<UserDetails />}></Route>
+          <Route path={RoutePaths.addUser} element={<AddUser />} />
+          <Route path={RoutePaths.editUser} element={<EditUser />} />
           <Route path={RoutePaths.groups} element={<Groups />} />
-          <Route path="groups/add" element={<CreateOrEditGroup />}></Route>
-          <Route path="groups/edit/:id" element={<CreateOrEditGroup />}></Route>
+          <Route
+            path={RoutePaths.addGroup}
+            element={<CreateOrEditGroup />}
+          ></Route>
+          <Route
+            path={RoutePaths.editGroup}
+            element={<CreateOrEditGroup />}
+          ></Route>
           <Route path={RoutePaths.roles} element={<Roles />} />
-          <Route path="roles/add" element={<CreateOrEditRole />}></Route>
-          <Route path="roles/edit/:id" element={<CreateOrEditRole />}></Route>
+          <Route
+            path={RoutePaths.addRole}
+            element={<CreateOrEditRole />}
+          ></Route>
+          <Route
+            path={RoutePaths.editRole}
+            element={<CreateOrEditRole />}
+          ></Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

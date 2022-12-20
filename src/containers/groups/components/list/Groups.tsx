@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { GridColumns, GridRowId } from "@mui/x-data-grid";
+import { GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -9,12 +9,10 @@ import { DELETE_GROUP } from "../../services/mutations";
 import { GET_GROUPS } from "../../services/queries";
 import TableList from "components/table";
 import { groupListAtom } from "states/groupStates";
-import TableChipElement from "components/table-chip-element";
 import {
   IsViewGroupsVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import AvatarList from "components/avatar-list/AvatarList";
 import {
   CREATE_GROUP_PERMISSION,
   DELETE_GROUP_PERMISSION,
@@ -27,6 +25,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
+import { columns } from "utils/groups";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -54,47 +53,6 @@ const GroupList: React.FC = () => {
       getGroups();
     }
   }, [isViewGroupsVerified, getGroups, groupCount]);
-
-  const columns: GridColumns = [
-    {
-      field: "name",
-      headerName: "Group",
-      headerClassName: "user-list-header",
-      headerAlign: "left",
-      width: 280,
-      sortable: false,
-    },
-    {
-      field: "roles",
-      headerName: "Roles",
-      headerClassName: "user-list-header",
-      flex: 0.6,
-      renderCell: (params) => (
-        <div className="role-list">
-          <TableChipElement
-            rowItems={params}
-            columnName="roles"
-            defaultSize={3}
-          />
-        </div>
-      ),
-      headerAlign: "left",
-      sortable: false,
-    },
-    {
-      field: "users",
-      headerName: "Members",
-      headerClassName: "user-list-header",
-      flex: 0.5,
-      renderCell: (params) => (
-        <div className="role-list">
-          <AvatarList {...params} />
-        </div>
-      ),
-      headerAlign: "left",
-      sortable: false,
-    },
-  ];
 
   const onAddGroup = () => {
     navigate("add");

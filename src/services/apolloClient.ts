@@ -8,7 +8,7 @@ import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 
 import { ErrorMessagesArray } from "./constants";
-import { RoutePaths } from "./../routes/routePaths";
+import { RoutePaths } from "constants/routes";
 
 const link = createHttpLink({
   uri: process.env.REACT_APP_API_URL,
