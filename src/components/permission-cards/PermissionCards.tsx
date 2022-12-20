@@ -61,6 +61,7 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
               setUserSelectedPermissions={setUserSelectedPermissions}
               userPermissions={userPermissions}
               isViewPage={isViewPage}
+              key={entity?.id}
             />
           ))}
         </>

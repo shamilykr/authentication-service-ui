@@ -10,13 +10,13 @@ const AvatarList = (avatarList: any) => {
   return (
     <div className="avatar-list">
       <AvatarGroup max={DEFAULT_SIZE} spacing={22}>
-        {row?.users?.map((item: any) => (
+        {row?.users?.map((item: any, index: number) => (
           <Avatar
             {...stringAvatar(
               `${item.firstName} ${item.lastName}`?.toUpperCase()
             )}
             className="avatar"
-            key={item?.id}
+            key={`${item?.id}_${index}`}
           />
         ))}
       </AvatarGroup>

@@ -133,7 +133,7 @@ const UserDetails = () => {
                     <div id="user-groups">
                       {user?.groups?.map((item: any) => {
                         return (
-                          <div style={{ marginTop: 15 }}>
+                          <div style={{ marginTop: 15 }} key={item?.id}>
                             <GroupCard
                               group={item}
                               showCheckBox={false}

@@ -77,6 +77,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
                   checked={getIsChecked(item)}
                   icon={<UnCheckedIcon />}
                   checkedIcon={<CheckedIcon />}
+                  key={item?.id}
                 />
               </div>
 

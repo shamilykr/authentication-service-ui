@@ -13,7 +13,7 @@ interface RoleFormProps {
   name: string;
   createRole: (inputs: FieldValues) => void;
   editRole: (inputs: FieldValues) => void;
-  role?: Role;
+  role: Role;
   loading: boolean;
 }
 

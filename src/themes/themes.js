@@ -17,7 +17,7 @@ const theme = createTheme({
           ...[...Array(max)].reduce(
             (result, curr, index) => ({
               ...result,
-              [`& > .MuiAvatar-root:nth-child(${index + 1})`]: {
+              [`& > .MuiAvatar-root:nth-of-type(${index + 1})`]: {
                 zIndex: max - index,
               },
             }),

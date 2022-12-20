@@ -102,7 +102,7 @@ const CreateOrEditRole = () => {
           name={role?.name || ""}
           createRole={onCreateRole}
           editRole={onEditRole}
-          role={role}
+          role={role as Role}
           loading={loading}
         />
       )}

@@ -49,7 +49,6 @@ const Filter: FC<FilterProps> = ({
                     setCheckedItems
                   );
                 }}
-                defaultChecked={false}
                 checked={handleCheckedItems(
                   typeof item === "string" ? item : item.id,
                   checkedItems

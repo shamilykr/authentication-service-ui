@@ -127,7 +127,10 @@ const PermissionsCard: FC<PermissionCardProps> = ({
     <Container show={showEntityPermissions()}>
       <CollectionName>{entity.name}</CollectionName>
       {entity.permissions.map((permission) => (
-        <If condition={!RemovedPermissions.includes(permission.name)}>
+        <If
+          condition={!RemovedPermissions.includes(permission.name)}
+          key={permission?.id}
+        >
           <If condition={isViewPage && IsUserPermission(permission.id)}>
             <CheckboxContainer>
               <SquareIcon sx={{ width: 10, fill: "#2F6FED" }} />
