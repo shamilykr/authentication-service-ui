@@ -3,8 +3,9 @@ import { useRecoilState } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import { Box, Tab, Tabs, Typography, Grid, Divider } from "@mui/material";
+import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLazyQuery } from "@apollo/client";
 
 import { GET_ROLES } from "containers/roles/services/queries";
 import {
@@ -27,6 +28,8 @@ import { Permission, User } from "types/user";
 import { Group } from "types/group";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "constants/messages";
@@ -37,34 +40,7 @@ import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
-import { useLazyQuery } from "@apollo/client";
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  style?: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, style = {}, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      style={style}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import TabPanel from "components/tab-panel/TabPanel";
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -173,7 +149,6 @@ const CreateOrEditGroup = () => {
         return;
       }
       if (item) {
-        // handlePermissions(item);
         if (roles[0] === null) {
           setRoles([item]);
         } else {
@@ -350,11 +325,10 @@ const CreateOrEditGroup = () => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
+                  altMessage={ACCESS_DENIED_MESSAGE}
                   image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
-                  // className="access-denied-mini"
+                  heading={ACCESS_DENIED_MESSAGE}
+                  description={ACCESS_DENIED_DESCRIPTION}
                   containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
                 />
               )}
@@ -373,10 +347,10 @@ const CreateOrEditGroup = () => {
           ) : (
             <DisplayMessage
               customStyle={{ fontSize: 16 }}
-              altMessage="Access Denied"
+              altMessage={ACCESS_DENIED_MESSAGE}
               image="./assets/access-denied.png"
-              heading="Access Denied"
-              description="Sorry, you are not allowed to view this page."
+              heading={ACCESS_DENIED_MESSAGE}
+              description={ACCESS_DENIED_DESCRIPTION}
               className="access-denied-mini"
             />
           )}
@@ -427,10 +401,10 @@ const CreateOrEditGroup = () => {
             ) : (
               <DisplayMessage
                 customStyle={{ fontSize: 16 }}
-                altMessage="Access Denied"
+                altMessage={ACCESS_DENIED_MESSAGE}
                 image="./assets/access-denied.png"
-                heading="Access Denied"
-                description="Sorry, you are not allowed to view this page."
+                heading={ACCESS_DENIED_MESSAGE}
+                description={ACCESS_DENIED_DESCRIPTION}
                 className="access-denied-mini"
               />
             )}

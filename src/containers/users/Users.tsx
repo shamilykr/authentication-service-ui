@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Avatar, Chip } from "@mui/material";
 import { GridColumns } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,11 @@ import {
   statusFilterAtom,
 } from "states/searchSortFilterStates";
 import { groupListAtom } from "states/groupStates";
+import { AddEntity, SearchEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -142,10 +147,10 @@ const Users: React.FC = () => {
     return (
       <div className="denied-table-component">
         <DisplayMessage
-          altMessage="Access Denied"
+          altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
-          heading="Access Denied"
-          description="Sorry, you are not allowed to view this page."
+          heading={ACCESS_DENIED_MESSAGE}
+          description={ACCESS_DENIED_DESCRIPTION}
         />
       </div>
     );
@@ -160,8 +165,8 @@ const Users: React.FC = () => {
           onAdd={onAdd}
           onEdit={onEdit}
           entity="User"
-          buttonLabel="Add User"
-          searchLabel="Search by First Name or Email"
+          buttonLabel={AddEntity.ADD_USER}
+          searchLabel={SearchEntity.SEARCH_USER}
           deleteMutation={DELETE_USER}
           refetchQuery={GET_USERS}
           handleRowClick={onUserClick}

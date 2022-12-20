@@ -5,8 +5,8 @@ import { ReactComponent as SearchIcon } from "assets/search.svg";
 import { SearchBarProps } from "./types";
 import "./styles.css";
 import { useSetRecoilState } from "recoil";
-import { searchAtom } from "../../states/searchSortFilterStates";
-import { useFetchEntities } from "../../hooks/useFetchEntities";
+import { searchAtom } from "states/searchSortFilterStates";
+import { useFetchEntities } from "hooks/useFetchEntities";
 
 const SearchBar: FC<SearchBarProps> = ({
   searchLabel,

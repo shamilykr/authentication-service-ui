@@ -22,6 +22,11 @@ import {
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
 import { useLazyQuery } from "@apollo/client";
+import { AddEntity, SearchEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -115,10 +120,10 @@ const GroupList: React.FC = () => {
     return (
       <div className="denied-table-component">
         <DisplayMessage
-          altMessage="Access Denied"
+          altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
-          heading="Access Denied"
-          description="Sorry, you are not allowed to view this page."
+          heading={ACCESS_DENIED_MESSAGE}
+          description={ACCESS_DENIED_DESCRIPTION}
         />
       </div>
     );
@@ -129,8 +134,8 @@ const GroupList: React.FC = () => {
           rows={groupList}
           columns={columns}
           count={groupCount}
-          buttonLabel="Add Group"
-          searchLabel="Search Group"
+          buttonLabel={AddEntity.ADD_GROUP}
+          searchLabel={SearchEntity.SEARCH_GROUP}
           setItemList={setItemList}
           entity="Group"
           deleteMutation={DELETE_GROUP}

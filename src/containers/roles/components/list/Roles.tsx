@@ -21,6 +21,11 @@ import {
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
 import { useLazyQuery } from "@apollo/client";
+import { AddEntity, SearchEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -102,10 +107,10 @@ const Roles: React.FC = () => {
     return (
       <div className="denied-table-component">
         <DisplayMessage
-          altMessage="Access Denied"
+          altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
-          heading="Access Denied"
-          description="Sorry, you are not allowed to view this page."
+          heading={ACCESS_DENIED_MESSAGE}
+          description={ACCESS_DENIED_DESCRIPTION}
         />
       </div>
     );
@@ -116,8 +121,8 @@ const Roles: React.FC = () => {
           rows={roleList}
           columns={columns}
           count={roleCount}
-          buttonLabel="Add Role"
-          searchLabel="Search Role"
+          buttonLabel={AddEntity.ADD_ROLE}
+          searchLabel={SearchEntity.SEARCH_ROLE}
           setItemList={setItemList}
           entity="Role"
           deleteMutation={DELETE_ROLE}

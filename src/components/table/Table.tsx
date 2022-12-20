@@ -29,6 +29,7 @@ import {
   paginationAtom,
 } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
+import { ACCESS_DENIED_MESSAGE } from "constants/messages";
 const TableList: FC<TableProps> = ({
   field,
   rows,
@@ -309,9 +310,9 @@ const TableList: FC<TableProps> = ({
         </>
       ) : (
         <DisplayMessage
-          altMessage="Access Denied"
+          altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
-          heading="Access Denied"
+          heading={ACCESS_DENIED_MESSAGE}
           description="Sorry, you are not allowed to view this page."
         />
       )}

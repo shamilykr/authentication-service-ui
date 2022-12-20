@@ -8,6 +8,7 @@ import { RoleFormSchema } from "../../roleSchema";
 import "./styles.css";
 import FormInputText from "components/inputText";
 import { Role } from "types/role";
+import { AddEntity, UpdateEntity } from "types/generic";
 
 interface RoleFormProps {
   name: string;
@@ -70,7 +71,9 @@ const RoleForm: FC<RoleFormProps> = ({
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={id ? "Update Role" : "Create Role"}
+        primarybuttonLabel={
+          id ? UpdateEntity.UPDATE_ROLE : AddEntity.CREATE_ROLE
+        }
         primaryButtonType="submit"
         formId="role-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

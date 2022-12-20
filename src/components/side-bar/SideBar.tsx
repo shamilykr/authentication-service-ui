@@ -5,8 +5,9 @@ import "./styles.css";
 import { ReactComponent as UsersIcon } from "assets/users.svg";
 import { ReactComponent as GroupsIcon } from "assets/groups.svg";
 import { ReactComponent as RolesIcon } from "assets/roles.svg";
+import { Entities } from "types/generic";
 
-const SideBar: FC = ({}) => {
+const SideBar: FC = () => {
   return (
     <nav>
       <div className="sideBarContainer">
@@ -17,7 +18,7 @@ const SideBar: FC = ({}) => {
           }
         >
           <UsersIcon className="sidebar-icon" />
-          Users
+          {Entities.USERS}
         </NavLink>
         <NavLink
           to="/home/groups"
@@ -26,7 +27,7 @@ const SideBar: FC = ({}) => {
           }
         >
           <GroupsIcon className="sidebar-icon" />
-          Groups
+          {Entities.GROUPS}
         </NavLink>
 
         <NavLink
@@ -36,7 +37,7 @@ const SideBar: FC = ({}) => {
           }
         >
           <RolesIcon className="sidebar-icon" />
-          Roles
+          {Entities.ROLES}
         </NavLink>
       </div>
     </nav>

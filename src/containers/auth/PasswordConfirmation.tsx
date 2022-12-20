@@ -7,6 +7,8 @@ import FormInputText from "components/inputText";
 import { ConfirmPasswordSchema } from "./authSchema";
 import { LOGO_URL } from "../../config";
 import "./styles.css";
+import { SET_PASSWORD } from "constants/messages";
+import { UserActions } from "types/generic";
 
 type Props = {
   onSubmitForm: (data: any) => void;
@@ -28,9 +30,7 @@ const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
       <div className="logo">
         <img alt="logo" src={LOGO_URL} />
       </div>
-      <div className="password-message">
-        Set your password to activate your account.
-      </div>
+      <div className="password-message">{SET_PASSWORD}</div>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <FormInputText
@@ -53,7 +53,7 @@ const PasswordConfirmation: React.FC<Props> = ({ onSubmitForm }) => {
             fullWidth
             className="login-button"
           >
-            Submit
+            {UserActions.SUBMIT}
           </Button>
         </form>
       </FormProvider>

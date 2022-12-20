@@ -12,6 +12,7 @@ import { ReactComponent as FilterIcon } from "assets/filter.svg";
 import { sortCountAtom } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
 import FilterDropdown from "components/filter-dropdown";
+import { ADD_FILTER, SORT_BY_NAME } from "constants/messages";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
@@ -83,7 +84,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           onClick={onSort}
         >
           <SortIcon id={count > 0 ? "sort-icon-enabled" : "sort-filter-icon"} />
-          Sort by Name
+          {SORT_BY_NAME}
         </div>
 
         {field === "firstName" && (
@@ -92,7 +93,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
             onClick={handleClick}
           >
             <FilterIcon id="sort-filter-icon" />
-            Add Filter
+            {ADD_FILTER}
             {filter > 0 && (
               <Avatar
                 sx={{

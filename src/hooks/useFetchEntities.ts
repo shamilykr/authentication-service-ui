@@ -7,7 +7,7 @@ import {
   sortCountAtom,
   statusFilterAtom,
   paginationAtom,
-} from "../states/searchSortFilterStates";
+} from "states/searchSortFilterStates";
 
 interface userParamsProps {
   setList: SetterOrUpdater<never[]>;

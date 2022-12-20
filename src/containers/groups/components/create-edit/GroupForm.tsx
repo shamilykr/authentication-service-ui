@@ -8,6 +8,7 @@ import BottomFormController from "components/bottom-form-controller";
 import "./styles.css";
 import { GroupFormSchema } from "../../groupSchema";
 import FormInputText from "components/inputText";
+import { AddEntity, UpdateEntity } from "types/generic";
 
 interface GroupFormProps {
   name: string;
@@ -53,7 +54,9 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
         </FormProvider>
       </div>
       <BottomFormController
-        primarybuttonLabel={id ? "Update Group" : "Create Group"}
+        primarybuttonLabel={
+          id ? UpdateEntity.UPDATE_GROUP : AddEntity.CREATE_GROUP
+        }
         primaryButtonType="submit"
         formId="group-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}

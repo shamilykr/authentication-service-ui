@@ -7,6 +7,7 @@ import FormInputText from "components/inputText";
 import { LoginSchema } from "./authSchema";
 import { LOGO_URL } from "../../config";
 import "./styles.css";
+import { UserActions } from "types/generic";
 
 type Props = {
   onSubmitForm: (data: any) => void;
@@ -48,7 +49,7 @@ const LoginPassword: React.FC<Props> = ({ onSubmitForm }) => {
             fullWidth
             className="login-button"
           >
-            Login
+            {UserActions.LOGIN}
           </Button>
         </form>
       </FormProvider>

@@ -21,7 +21,6 @@ import {
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import { ReactComponent as MenuIcon } from "assets/menu.svg";
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
@@ -35,6 +34,8 @@ import {
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
 import { GET_CURRENT_USER } from "containers/auth/services/queries";
+import { UserActions } from "types/generic";
+import { getHeader } from "utils/routes";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
@@ -129,24 +130,7 @@ const HomePage = () => {
         : redirectUrl;
     navigate(redirectUrl);
   };
-  const getHeader = () => {
-    let pathnameArray: string[] = [];
-    if (window?.location?.hash.includes("home")) {
-      pathnameArray = window?.location?.hash?.split("home")?.[1]?.split("/");
 
-      if (pathnameArray?.length === 4) {
-        return `Modify ${pathnameArray[1]}`;
-      } else if (pathnameArray[2] === "add") {
-        return `Add ${pathnameArray[1]}`;
-      } else if (pathnameArray?.length === 3 && pathnameArray[2] !== "add") {
-        return `View ${pathnameArray[1]}`;
-      } else if (pathnameArray?.length === 2) {
-        return (
-          pathnameArray[1]?.charAt(0).toUpperCase() + pathnameArray[1].slice(1)
-        );
-      }
-    }
-  };
   const getSubHeader = () => {
     const pathnameArray = window?.location?.hash
       ?.split("home")?.[1]
@@ -197,7 +181,7 @@ const HomePage = () => {
                   <div className="name-logout">
                     <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
                     <div onClick={onLogout} className="logout">
-                      Logout
+                      {UserActions.LOGOUT}
                     </div>
                   </div>
                 </div>

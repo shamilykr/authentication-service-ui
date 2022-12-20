@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
-import "./styles.css";
 import { useState, useEffect } from "react";
-import GroupCard from "components/group-card/GroupCard";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useRecoilState } from "recoil";
+
+import GroupCard from "components/group-card/GroupCard";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -12,16 +13,22 @@ import {
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
 import { useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-
 import "./styles.css";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
-import { TabPanel } from "../create-edit-user/UserForm";
+import TabPanel from "components/tab-panel/TabPanel";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
 import If from "components/If/If";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+  NO_GROUPS_DESCRIPTION,
+  NO_GROUPS_MESSAGE,
+  NO_PERMISSIONS_DESCRIPTION,
+  NO_PERMISSIONS_MESSAGE,
+} from "constants/messages";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -147,10 +154,10 @@ const UserDetails = () => {
                 ) : (
                   <DisplayMessage
                     customStyle={{ fontSize: 16 }}
-                    altMessage="No groups to show"
+                    altMessage={NO_GROUPS_MESSAGE}
                     image="./assets/nothing-to-show.png"
-                    heading="No Groups to Show"
-                    description="Sorry, there are no groups associated with this user."
+                    heading={NO_GROUPS_MESSAGE}
+                    description={NO_GROUPS_DESCRIPTION}
                     imageStyles={{ width: "27%" }}
                     containerStyles={{ marginTop: "83px" }}
                   />
@@ -158,10 +165,10 @@ const UserDetails = () => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
+                  altMessage={ACCESS_DENIED_MESSAGE}
                   image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
+                  heading={ACCESS_DENIED_MESSAGE}
+                  description={ACCESS_DENIED_DESCRIPTION}
                   imageStyles={{ width: "33%" }}
                   className="access-denied-mini"
                 />
@@ -180,10 +187,10 @@ const UserDetails = () => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="No permissions to show"
+                  altMessage={NO_PERMISSIONS_MESSAGE}
                   image="./assets/no-permissions.png"
-                  heading="No Permissions to Show"
-                  description="Sorry, there are no permissions associated with this user."
+                  heading={NO_PERMISSIONS_MESSAGE}
+                  description={NO_PERMISSIONS_DESCRIPTION}
                   imageStyles={{ width: "17%" }}
                   containerStyles={{ marginTop: "83px" }}
                 />
@@ -191,10 +198,10 @@ const UserDetails = () => {
             ) : (
               <DisplayMessage
                 customStyle={{ fontSize: 16 }}
-                altMessage="Access Denied"
+                altMessage={ACCESS_DENIED_MESSAGE}
                 image="./assets/access-denied.png"
-                heading="Access Denied"
-                description="Sorry, you are not allowed to view this page."
+                heading={ACCESS_DENIED_MESSAGE}
+                description={ACCESS_DENIED_DESCRIPTION}
                 imageStyles={{ width: "33%" }}
                 className="access-denied-mini"
               />

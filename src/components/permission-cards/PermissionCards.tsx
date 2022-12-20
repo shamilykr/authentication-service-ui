@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-
-import "./styles.css";
 import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
+
+import "./styles.css";
 import { Permission } from "types/user";
 import PermissionsCard from "../permission-card/PermissionCard";
 import { Role } from "types/role";
@@ -12,6 +12,10 @@ import { Group } from "types/group";
 import { useCustomQuery } from "hooks/useQuery";
 import DisplayMessage from "components/display-message";
 import { IsViewEntitiesVerifiedAtom } from "states/permissionsStates";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
 
 interface PermissionCardsProps {
   userSelectedPermissions?: Permission[];
@@ -69,10 +73,10 @@ const PermissionCards: React.FC<PermissionCardsProps> = ({
         <div style={{ width: "100%" }}>
           <DisplayMessage
             customStyle={{ fontSize: 16 }}
-            altMessage="Access Denied"
+            altMessage={ACCESS_DENIED_MESSAGE}
             image="./assets/access-denied.png"
-            heading="Access Denied"
-            description="Sorry, you are not allowed to view this page."
+            heading={ACCESS_DENIED_MESSAGE}
+            description={ACCESS_DENIED_DESCRIPTION}
           />
         </div>
       )}

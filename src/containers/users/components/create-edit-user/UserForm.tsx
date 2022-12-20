@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
@@ -24,6 +24,12 @@ import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
 import DisplayMessage from "components/display-message";
 import { currentUserAtom } from "states/loginStates";
+import { AddEntity, UpdateEntity } from "types/generic";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
+import TabPanel from "components/tab-panel/TabPanel";
 
 interface UserProps {
   isEdit?: boolean;
@@ -37,34 +43,6 @@ interface UserProps {
     userGroups: Group[],
     userPermissions: Permission[]
   ) => void;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  style?: any;
-}
-
-export function TabPanel(props: TabPanelProps) {
-  const { children, value, index, style = {}, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      style={style}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
 
 const UserForm = (props: UserProps) => {
@@ -240,10 +218,10 @@ const UserForm = (props: UserProps) => {
                     ) : (
                       <DisplayMessage
                         customStyle={{ fontSize: 16 }}
-                        altMessage="Access Denied"
+                        altMessage={ACCESS_DENIED_MESSAGE}
                         image="./assets/access-denied.png"
-                        heading="Access Denied"
-                        description="Sorry, you are not allowed to view this page."
+                        heading={ACCESS_DENIED_MESSAGE}
+                        description={ACCESS_DENIED_DESCRIPTION}
                         className="access-denied-mini"
                       />
                     )}
@@ -263,10 +241,10 @@ const UserForm = (props: UserProps) => {
               ) : (
                 <DisplayMessage
                   customStyle={{ fontSize: 16 }}
-                  altMessage="Access Denied"
+                  altMessage={ACCESS_DENIED_MESSAGE}
                   image="./assets/access-denied.png"
-                  heading="Access Denied"
-                  description="Sorry, you are not allowed to view this page."
+                  heading={ACCESS_DENIED_MESSAGE}
+                  description={ACCESS_DENIED_DESCRIPTION}
                   className="access-denied-mini"
                 />
               )}
@@ -275,7 +253,9 @@ const UserForm = (props: UserProps) => {
         </div>
       </div>
       <BottomFormController
-        primarybuttonLabel={isEdit ? "Update User" : "Add User"}
+        primarybuttonLabel={
+          isEdit ? UpdateEntity.UPDATE_USER : AddEntity.CREATE_USER
+        }
         primaryButtonType="submit"
         formId="add-user-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}
