@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import BottomFormController from "components/bottom-form-controller";
 
 import "./styles.css";
-import { GroupFormSchema } from "../../groupSchema";
+import { GroupFormSchema } from "utils/groups";
 import FormInputText from "components/inputText";
 import { AddEntity, UpdateEntity } from "types/generic";
 

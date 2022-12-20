@@ -18,7 +18,6 @@ import {
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
-import DisplayMessage from "components/display-message";
 import "./styles.css";
 import GroupForm from "./GroupForm";
 import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
@@ -28,8 +27,6 @@ import { Permission, User } from "types/user";
 import { Group } from "types/group";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import {
-  ACCESS_DENIED_DESCRIPTION,
-  ACCESS_DENIED_MESSAGE,
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "constants/messages";
@@ -41,6 +38,7 @@ import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 import TabPanel from "components/tab-panel/TabPanel";
+import { renderAccessDenied } from "utils/generic";
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -121,6 +119,58 @@ const CreateOrEditGroup = () => {
     },
     fetchPolicy: "network-only",
   });
+  useEffect(() => {
+    if (isViewUsersVerified) {
+      getUsers();
+    }
+  }, [getUsers, isViewUsersVerified]);
+
+  useEffect(() => {
+    if (createdGroupData) {
+      updateGroup({
+        variables: {
+          id: createdGroupData?.createGroup?.id,
+          input: { users: users.map((user) => user.id) },
+        },
+      });
+
+      updateGroupRoles({
+        variables: {
+          id: createdGroupData?.createGroup?.id,
+          input: { roles: roles.map((role) => role.id) },
+        },
+      });
+
+      updateGroupPermissions({
+        variables: {
+          id: createdGroupData?.createGroup?.id,
+          input: {
+            permissions: userSelectedPermissions.map(
+              (permission) => permission.id
+            ),
+          },
+        },
+      });
+    } // eslint-disable-next-line
+  }, [createdGroupData]);
+
+  useEffect(() => {
+    if ((createdGroupData && updatedGroupData) || updatedGroupData) {
+      if (updatedGroupRolesData && updatedGroupPermissionsData) {
+        navigate("/home/groups");
+        setApiSuccess(true);
+        createdGroupData
+          ? setToastMessage(GROUP_CREATE_SUCCESS_MESSAGE)
+          : setToastMessage(GROUP_UPDATE_SUCCESS_MESSAGE);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    createdGroupData,
+    updatedGroupData,
+    updatedGroupRolesData,
+    updatedGroupPermissionsData,
+  ]);
 
   const removeItem = ({
     roleId,
@@ -197,53 +247,6 @@ const CreateOrEditGroup = () => {
     });
   };
 
-  useEffect(() => {
-    if (createdGroupData) {
-      updateGroup({
-        variables: {
-          id: createdGroupData?.createGroup?.id,
-          input: { users: users.map((user) => user.id) },
-        },
-      });
-
-      updateGroupRoles({
-        variables: {
-          id: createdGroupData?.createGroup?.id,
-          input: { roles: roles.map((role) => role.id) },
-        },
-      });
-
-      updateGroupPermissions({
-        variables: {
-          id: createdGroupData?.createGroup?.id,
-          input: {
-            permissions: userSelectedPermissions.map(
-              (permission) => permission.id
-            ),
-          },
-        },
-      });
-    } // eslint-disable-next-line
-  }, [createdGroupData]);
-
-  useEffect(() => {
-    if ((createdGroupData && updatedGroupData) || updatedGroupData) {
-      if (updatedGroupRolesData && updatedGroupPermissionsData) {
-        navigate("/home/groups");
-        setApiSuccess(true);
-        createdGroupData
-          ? setToastMessage(GROUP_CREATE_SUCCESS_MESSAGE)
-          : setToastMessage(GROUP_UPDATE_SUCCESS_MESSAGE);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    createdGroupData,
-    updatedGroupData,
-    updatedGroupRolesData,
-    updatedGroupPermissionsData,
-  ]);
-
   const onEditGroup = (inputs: FieldValues) => {
     updateGroup({
       variables: {
@@ -270,12 +273,6 @@ const CreateOrEditGroup = () => {
       },
     });
   };
-
-  useEffect(() => {
-    if (isViewUsersVerified) {
-      getUsers();
-    }
-  }, [isViewUsersVerified]);
 
   return (
     <div className="access-settings">
@@ -323,14 +320,7 @@ const CreateOrEditGroup = () => {
                   onChange={onChange}
                 />
               ) : (
-                <DisplayMessage
-                  customStyle={{ fontSize: 16 }}
-                  altMessage={ACCESS_DENIED_MESSAGE}
-                  image="./assets/access-denied.png"
-                  heading={ACCESS_DENIED_MESSAGE}
-                  description={ACCESS_DENIED_DESCRIPTION}
-                  containerStyles={{ marginTop: "50px", marginLeft: "15px" }}
-                />
+                <>{renderAccessDenied()}</>
               )}
             </div>
           </TabPanel>
@@ -345,14 +335,7 @@ const CreateOrEditGroup = () => {
               setUserSelectedPermissions={setUserSelectedPermissions}
             />
           ) : (
-            <DisplayMessage
-              customStyle={{ fontSize: 16 }}
-              altMessage={ACCESS_DENIED_MESSAGE}
-              image="./assets/access-denied.png"
-              heading={ACCESS_DENIED_MESSAGE}
-              description={ACCESS_DENIED_DESCRIPTION}
-              className="access-denied-mini"
-            />
+            <>{renderAccessDenied()}</>
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -399,14 +382,7 @@ const CreateOrEditGroup = () => {
                 </Grid>
               </Grid>
             ) : (
-              <DisplayMessage
-                customStyle={{ fontSize: 16 }}
-                altMessage={ACCESS_DENIED_MESSAGE}
-                image="./assets/access-denied.png"
-                heading={ACCESS_DENIED_MESSAGE}
-                description={ACCESS_DENIED_DESCRIPTION}
-                className="access-denied-mini"
-              />
+              <>{renderAccessDenied()}</>
             )}
           </div>
         </TabPanel>

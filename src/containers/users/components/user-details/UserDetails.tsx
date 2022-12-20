@@ -3,6 +3,7 @@ import { Box, Button, Divider, Tab, Tabs, Chip } from "@mui/material";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
 
 import GroupCard from "components/group-card/GroupCard";
 import {
@@ -12,7 +13,6 @@ import {
 } from "states/permissionsStates";
 import { GET_USER } from "../../services/queries";
 import { User } from "types/user";
-import { useParams } from "react-router-dom";
 import "./styles.css";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import TabPanel from "components/tab-panel/TabPanel";
@@ -22,13 +22,12 @@ import If from "components/If/If";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
 import {
-  ACCESS_DENIED_DESCRIPTION,
-  ACCESS_DENIED_MESSAGE,
   NO_GROUPS_DESCRIPTION,
   NO_GROUPS_MESSAGE,
   NO_PERMISSIONS_DESCRIPTION,
   NO_PERMISSIONS_MESSAGE,
 } from "constants/messages";
+import { renderAccessDenied } from "utils/generic";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -55,9 +54,11 @@ const UserDetails = () => {
         }
       });
   }, [userPermissions]);
+
   const onCompleted = (data: any) => {
     setUser(data?.getUser);
   };
+
   const { loading } = useCustomQuery(GET_USER, onCompleted, { id: id });
   const getClassName = () => {
     if (user?.status === "ACTIVE") return "active-user-style";
@@ -67,6 +68,7 @@ const UserDetails = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   return (
     <div className="cntr">
       <div className="personal-details">
@@ -163,15 +165,7 @@ const UserDetails = () => {
                   />
                 )
               ) : (
-                <DisplayMessage
-                  customStyle={{ fontSize: 16 }}
-                  altMessage={ACCESS_DENIED_MESSAGE}
-                  image="./assets/access-denied.png"
-                  heading={ACCESS_DENIED_MESSAGE}
-                  description={ACCESS_DENIED_DESCRIPTION}
-                  imageStyles={{ width: "33%" }}
-                  className="access-denied-mini"
-                />
+                <>{renderAccessDenied()}</>
               )
             ) : (
               <CircularProgress sx={{ top: "35%", marginTop: "225px" }} />
@@ -196,15 +190,7 @@ const UserDetails = () => {
                 />
               )
             ) : (
-              <DisplayMessage
-                customStyle={{ fontSize: 16 }}
-                altMessage={ACCESS_DENIED_MESSAGE}
-                image="./assets/access-denied.png"
-                heading={ACCESS_DENIED_MESSAGE}
-                description={ACCESS_DENIED_DESCRIPTION}
-                imageStyles={{ width: "33%" }}
-                className="access-denied-mini"
-              />
+              <>{renderAccessDenied()}</>
             )}
           </TabPanel>
         </Box>

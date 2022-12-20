@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { GridColumns, GridRowId } from "@mui/x-data-grid";
+import { GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -13,7 +13,6 @@ import {
   IsViewRolesVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import TableChipElement from "components/table-chip-element";
 import {
   CREATE_ROLE_PERMISSION,
   DELETE_ROLE_PERMISSION,
@@ -26,6 +25,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
+import { columns } from "utils/roles";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -66,34 +66,6 @@ const Roles: React.FC = () => {
     setRoleList(data.getRoles?.results);
     setRoleCount(data?.getRoles?.totalCount);
   };
-
-  const columns: GridColumns = [
-    {
-      field: "name",
-      headerName: "Role",
-      width: 280,
-      headerClassName: "user-list-header",
-      headerAlign: "left",
-      sortable: false,
-    },
-    {
-      field: "permissions",
-      headerName: "Permissions",
-      headerClassName: "user-list-header",
-      renderCell: (params) => (
-        <div className="permission-list">
-          <TableChipElement
-            rowItems={params}
-            columnName="permissions"
-            defaultSize={3}
-          />
-        </div>
-      ),
-      headerAlign: "left",
-      sortable: false,
-      flex: 0.7,
-    },
-  ];
 
   const onAddRole = () => {
     navigate("add");

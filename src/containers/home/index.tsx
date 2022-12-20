@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
+
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 import { LOGO_URL } from "../../config";
@@ -36,24 +37,13 @@ import { useCustomMutation } from "hooks/useMutation";
 import { GET_CURRENT_USER } from "containers/auth/services/queries";
 import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
+import { RoutePaths } from "constants/routes";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
     useRecoilState(currentUserAtom);
   const [userPermissions, setUserPermissions] =
     useRecoilState(UserPermissionsAtom);
-
-  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
-    onCompleted: (data) => {
-      setCurrentUserDetails(data.getCurrentUser);
-      setUserPermissions(data.getCurrentUser?.permissions);
-    },
-    fetchPolicy: "network-only",
-  });
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
   const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
@@ -76,6 +66,18 @@ const HomePage = () => {
       onGetGroupsComplete(data);
     },
   });
+  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
+    onCompleted: (data) => {
+      setCurrentUserDetails(data.getCurrentUser);
+      setUserPermissions(data.getCurrentUser?.permissions);
+    },
+    fetchPolicy: "network-only",
+  });
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   useEffect(() => {
     if (userPermissions) {
       userPermissions.forEach((item: any) => {
@@ -116,7 +118,7 @@ const HomePage = () => {
     setIsViewPermissionsVerified(false);
     setisViewEntitiesVerified(false);
     setIsViewRolesVerified(false);
-    navigate("/login");
+    navigate(RoutePaths.login);
   };
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
 
@@ -151,6 +153,7 @@ const HomePage = () => {
       );
     } else return null;
   };
+
   const onLogout = () => {
     logout();
   };
@@ -158,6 +161,7 @@ const HomePage = () => {
   const onCloseToast = () => {
     setToastMessage("");
   };
+
   return (
     <>
       <div className="wrapperContainer">
@@ -203,7 +207,7 @@ const HomePage = () => {
                   <CircularProgress />
                 )
               ) : (
-                <Navigate replace to="/login" />
+                <Navigate replace to={RoutePaths.login} />
               )}
             </div>
           </div>
