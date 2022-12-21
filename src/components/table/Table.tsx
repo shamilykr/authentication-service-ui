@@ -100,11 +100,10 @@ const TableList: FC<TableProps> = ({
   const onDeleteCompleted = () => {
     setToastMessage(`${entity} deleted successfully`);
     setApiSuccess(true);
+    fetchEntities({ page: currentPage - 1 });
   };
 
-  const [deleteItem] = useCustomMutation(deleteMutation, onDeleteCompleted, [
-    { query: refetchQuery },
-  ]);
+  const [deleteItem] = useCustomMutation(deleteMutation, onDeleteCompleted);
 
   const onConfirmDelete = () => {
     deleteItem({
