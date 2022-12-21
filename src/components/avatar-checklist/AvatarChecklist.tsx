@@ -3,8 +3,8 @@ import Checkbox from "@mui/material/Checkbox";
 import { DocumentNode } from "graphql";
 import { User } from "types/user";
 import "./styles.css";
-import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import { CustomAvatar } from "../custom-avatar/CustomAvatar";
 import SearchBar from "../search-bar/SearchBar";
 

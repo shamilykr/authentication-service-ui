@@ -19,13 +19,13 @@ import {
   UPDATE_ROLE_PERMISSION,
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
-import { useLazyQuery } from "@apollo/client";
 import { AddEntity, SearchEntity } from "types/generic";
 import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
 import { columns } from "utils/roles";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
 
 const Roles: React.FC = () => {
   const navigate = useNavigate();
@@ -42,12 +42,10 @@ const Roles: React.FC = () => {
     setRoleCount(data?.getRoles?.totalCount);
   };
 
-  const [getRoles, { loading }] = useLazyQuery(GET_ROLES, {
-    onCompleted: (data) => {
-      onGetRolesComplete(data);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getRoles, loading } = useCustomLazyQuery(
+    GET_ROLES,
+    onGetRolesComplete
+  );
 
   useEffect(() => {
     if (isViewRolesVerified && roleCount === 0) {

@@ -1,5 +1,6 @@
-import { useLazyQuery, DocumentNode } from "@apollo/client";
+import { DocumentNode } from "@apollo/client";
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
+
 import { FilterConditions, SortDirection } from "../services/constants";
 import {
   groupFilterAtom,
@@ -8,6 +9,7 @@ import {
   statusFilterAtom,
   paginationAtom,
 } from "states/searchSortFilterStates";
+import { useCustomLazyQuery } from "./useLazyQuery";
 
 interface userParamsProps {
   setList: SetterOrUpdater<never[]>;
@@ -30,12 +32,16 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
   const [checkedGroups] = useRecoilState(groupFilterAtom);
   const [count] = useRecoilState(sortCountAtom);
   const setCurrentPage = useSetRecoilState(paginationAtom);
-  const [filterQuery] = useLazyQuery(usersFetchProps.userParams.query, {
-    onCompleted: (data) => {
-      usersFetchProps.userParams.setList(data);
-    },
-    fetchPolicy: "network-only",
-  });
+
+  const onCompleted = (data: any) => {
+    usersFetchProps.userParams.setList(data);
+  };
+
+  const { lazyQuery: filterQuery } = useCustomLazyQuery(
+    usersFetchProps.userParams.query,
+    onCompleted
+  );
+
   const fetchEntities = ({
     searchText = null,
     countValue = 0,

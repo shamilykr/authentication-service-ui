@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import SquareIcon from "@mui/icons-material/Square";
 
-import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 
 import { Permission } from "types/permission";
 import { Role } from "types/role";

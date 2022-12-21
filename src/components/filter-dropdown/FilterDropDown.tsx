@@ -7,9 +7,10 @@ import { Avatar } from "@mui/material";
 
 import "./styles.css";
 import Filter from "components/filter/Filter";
-import { ReactComponent as LeftArrowIcon } from "assets/arrow-left.svg";
+import { ReactComponent as LeftArrowIcon } from "assets/toolbar-icons/arrow-left.svg";
 import { useFetchEntities } from "hooks/useFetchEntities";
 import { DocumentNode } from "graphql";
+import { statusList } from "constants/filters";
 
 interface FilterDropdownProps {
   firstFilter?: never[];
@@ -20,7 +21,7 @@ interface FilterDropdownProps {
   searchQuery: DocumentNode;
   setItemList: any;
   field: string;
-  filterList?: any;
+  filterList?: never[];
   open: boolean;
   anchorEl: any;
   onApply: (count: number) => void;
@@ -238,7 +239,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         </div>
         {viewFirstFilter && (
           <Filter
-            itemList={filterList[0]}
+            itemList={statusList}
             checkedItems={firstFilter as unknown as never[]}
             handleCheckedItems={handleCheckedItems}
             setCheckedItems={
@@ -249,7 +250,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
         )}
         {viewSecondFilter && (
           <Filter
-            itemList={filterList[1]}
+            itemList={filterList as unknown as never[]}
             checkedItems={secondFilter as unknown as never[]}
             handleCheckedItems={handleCheckedItems}
             setCheckedItems={

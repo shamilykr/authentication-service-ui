@@ -24,7 +24,7 @@ export interface TableProps {
   isAddVerified?: boolean;
   actionFlex: number;
   cursorType: string;
-  filterList?: any;
+  filterList?: never[];
   filterName?: string[];
   firstFilter?: never[];
   isViewFilterVerified?: boolean;

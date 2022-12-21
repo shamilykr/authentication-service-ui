@@ -1,4 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
@@ -25,7 +24,7 @@ import {
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
 import { GET_GROUPS } from "../groups/services/queries";
-import { ReactComponent as ArrowIcon } from "assets/arrow.svg";
+import { ReactComponent as ArrowIcon } from "assets/sub-header-icons/arrow.svg";
 import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
@@ -38,6 +37,8 @@ import { GET_CURRENT_USER } from "containers/auth/services/queries";
 import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
+import If from "components/If/If";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
@@ -60,22 +61,20 @@ const HomePage = () => {
   const onGetGroupsComplete = (data: any) => {
     setGroupList(data?.getGroups?.results);
   };
+  const onGetCurrentUserCompleted = (data: any) => {
+    setCurrentUserDetails(data.getCurrentUser);
+    setUserPermissions(data.getCurrentUser?.permissions);
+  };
 
-  const [getGroups, { loading }] = useLazyQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      onGetGroupsComplete(data);
-    },
-  });
-  const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
-    onCompleted: (data) => {
-      setCurrentUserDetails(data.getCurrentUser);
-      setUserPermissions(data.getCurrentUser?.permissions);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getGroups, loading } = useCustomLazyQuery(
+    GET_GROUPS,
+    onGetGroupsComplete
+  );
+  const { lazyQuery: getCurrentUser, loading: currentUserLoading } =
+    useCustomLazyQuery(GET_CURRENT_USER, onGetCurrentUserCompleted);
 
   useEffect(() => {
-    getCurrentUser();
+    getCurrentUser(); // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -176,19 +175,21 @@ const HomePage = () => {
               <SideBar />
               <div>
                 <Divider />
-                <div className="userdetails">
-                  <Avatar
-                    {...stringAvatar(
-                      `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                    )}
-                  />
-                  <div className="name-logout">
-                    <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                    <div onClick={onLogout} className="logout">
-                      {UserActions.LOGOUT}
+                <If condition={currentUserDetails.firstName}>
+                  <div className="userdetails">
+                    <Avatar
+                      {...stringAvatar(
+                        `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                      )}
+                    />
+                    <div className="name-logout">
+                      <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                      <div onClick={onLogout} className="logout">
+                        {UserActions.LOGOUT}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </If>
               </div>
             </div>
           </div>
@@ -201,7 +202,7 @@ const HomePage = () => {
             </div>
             <div className="outlet">
               {CustomerAuth?.isAuthenticated ? (
-                !loading ? (
+                !loading && !currentUserLoading ? (
                   <Outlet />
                 ) : (
                   <CircularProgress />

@@ -3,8 +3,8 @@ import Checkbox from "@mui/material/Checkbox";
 
 import "./styles.css";
 import GroupCard from "../group-card/GroupCard";
-import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import { Group } from "types/group";
 
 interface ChecklistProps {

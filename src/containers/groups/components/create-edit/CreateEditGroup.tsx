@@ -5,7 +5,6 @@ import { FieldValues } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useLazyQuery } from "@apollo/client";
 
 import { GET_ROLES } from "containers/roles/services/queries";
 import {
@@ -34,11 +33,12 @@ import RoleCardsChecklist from "components/role-cards-checklist/RoleCardsCheckli
 import { AvatarChecklistComponent } from "components/avatar-checklist/AvatarChecklist";
 import { GET_USERS } from "containers/users/services/queries";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
-import { ReactComponent as CrossIcon } from "assets/cross-icon.svg";
+import { ReactComponent as CrossIcon } from "assets/edit-group-icons/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
 import TabPanel from "components/tab-panel/TabPanel";
 import { renderAccessDenied } from "utils/generic";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
 
 const CreateOrEditGroup = () => {
   const { id } = useParams();
@@ -78,6 +78,21 @@ const CreateOrEditGroup = () => {
     setAllRoles(data?.getRoles?.results);
   };
 
+  const onGetGroupComplete = (data: any) => {
+    setGroup(data?.getGroup);
+    setRoles([...roles, ...data?.getGroup?.roles]);
+    setUsers([...users, ...data?.getGroup?.users]);
+  };
+
+  const onGetGroupPermissionsComplete = (data: any) => {
+    const permissionList = data?.getGroupPermissions;
+    setUserSelectedPermissions(permissionList);
+  };
+
+  const onGetUsersComplete = (data: any) => {
+    setAllUsers(data?.getUsers?.results);
+  };
+
   const { data: roleData, loading: rolesLoading } = useCustomQuery(
     GET_ROLES,
     onGetRolesComplete,
@@ -85,22 +100,12 @@ const CreateOrEditGroup = () => {
     !isViewRolesVerified
   );
 
-  const onGetGroupComplete = (data: any) => {
-    setGroup(data?.getGroup);
-    setRoles([...roles, ...data?.getGroup?.roles]);
-    setUsers([...users, ...data?.getGroup?.users]);
-  };
   const { loading } = useCustomQuery(
     GET_GROUP,
     onGetGroupComplete,
     { id: id },
     !id
   );
-
-  const onGetGroupPermissionsComplete = (data: any) => {
-    const permissionList = data?.getGroupPermissions;
-    setUserSelectedPermissions(permissionList);
-  };
 
   useCustomQuery(
     GET_GROUP_PERMISSIONS,
@@ -109,16 +114,10 @@ const CreateOrEditGroup = () => {
     !id
   );
 
-  const onGetUsersComplete = (data: any) => {
-    setAllUsers(data?.getUsers?.results);
-  };
-
-  const [getUsers] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
-      onGetUsersComplete(data);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getUsers } = useCustomLazyQuery(
+    GET_USERS,
+    onGetUsersComplete
+  );
   useEffect(() => {
     if (isViewUsersVerified) {
       getUsers();

@@ -13,7 +13,7 @@ export interface TableToolBarProps {
   secondFilter?: never[];
   setSecondFilter?: SetterOrUpdater<never[]>;
   isAddVerified?: boolean;
-  filterList?: any;
+  filterList?: never[];
   isViewFilterVerified?: boolean;
   onAdd?: () => void;
 }

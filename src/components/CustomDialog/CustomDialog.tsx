@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, DialogTitle, styled } from "@mui/material";
-import { ReactComponent as CloseIcon } from "assets/icons/closeIcon.svg";
+import { ReactComponent as CloseIcon } from "assets/dialog-box-icons/closeIcon.svg";
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
     background-color: rgb(84 81 81 / 15%);

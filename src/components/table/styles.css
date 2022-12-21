@@ -84,6 +84,14 @@
   width: 76px;
 }
 
+#go-button {
+  text-transform: none;
+  background-color: #2f6fed;
+  color: white;
+  min-width: 32px !important;
+  height: 35px !important;
+}
+
 #go-button:hover {
   background-color: #2f6fed;
   color: white;

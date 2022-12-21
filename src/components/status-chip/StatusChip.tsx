@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Tooltip } from "@mui/material";
 import { Chip } from "@mui/material";
-import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
-import { ReactComponent as ContentCopyIcon } from "assets/copy.svg";
+
+import { ReactComponent as RefreshIcon } from "assets/invite-chip-icons/refresh.svg";
+import { ReactComponent as ContentCopyIcon } from "assets/invite-chip-icons/copy.svg";
 import { REFRESH_INVITE_TOKEN } from "containers/auth/services/mutations";
 import { useCustomMutation } from "hooks/useMutation";
 import { GET_USERS } from "containers/users/services/queries";

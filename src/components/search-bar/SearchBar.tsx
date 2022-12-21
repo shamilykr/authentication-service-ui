@@ -1,6 +1,6 @@
 import { InputBase } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { ReactComponent as SearchIcon } from "assets/search.svg";
+import { ReactComponent as SearchIcon } from "assets/toolbar-icons/search.svg";
 
 import { SearchBarProps } from "./types";
 import "./styles.css";

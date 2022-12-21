@@ -19,13 +19,13 @@ import {
   UPDATE_GROUP_PERMISSION,
 } from "constants/permissions";
 import DisplayMessage from "components/display-message";
-import { useLazyQuery } from "@apollo/client";
 import { AddEntity, SearchEntity } from "types/generic";
 import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
 import { columns } from "utils/groups";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
 
 const GroupList: React.FC = () => {
   const navigate = useNavigate();
@@ -41,12 +41,10 @@ const GroupList: React.FC = () => {
     setGroupCount(data?.getGroups?.totalCount);
   };
 
-  const [getGroups, { loading }] = useLazyQuery(GET_GROUPS, {
-    onCompleted: (data) => {
-      onGetGroupsComplete(data);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getGroups, loading } = useCustomLazyQuery(
+    GET_GROUPS,
+    onGetGroupsComplete
+  );
 
   useEffect(() => {
     if (isViewGroupsVerified && groupCount === 0) {

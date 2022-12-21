@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useLazyQuery } from "@apollo/client";
 
 import { GET_USERS } from "./services/queries";
 import "./styles.css";
@@ -33,6 +32,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
+import { useCustomLazyQuery } from "hooks/useLazyQuery";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -43,7 +43,6 @@ const Users: React.FC = () => {
   const [userList, setUserList] = useRecoilState(userListAtom);
   const [checkedStatus, setCheckedStatus] = useRecoilState(statusFilterAtom);
   const [checkedGroups, setCheckedGroups] = useRecoilState(groupFilterAtom);
-  const statusList = ["ACTIVE", "INACTIVE", "INVITED"];
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 
@@ -52,18 +51,16 @@ const Users: React.FC = () => {
     setUsersCount(data?.getUsers?.totalCount);
   };
 
-  const [getUsers, { loading }] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
-      onComplete(data);
-    },
-    fetchPolicy: "network-only",
-  });
+  const { lazyQuery: getUsers, loading } = useCustomLazyQuery(
+    GET_USERS,
+    onComplete
+  );
 
   useEffect(() => {
-    if (isViewUsersVerified && usersCount === 0) {
+    if (isViewUsersVerified) {
       getUsers({ variables: { pagination: { limit: 8, offset: 0 } } });
     }
-  }, [isViewUsersVerified, getUsers, usersCount]);
+  }, [isViewUsersVerified, getUsers]);
 
   const onEdit = (id: any) => {
     navigate(`/home/users/add/${id}`);
@@ -124,7 +121,7 @@ const Users: React.FC = () => {
           actionFlex={0.23}
           cursorType="pointer"
           field="firstName"
-          filterList={[statusList, groupList]}
+          filterList={groupList}
           firstFilter={checkedStatus}
           setFirstFilter={setCheckedStatus}
           secondFilter={checkedGroups}

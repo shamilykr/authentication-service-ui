@@ -2,8 +2,8 @@ import { Checkbox } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { Role } from "types/role";
 import RoleCard from "../role-card/RoleCard";
-import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import styled from "@emotion/styled";
 
 interface Props {

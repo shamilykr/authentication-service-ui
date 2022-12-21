@@ -1,26 +1,15 @@
-import {
-  DataGrid,
-  GridActionsCellItem,
-  GridColumns,
-  GridRowId,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import React, { FC, useEffect, useState } from "react";
-import { Tooltip, Button, TextField } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { Button, TextField } from "@mui/material";
 import { useSetRecoilState, useRecoilState } from "recoil";
 
 import { UserPermissionsAtom } from "states/permissionsStates";
 import { TableProps } from "./types";
 import TableToolBar from "../table-toolbar/TableToolBar";
 import "./styles.css";
-import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import DisplayMessage from "../display-message";
-import { ReactComponent as EditIcon } from "assets/edit.svg";
-import { ReactComponent as LineIcon } from "assets/line.svg";
-import { ReactComponent as DeleteIcon } from "assets/trash.svg";
-import DialogBox from "../dialog-box";
-import { useCustomMutation } from "hooks/useMutation";
 import {
   statusFilterAtom,
   groupFilterAtom,
@@ -29,7 +18,12 @@ import {
   paginationAtom,
 } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
-import { ACCESS_DENIED_MESSAGE } from "constants/messages";
+import {
+  ACCESS_DENIED_DESCRIPTION,
+  ACCESS_DENIED_MESSAGE,
+} from "constants/messages";
+import ActionsCell from "components/actions-cell";
+
 const TableList: FC<TableProps> = ({
   field,
   rows,
@@ -58,10 +52,8 @@ const TableList: FC<TableProps> = ({
   handleRowClick,
   entity,
 }) => {
-  const [isEditVerified, setEditVerified] = React.useState(false);
-  const [isDeleteVerified, setDeleteVerified] = React.useState(false);
-  const setApiSuccess = useSetRecoilState(apiRequestAtom);
-  const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const [isEditVerified, setEditVerified] = useState(false);
+  const [isDeleteVerified, setDeleteVerified] = useState(false);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const setCheckedStatus = useSetRecoilState(statusFilterAtom);
   const setCheckedGroups = useSetRecoilState(groupFilterAtom);
@@ -69,9 +61,6 @@ const TableList: FC<TableProps> = ({
   const setSearchValue = useSetRecoilState(searchAtom);
 
   const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
-  const [open, setOpen] = useState(false);
-  const [entityId, setEntityId] = useState<GridRowId>("");
-  const [entityName, setEntityName] = useState<string>("");
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: refetchQuery, field: field },
   });
@@ -86,33 +75,6 @@ const TableList: FC<TableProps> = ({
         }
       });
   }, [editPermission, deletePermission, userPermissions]);
-
-  const openConfirmPopup = (id: GridRowId, name: string) => {
-    setOpen(true);
-    setEntityId(id);
-    setEntityName(name);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onDeleteCompleted = () => {
-    setToastMessage(`${entity} deleted successfully`);
-    setApiSuccess(true);
-    fetchEntities({ page: currentPage - 1 });
-  };
-
-  const [deleteItem] = useCustomMutation(deleteMutation, onDeleteCompleted);
-
-  const onConfirmDelete = () => {
-    deleteItem({
-      variables: {
-        id: entityId,
-      },
-    });
-    handleClose();
-  };
 
   useEffect(() => {
     return () => {
@@ -164,13 +126,6 @@ const TableList: FC<TableProps> = ({
           </div>
           <div>
             <Button
-              sx={{
-                textTransform: "none",
-                backgroundColor: "#2F6FED",
-                color: "white",
-                minWidth: "32px !important",
-                height: "35px !important",
-              }}
               id="go-button"
               onClick={() => {
                 setCurrentPage(pageValue);
@@ -199,76 +154,23 @@ const TableList: FC<TableProps> = ({
       getActions: (params) => {
         return [
           <>
-            {isEditVerified && (
-              <Tooltip title="Edit" arrow placement="top">
-                <GridActionsCellItem
-                  icon={
-                    <>
-                      <EditIcon
-                        className={
-                          params.row.status !== "INVITED"
-                            ? "edit"
-                            : "blurred-edit"
-                        }
-                      />
-                      <LineIcon
-                        className={
-                          params.row.status !== "INVITED"
-                            ? "edit-line"
-                            : "blurred-edit-line"
-                        }
-                      />
-                    </>
-                  }
-                  label="Edit"
-                  className="edit"
-                  onClick={() => onEdit(params.id)}
-                />
-              </Tooltip>
-            )}
-            {isDeleteVerified && (
-              <Tooltip title="Delete" arrow placement="top">
-                <GridActionsCellItem
-                  icon={<DeleteIcon className="delete" />}
-                  label="Delete"
-                  className={
-                    params.row.status !== "INVITED"
-                      ? "delete"
-                      : "blurred-delete"
-                  }
-                  onClick={() => {
-                    openConfirmPopup(
-                      params.id,
-                      params.row.name
-                        ? params.row.name
-                        : `${params.row.firstName} ${params.row.lastName}`
-                    );
-                  }}
-                />
-              </Tooltip>
-            )}
-            {open && (
-              <DialogBox
-                deleteMutation={deleteMutation}
-                refetchQuery={refetchQuery}
-                entity={entity}
-                entityId={entityId}
-                entityName={entityName}
-                onConfirm={onConfirmDelete}
-                handleClose={handleClose}
-              />
-            )}
+            <ActionsCell
+              deleteMutation={deleteMutation}
+              entity={entity}
+              isDeleteVerified={isDeleteVerified}
+              isEditVerified={isEditVerified}
+              onEdit={onEdit}
+              refetchQuery={refetchQuery}
+              params={params}
+            />
           </>,
         ];
       },
     },
   ];
   let final_columns;
-  if (!isEditVerified && !isDeleteVerified) {
-    final_columns = columns;
-  } else {
-    final_columns = [...columns, ...action_column];
-  }
+  if (!isEditVerified && !isDeleteVerified) final_columns = columns;
+  else final_columns = [...columns, ...action_column];
 
   return (
     <div className="table-component">
@@ -312,7 +214,7 @@ const TableList: FC<TableProps> = ({
           altMessage={ACCESS_DENIED_MESSAGE}
           image="./assets/access-denied.png"
           heading={ACCESS_DENIED_MESSAGE}
-          description="Sorry, you are not allowed to view this page."
+          description={ACCESS_DENIED_DESCRIPTION}
         />
       )}
     </div>

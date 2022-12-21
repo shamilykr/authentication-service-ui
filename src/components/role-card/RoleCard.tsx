@@ -3,8 +3,8 @@ import { Checkbox, Button } from "@mui/material";
 import { FC, useState } from "react";
 import { Role } from "types/role";
 import CustomChip from "../custom-chip/CustomChip";
-import { ReactComponent as UnCheckedIcon } from "assets/icons/uncheckedicon.svg";
-import { ReactComponent as CheckedIcon } from "assets/icons/checkedicon.svg";
+import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
+import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import If from "../If/If";
 import CustomDialog from "components/CustomDialog";
 
