@@ -9,4 +9,5 @@ export interface ActionsCellProps {
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
   params: GridRowParams<any>;
+  fetchEntities: any;
 }

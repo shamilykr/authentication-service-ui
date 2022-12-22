@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { GridActionsCellItem, GridRowId } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { ReactComponent as EditIcon } from "assets/table-actions-icons/edit.svg";
 import { ReactComponent as LineIcon } from "assets/table-actions-icons/line.svg";
@@ -10,6 +10,7 @@ import DialogBox from "../dialog-box";
 import { ActionsCellProps } from "./types";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { useCustomMutation } from "hooks/useMutation";
+import { paginationAtom } from "states/searchSortFilterStates";
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,
@@ -19,12 +20,15 @@ const ActionsCell: FC<ActionsCellProps> = ({
   deleteMutation,
   refetchQuery,
   params,
+  fetchEntities,
 }) => {
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
   const [entityName, setEntityName] = useState<string>("");
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
+  const [currentPage] = useRecoilState(paginationAtom);
+
   const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);
     setEntityId(id);
@@ -37,10 +41,9 @@ const ActionsCell: FC<ActionsCellProps> = ({
   const onDeleteCompleted = () => {
     setToastMessage(`${entity} deleted successfully`);
     setApiSuccess(true);
+    fetchEntities({ page: currentPage - 1 });
   };
-  const [deleteItem] = useCustomMutation(deleteMutation, onDeleteCompleted, [
-    { query: refetchQuery },
-  ]);
+  const [deleteItem] = useCustomMutation(deleteMutation, onDeleteCompleted);
 
   const onConfirmDelete = () => {
     deleteItem({

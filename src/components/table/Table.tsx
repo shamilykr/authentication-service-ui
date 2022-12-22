@@ -1,4 +1,10 @@
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColumns,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { FC, useEffect, useState } from "react";
@@ -85,6 +91,11 @@ const TableList: FC<TableProps> = ({
 
   function CustomPagination() {
     const [pageValue, setPageValue] = useState(1);
+    const [pageCount] = useState(
+      count % 8 > 0 ? Math.floor(count / 8) + 1 : Math.floor(count / 8)
+    );
+    const apiRef = useGridApiContext();
+    const page = useGridSelector(apiRef, gridPageSelector);
     return (
       <>
         <div className="pagination-count">
@@ -94,10 +105,8 @@ const TableList: FC<TableProps> = ({
           color="primary"
           variant="outlined"
           shape="rounded"
-          page={currentPage}
-          count={
-            count % 8 > 0 ? Math.floor(count / 8) + 1 : Math.floor(count / 8)
-          }
+          page={page + 1 === currentPage ? page + 1 : currentPage}
+          count={pageCount}
           // @ts-expect-error
           renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
           onChange={(event, value) => {
@@ -110,7 +119,7 @@ const TableList: FC<TableProps> = ({
           <div id="pagination-text">Go to Page</div>
           <div>
             <TextField
-              value={pageValue}
+              defaultValue={currentPage}
               onChange={(e: any) => {
                 setPageValue(e.target.value);
               }}
@@ -125,9 +134,17 @@ const TableList: FC<TableProps> = ({
             <Button
               id="go-button"
               onClick={() => {
-                setCurrentPage(pageValue);
+                if (pageValue > pageCount) setCurrentPage(pageCount);
+                else setCurrentPage(pageValue);
                 setPageValue(pageValue);
-                fetchEntities({ page: pageValue - 1 });
+                fetchEntities({
+                  page:
+                    pageValue > pageCount
+                      ? pageCount - 1
+                      : pageValue < 1
+                      ? 0
+                      : pageValue - 1,
+                });
               }}
             >
               Go
@@ -159,6 +176,7 @@ const TableList: FC<TableProps> = ({
               onEdit={onEdit}
               refetchQuery={refetchQuery}
               params={params}
+              fetchEntities={fetchEntities}
             />
           </>,
         ];
