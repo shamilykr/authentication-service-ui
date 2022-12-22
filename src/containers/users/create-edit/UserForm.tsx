@@ -238,7 +238,6 @@ const UserForm = (props: UserProps) => {
         primarybuttonLabel={
           isEdit ? UpdateEntity.UPDATE_USER : AddEntity.CREATE_USER
         }
-        primaryButtonType="submit"
         formId="add-user-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}
         onCancel={onBackNavigation}

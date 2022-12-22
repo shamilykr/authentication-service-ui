@@ -64,3 +64,16 @@
   margin-right: -6px;
   cursor: pointer;
 }
+
+#avatar-arrow {
+  display: flex;
+  align-items: center;
+}
+
+#filter-avatar {
+  background-color: #2653f1;
+  color: white;
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 14px !important;
+}

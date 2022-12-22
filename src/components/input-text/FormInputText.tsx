@@ -1,17 +1,8 @@
-import React from "react";
 import { styled } from "@mui/material/styles";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextField } from "@mui/material";
 
-export interface FormInputProps {
-  name: string;
-  label: string;
-  type: string;
-  setValue?: any;
-  className?: any;
-  defaultText?: string;
-  autoComplete?: string;
-}
+import { FormInputProps } from "./types";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {

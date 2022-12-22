@@ -1,20 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import { DocumentNode } from "graphql";
-import { User } from "types/user";
+
 import "./styles.css";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import CustomAvatar from "components/custom-avatar";
 import SearchBar from "../search-bar/SearchBar";
-
-interface ChecklistProps {
-  mapList: User[];
-  currentCheckedItems: User[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, item?: any) => void;
-  setItemList: (items: User[]) => void;
-  searchQuery: DocumentNode;
-}
+import { ChecklistProps } from "./types";
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,

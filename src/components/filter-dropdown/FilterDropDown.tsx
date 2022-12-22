@@ -48,7 +48,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   const [viewFirstFilter, setViewFirstFilter] = useState(true);
   const [viewSecondFilter, setViewSecondFilter] = useState(false);
   const handleClose = () => {
-    let totalLength = 0;
+    let totalLength = 0; // eslint-disable-next-line
     currentFilters.map((item: never[]) => {
       totalLength = totalLength + item.length;
     });
@@ -140,13 +140,9 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
             >
               <div id="filter-heading">Filters</div>
               <Avatar
+                id="filter-avatar"
                 sx={{
                   ml: "10px !important",
-                  backgroundColor: "#2653F1",
-                  color: "white",
-                  width: "24px !important",
-                  height: "24px !important",
-                  fontSize: "14px !important",
                   mr: "112px",
                 }}
               >
@@ -164,13 +160,9 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
               <div>{filterName[0]}</div>
               <div id="avatar-arrow">
                 <Avatar
+                  id="filter-avatar"
                   sx={{
                     mr: "12px !important",
-                    backgroundColor: "#2653F1",
-                    color: "white",
-                    width: "24px !important",
-                    height: "24px !important",
-                    fontSize: "14px !important",
                   }}
                 >
                   {(firstFilter as unknown as never[]).length}
@@ -186,13 +178,9 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
                 <div>{filterName[1]}</div>
                 <div id="avatar-arrow">
                   <Avatar
+                    id="filter-avatar"
                     sx={{
                       mr: "12px !important",
-                      backgroundColor: "#2653F1",
-                      color: "white",
-                      width: "24px !important",
-                      height: "24px !important",
-                      fontSize: "14px !important",
                     }}
                   >
                     {(secondFilter as unknown as never[]).length}

@@ -1,19 +1,11 @@
 import "./styles.css";
 import { Button } from "@mui/material";
+import { BottomControllerProps } from "./types";
 
-interface BottomControllerProps {
-  primarybuttonLabel: string;
-  onSubmit: (data: any) => void;
-  primaryButtonType: string;
-  formId: string;
-  onCancel: () => void;
-  secondaryButtonLabel: string;
-}
 const BottomFormController = (props: BottomControllerProps) => {
   const {
     primarybuttonLabel,
     onSubmit,
-    primaryButtonType = "submit",
     formId,
     onCancel,
     secondaryButtonLabel,

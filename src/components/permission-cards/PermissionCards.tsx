@@ -3,12 +3,9 @@ import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
 
 import "./styles.css";
-import { Permission } from "types/user";
 import PermissionsCard from "../permission-card";
-import { Role } from "types/role";
 import { GET_ENTITIES } from "services/queries/entityQueries";
 import { Entity } from "types/generic";
-import { Group } from "types/group";
 import { useCustomQuery } from "hooks/useQuery";
 import DisplayMessage from "components/display-message";
 import { IsViewEntitiesVerifiedAtom } from "states/permissionsStates";
@@ -16,17 +13,7 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
-
-interface PermissionCardsProps {
-  userSelectedPermissions?: Permission[];
-  roles?: Role[];
-  groups?: Group[];
-  setUserSelectedPermissions?: React.Dispatch<
-    React.SetStateAction<Permission[]>
-  >;
-  userPermissions?: Permission[];
-  isViewPage?: boolean;
-}
+import { PermissionCardsProps } from "./types";
 
 const Container = styled.div`
   display: flex;

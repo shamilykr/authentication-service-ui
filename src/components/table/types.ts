@@ -15,15 +15,12 @@ export interface TableProps {
   count: number;
   searchLabel: string;
   setItemList: (data: any) => void;
-  entity: string;
   deleteMutation: DocumentNode;
   refetchQuery: DocumentNode;
   editPermission?: string;
   deletePermission?: string;
   isViewVerified?: boolean;
   isAddVerified?: boolean;
-  actionFlex: number;
-  cursorType: string;
   filterList?: never[];
   filterName?: string[];
   firstFilter?: never[];

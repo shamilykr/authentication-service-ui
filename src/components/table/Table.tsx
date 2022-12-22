@@ -29,8 +29,6 @@ const TableList: FC<TableProps> = ({
   rows,
   columns,
   count,
-  actionFlex,
-  cursorType,
   filterList,
   firstFilter,
   filterName,
@@ -50,7 +48,6 @@ const TableList: FC<TableProps> = ({
   isViewVerified,
   isAddVerified,
   handleRowClick,
-  entity,
 }) => {
   const [isEditVerified, setEditVerified] = useState(false);
   const [isDeleteVerified, setDeleteVerified] = useState(false);
@@ -83,7 +80,7 @@ const TableList: FC<TableProps> = ({
       setCurrentPage(1);
       setCount(0);
       setSearchValue("");
-    };
+    }; // eslint-disable-next-line
   }, []);
 
   function CustomPagination() {
@@ -147,7 +144,7 @@ const TableList: FC<TableProps> = ({
       type: "actions",
       headerName: "Actions",
       headerClassName: "table-list-header",
-      flex: actionFlex,
+      flex: field === "name" ? 0.3 : 0.23,
       cellClassName: "actions",
       headerAlign: "center",
 
@@ -156,7 +153,7 @@ const TableList: FC<TableProps> = ({
           <>
             <ActionsCell
               deleteMutation={deleteMutation}
-              entity={entity}
+              entity={buttonLabel.slice(4, buttonLabel.length)}
               isDeleteVerified={isDeleteVerified}
               isEditVerified={isEditVerified}
               onEdit={onEdit}
@@ -197,7 +194,7 @@ const TableList: FC<TableProps> = ({
             columns={final_columns}
             style={{
               borderRadius: "0px 0px 5px 5px",
-              cursor: cursorType,
+              cursor: field === "name" ? "default" : "pointer",
             }}
             disableSelectionOnClick
             onRowClick={handleRowClick}

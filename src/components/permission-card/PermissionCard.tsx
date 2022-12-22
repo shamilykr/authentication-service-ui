@@ -5,29 +5,14 @@ import SquareIcon from "@mui/icons-material/Square";
 
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-
 import { Permission } from "types/permission";
-import { Role } from "types/role";
 import {
   getUniquePermissionsFromGroups,
   getUniquePermissionsFromRoles,
 } from "utils/permissions";
-import { Entity } from "types/generic";
-import If from "../If";
+import If from "../if";
 import { RemovedPermissions } from "constants/permissions";
-import { Group } from "types/group";
-
-interface PermissionCardProps {
-  entity: Entity;
-  roles?: Role[];
-  groups?: Group[];
-  userSelectedPermissions?: Permission[];
-  setUserSelectedPermissions?: React.Dispatch<
-    React.SetStateAction<Permission[]>
-  >;
-  userPermissions?: Permission[];
-  isViewPage?: boolean;
-}
+import { PermissionCardProps } from "./types";
 
 const Container = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show ? "flex" : "none")};
@@ -98,7 +83,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 
   useEffect(() => {
     setRolePermissions(getUniquePermissionsFromRoles(roles));
-    setGroupPermissions(getUniquePermissionsFromGroups(groups));
+    setGroupPermissions(getUniquePermissionsFromGroups(groups)); // eslint-disable-next-line
   }, []);
 
   const IsChecked = (id: string) => {

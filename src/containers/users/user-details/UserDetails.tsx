@@ -18,7 +18,7 @@ import CustomAvatar from "components/custom-avatar";
 import TabPanel from "components/tab-panel";
 import PermissionCards from "components/permission-cards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
-import If from "components/If";
+import If from "components/if";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
 import {

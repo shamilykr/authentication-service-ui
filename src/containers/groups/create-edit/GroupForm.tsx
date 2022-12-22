@@ -57,7 +57,6 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
         primarybuttonLabel={
           id ? UpdateEntity.UPDATE_GROUP : AddEntity.CREATE_GROUP
         }
-        primaryButtonType="submit"
         formId="group-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}
         onCancel={onBackNavigation}

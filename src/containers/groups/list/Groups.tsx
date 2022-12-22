@@ -93,7 +93,6 @@ const GroupList: React.FC = () => {
           buttonLabel={AddEntity.ADD_GROUP}
           searchLabel={SearchEntity.SEARCH_GROUP}
           setItemList={setItemList}
-          entity="Group"
           deleteMutation={DELETE_GROUP}
           refetchQuery={GET_GROUPS}
           onAdd={onAddGroup}
@@ -102,8 +101,6 @@ const GroupList: React.FC = () => {
           deletePermission={DELETE_GROUP_PERMISSION}
           isViewVerified={isViewGroupsVerified}
           isAddVerified={!isAddVerified}
-          actionFlex={0.3}
-          cursorType="default"
           field="name"
         />
       ) : (

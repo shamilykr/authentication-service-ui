@@ -8,7 +8,7 @@ import { ReactComponent as DownArrowIcon } from "assets/checkbox-icons/Stroke 1.
 import { getUniquePermissionsFromRoles } from "utils/permissions";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import If from "../If";
+import If from "../if";
 import CustomDialog from "components/custom-dialog";
 import "../checklist/styles.css";
 import { Group } from "types/group";

@@ -108,7 +108,6 @@ const Users: React.FC = () => {
           setItemList={setItemList}
           onAdd={onAdd}
           onEdit={onEdit}
-          entity="User"
           buttonLabel={AddEntity.ADD_USER}
           searchLabel={SearchEntity.SEARCH_USER}
           deleteMutation={DELETE_USER}
@@ -118,8 +117,6 @@ const Users: React.FC = () => {
           deletePermission={DELETE_USER_PERMISSION}
           isViewVerified={isViewUsersVerified}
           isAddVerified={!isAddVerified}
-          actionFlex={0.23}
-          cursorType="pointer"
           field="firstName"
           filterList={groupList}
           firstFilter={checkedStatus}

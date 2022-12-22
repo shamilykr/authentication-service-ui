@@ -2,22 +2,9 @@ import { FC } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { SetterOrUpdater } from "recoil";
 
 import "./styles.css";
-
-interface FilterProps {
-  itemList: string[] | never[];
-  onAddFilter: (
-    name: string,
-    e: React.ChangeEvent<HTMLInputElement>,
-    checkedItems: never[],
-    setCheckedItems: React.Dispatch<React.SetStateAction<never[]>>
-  ) => void;
-  checkedItems: never[];
-  setCheckedItems: SetterOrUpdater<never[]>;
-  handleCheckedItems: (item: string, checkedItems: never[]) => boolean;
-}
+import { FilterProps } from "./types";
 
 const Filter: FC<FilterProps> = ({
   itemList,

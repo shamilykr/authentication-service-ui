@@ -94,7 +94,6 @@ const Roles: React.FC = () => {
           buttonLabel={AddEntity.ADD_ROLE}
           searchLabel={SearchEntity.SEARCH_ROLE}
           setItemList={setItemList}
-          entity="Role"
           deleteMutation={DELETE_ROLE}
           refetchQuery={GET_ROLES}
           onAdd={onAddRole}
@@ -103,8 +102,6 @@ const Roles: React.FC = () => {
           deletePermission={DELETE_ROLE_PERMISSION}
           isViewVerified={isViewRolesVerified}
           isAddVerified={!isAddVerified}
-          actionFlex={0.3}
-          cursorType="default"
           field="name"
         />
       ) : (

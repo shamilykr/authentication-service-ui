@@ -74,7 +74,6 @@ const RoleForm: FC<RoleFormProps> = ({
         primarybuttonLabel={
           id ? UpdateEntity.UPDATE_ROLE : AddEntity.CREATE_ROLE
         }
-        primaryButtonType="submit"
         formId="role-form"
         onSubmit={() => handleSubmit(onSubmitForm)()}
         onCancel={onBackNavigation}

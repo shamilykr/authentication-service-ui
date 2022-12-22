@@ -7,8 +7,8 @@ import {
   DialogTitle,
   styled,
 } from "@mui/material";
-import { GridRowId } from "@mui/x-data-grid";
-import { DocumentNode } from "@apollo/client";
+
+import { DialogProps } from "./types";
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
@@ -16,16 +16,6 @@ const StyledDialog = styled(Dialog)`
     opacity: 0.4 !important;
   }
 `;
-
-type DialogProps = {
-  deleteMutation: DocumentNode;
-  refetchQuery: DocumentNode;
-  entity: string;
-  entityId: GridRowId;
-  entityName: string;
-  onConfirm: () => void;
-  handleClose: () => void;
-};
 
 const DialogBox: React.FC<DialogProps> = ({
   entity,
