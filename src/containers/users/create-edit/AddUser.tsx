@@ -6,7 +6,7 @@ import {
   CREATE_USER,
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
-} from "../../services/mutations";
+} from "services/mutations/userMutations";
 import "./styles.css";
 import UserForm from "./UserForm";
 import { GroupPermissionsDetails } from "types/permission";

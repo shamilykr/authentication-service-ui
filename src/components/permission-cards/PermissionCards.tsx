@@ -6,7 +6,7 @@ import "./styles.css";
 import { Permission } from "types/user";
 import PermissionsCard from "../permission-card/PermissionCard";
 import { Role } from "types/role";
-import { GET_ENTITIES } from "containers/entities/services/queries";
+import { GET_ENTITIES } from "services/queries/entityQueries";
 import { Entity } from "types/generic";
 import { Group } from "types/group";
 import { useCustomQuery } from "hooks/useQuery";

@@ -1,16 +1,16 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import UserDetails from "../containers/users/components/user-details/UserDetails";
-import CreateOrEditRole from "../containers/roles/components/create-edit/CreateOrEditRole";
-import AddUser from "../containers/users/components/create-edit-user/AddUser";
-import EditUser from "../containers/users/components/create-edit-user/EditUser";
+import UserDetails from "containers/users/user-details/UserDetails";
+import CreateOrEditRole from "containers/roles/create-edit/CreateOrEditRole";
+import AddUser from "containers/users/create-edit/AddUser";
+import EditUser from "containers/users/create-edit/EditUser";
 import { RoutePaths } from "constants/routes";
-import CreateOrEditGroup from "../containers/groups/components/create-edit/CreateEditGroup";
+import CreateOrEditGroup from "../containers/groups/create-edit/CreateEditGroup";
 
 const NotFound = lazy(() => import("../components/NotFound"));
 const HomePage = lazy(() => import("../containers/home"));
-const Login = lazy(() => import("../containers/auth/login"));
+const Login = lazy(() => import("../containers/auth"));
 const Users = lazy(() => import("../containers/users"));
 const Groups = lazy(() => import("../containers/groups"));
 const Roles = lazy(() => import("../containers/roles"));

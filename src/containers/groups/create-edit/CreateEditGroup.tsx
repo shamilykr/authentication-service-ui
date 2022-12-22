@@ -6,20 +6,23 @@ import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { GET_ROLES } from "containers/roles/services/queries";
+import { GET_ROLES } from "services/queries/roleQueries";
 import {
   CREATE_GROUP,
   UPDATE_GROUP,
   UPDATE_GROUP_PERMISSIONS,
   UPDATE_GROUP_ROLES,
-} from "../../services/mutations";
+} from "services/mutations/groupMutations";
 import {
   IsViewRolesVerifiedAtom,
   IsViewUsersVerifiedAtom,
 } from "states/permissionsStates";
 import "./styles.css";
 import GroupForm from "./GroupForm";
-import { GET_GROUP, GET_GROUP_PERMISSIONS } from "../../services/queries";
+import {
+  GET_GROUP,
+  GET_GROUP_PERMISSIONS,
+} from "services/queries/groupQueries";
 import { Role } from "types/role";
 import PermissionCards from "components/permission-cards/PermissionCards";
 import { Permission, User } from "types/user";
@@ -31,7 +34,7 @@ import {
 } from "constants/messages";
 import RoleCardsChecklist from "components/role-cards-checklist/RoleCardsChecklist";
 import { AvatarChecklistComponent } from "components/avatar-checklist/AvatarChecklist";
-import { GET_USERS } from "containers/users/services/queries";
+import { GET_USERS } from "services/queries/userQueries";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
 import { ReactComponent as CrossIcon } from "assets/edit-group-icons/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";

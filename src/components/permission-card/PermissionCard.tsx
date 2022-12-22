@@ -14,7 +14,7 @@ import {
 } from "utils/permissions";
 import { Entity } from "types/generic";
 import If from "../If/If";
-import { RemovedPermissions } from "containers/permissions/constants";
+import { RemovedPermissions } from "constants/permissions";
 import { Group } from "types/group";
 
 interface PermissionCardProps {

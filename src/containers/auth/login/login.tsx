@@ -3,9 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
-import { LOGIN_URL } from "../../config";
-import { LOGIN, SET_PASSWORD } from "./services/mutations";
-import CustomerAuth from "../../services/auth";
+import { LOGIN_URL } from "../../../config";
+import { LOGIN, SET_PASSWORD } from "services/mutations/authMutations";
+import CustomerAuth from "services/auth";
 import "./styles.css";
 import LoginPassword from "./loginPassword";
 import PasswordConfirmation from "./PasswordConfirmation";

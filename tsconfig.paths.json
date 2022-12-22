@@ -10,7 +10,8 @@
       "states/*": ["states/*"],
       "types/*": ["types/*"],
       "utils/*": ["utils/*"],
-      "routes/*": ["routes/*"]
+      "routes/*": ["routes/*"],
+      "services/*": ["services/*"]
     }
   }
 }

@@ -13,6 +13,12 @@ const VIEW_ROLE_PERMISSION = "view-roles";
 const VIEW_ENTITY_PERMISSION = "view-entities";
 const VIEW_PERMISSIONS_PERMISSION = "view-permissions";
 
+const RemovedPermissions = [
+  "create-permissions",
+  "edit-permissions",
+  "delete-permissions",
+];
+
 export {
   CREATE_USER_PERMISSION,
   CREATE_GROUP_PERMISSION,
@@ -28,4 +34,5 @@ export {
   VIEW_ROLE_PERMISSION,
   VIEW_ENTITY_PERMISSION,
   VIEW_PERMISSIONS_PERMISSION,
+  RemovedPermissions,
 };

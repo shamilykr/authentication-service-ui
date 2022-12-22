@@ -11,7 +11,7 @@ import {
   IsViewGroupsVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import { GET_USER } from "../../services/queries";
+import { GET_USER } from "services/queries/userQueries";
 import { User } from "types/user";
 import "./styles.css";
 import { CustomAvatar } from "components/custom-avatar/CustomAvatar";

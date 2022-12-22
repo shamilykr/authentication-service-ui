@@ -1,3 +1,3 @@
-import Groups from "./components/list/Groups";
+import Groups from "./list/Groups";
 
 export default Groups;

@@ -6,9 +6,9 @@ import { Avatar, Divider } from "@mui/material";
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 import { LOGO_URL } from "../../config";
-import CustomerAuth from "../../services/auth";
+import CustomerAuth from "services/auth";
 import "./styles.css";
-import { LOGOUT } from "../auth/services/mutations";
+import { LOGOUT } from "services/mutations/authMutations";
 import { currentUserAtom } from "states/loginStates";
 import { stringAvatar } from "utils/table";
 import Toast from "components/toast";
@@ -23,7 +23,7 @@ import {
 } from "states/permissionsStates";
 import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
-import { GET_GROUPS } from "../groups/services/queries";
+import { GET_GROUPS } from "services/queries/groupQueries";
 import { ReactComponent as ArrowIcon } from "assets/sub-header-icons/arrow.svg";
 import {
   VIEW_GROUP_PERMISSION,
@@ -33,7 +33,7 @@ import {
   VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
-import { GET_CURRENT_USER } from "containers/auth/services/queries";
+import { GET_CURRENT_USER } from "services/queries/authQueries";
 import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";

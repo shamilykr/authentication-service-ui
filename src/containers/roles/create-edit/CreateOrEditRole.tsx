@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { GET_ROLE } from "../../services/queries";
+import { GET_ROLE } from "services/queries/roleQueries";
 import {
   CREATE_ROLE,
   UPDATE_ROLE,
   UPDATE_ROLE_PERMISSIONS,
-} from "../../services/mutations";
+} from "services/mutations/roleMutations";
 import RoleForm from "./RoleForm";
 import "./styles.css";
 import { Permission } from "types/user";

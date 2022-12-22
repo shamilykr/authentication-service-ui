@@ -11,10 +11,10 @@ import {
   IsViewGroupsVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import { GET_GROUPS } from "../../../groups/services/queries";
+import { GET_GROUPS } from "services/queries/groupQueries";
 import FormInputText from "components/inputText";
 import { ChecklistComponent } from "components/checklist/CheckList";
-import { GET_USER, GET_USER_PERMISSIONS } from "../../services/queries";
+import { GET_USER, GET_USER_PERMISSIONS } from "services/queries/userQueries";
 import { Permission, User } from "types/user";
 import "./styles.css";
 import { AddUserformSchema, EditUserformSchema } from "utils/user";

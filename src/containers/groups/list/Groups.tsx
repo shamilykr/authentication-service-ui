@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import "./styles.css";
-import { DELETE_GROUP } from "../../services/mutations";
-import { GET_GROUPS } from "../../services/queries";
+import { DELETE_GROUP } from "services/mutations/groupMutations";
+import { GET_GROUPS } from "services/queries/groupQueries";
 import TableList from "components/table";
 import { groupListAtom } from "states/groupStates";
 import {

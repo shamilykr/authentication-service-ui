@@ -4,9 +4,9 @@ import { GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import "./roles.css";
-import { GET_ROLES } from "../../services/queries";
-import { DELETE_ROLE } from "../../services/mutations";
+import "./styles.css";
+import { GET_ROLES } from "services/queries/roleQueries";
+import { DELETE_ROLE } from "services/mutations/roleMutations";
 import { RolesListAtom } from "states/roleStates";
 import TableList from "components/table";
 import {
