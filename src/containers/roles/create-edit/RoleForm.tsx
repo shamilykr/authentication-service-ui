@@ -6,7 +6,7 @@ import BottomFormController from "components/bottom-form-controller";
 
 import { RoleFormSchema } from "utils/roles";
 import "./styles.css";
-import FormInputText from "components/inputText";
+import FormInputText from "components/input-text";
 import { Role } from "types/role";
 import { AddEntity, UpdateEntity } from "types/generic";
 

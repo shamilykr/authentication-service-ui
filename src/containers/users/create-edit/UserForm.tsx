@@ -12,19 +12,19 @@ import {
   UserPermissionsAtom,
 } from "states/permissionsStates";
 import { GET_GROUPS } from "services/queries/groupQueries";
-import FormInputText from "components/inputText";
-import { ChecklistComponent } from "components/checklist/CheckList";
+import FormInputText from "components/input-text";
+import ChecklistComponent from "components/checklist";
 import { GET_USER, GET_USER_PERMISSIONS } from "services/queries/userQueries";
 import { Permission, User } from "types/user";
 import "./styles.css";
 import { AddUserformSchema, EditUserformSchema } from "utils/user";
-import PermissionCards from "components/permission-cards/PermissionCards";
+import PermissionCards from "components/permission-cards";
 import BottomFormController from "components/bottom-form-controller";
 import { useCustomQuery } from "hooks/useQuery";
 import { Group } from "types/group";
 import { currentUserAtom } from "states/loginStates";
 import { AddEntity, UpdateEntity } from "types/generic";
-import TabPanel from "components/tab-panel/TabPanel";
+import TabPanel from "components/tab-panel";
 import { renderAccessDenied } from "utils/generic";
 
 interface UserProps {

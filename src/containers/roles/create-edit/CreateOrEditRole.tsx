@@ -12,7 +12,7 @@ import {
 import RoleForm from "./RoleForm";
 import "./styles.css";
 import { Permission } from "types/user";
-import PermissionCards from "components/permission-cards/PermissionCards";
+import PermissionCards from "components/permission-cards";
 import { FieldValues } from "react-hook-form";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { Role } from "types/role";

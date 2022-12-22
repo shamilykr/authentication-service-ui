@@ -7,7 +7,7 @@ import BottomFormController from "components/bottom-form-controller";
 
 import "./styles.css";
 import { GroupFormSchema } from "utils/groups";
-import FormInputText from "components/inputText";
+import FormInputText from "components/input-text";
 import { AddEntity, UpdateEntity } from "types/generic";
 
 interface GroupFormProps {

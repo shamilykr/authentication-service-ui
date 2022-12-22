@@ -24,7 +24,7 @@ import {
   GET_GROUP_PERMISSIONS,
 } from "services/queries/groupQueries";
 import { Role } from "types/role";
-import PermissionCards from "components/permission-cards/PermissionCards";
+import PermissionCards from "components/permission-cards";
 import { Permission, User } from "types/user";
 import { Group } from "types/group";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
@@ -32,14 +32,14 @@ import {
   GROUP_CREATE_SUCCESS_MESSAGE,
   GROUP_UPDATE_SUCCESS_MESSAGE,
 } from "constants/messages";
-import RoleCardsChecklist from "components/role-cards-checklist/RoleCardsChecklist";
-import { AvatarChecklistComponent } from "components/avatar-checklist/AvatarChecklist";
+import RoleCardsChecklist from "components/role-cards-checklist";
+import AvatarChecklistComponent from "components/avatar-checklist";
 import { GET_USERS } from "services/queries/userQueries";
-import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
+import CustomAvatar from "components/custom-avatar";
 import { ReactComponent as CrossIcon } from "assets/edit-group-icons/cross-icon.svg";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
-import TabPanel from "components/tab-panel/TabPanel";
+import TabPanel from "components/tab-panel";
 import { renderAccessDenied } from "utils/generic";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
 

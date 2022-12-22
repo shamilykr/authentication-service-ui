@@ -38,7 +38,7 @@ import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
-import If from "components/If/If";
+import If from "components/If";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =

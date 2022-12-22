@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { Checkbox, Button } from "@mui/material";
 import { FC, useState } from "react";
 import { Role } from "types/role";
-import CustomChip from "../custom-chip/CustomChip";
+import CustomChip from "components/custom-chip";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import If from "../If/If";
-import CustomDialog from "components/CustomDialog";
+import If from "../If";
+import CustomDialog from "components/custom-dialog";
 
 interface RoleCardProps {
   role: Role;
