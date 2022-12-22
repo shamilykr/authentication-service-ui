@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 
-import GroupCard from "components/group-card/GroupCard";
+import GroupCard from "components/group-card";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -14,11 +14,11 @@ import {
 import { GET_USER } from "services/queries/userQueries";
 import { User } from "types/user";
 import "./styles.css";
-import { CustomAvatar } from "components/custom-avatar/CustomAvatar";
-import TabPanel from "components/tab-panel/TabPanel";
-import PermissionCards from "components/permission-cards/PermissionCards";
+import CustomAvatar from "components/custom-avatar";
+import TabPanel from "components/tab-panel";
+import PermissionCards from "components/permission-cards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
-import If from "components/If/If";
+import If from "components/If";
 import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
 import {

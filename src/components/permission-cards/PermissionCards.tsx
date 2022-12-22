@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 
 import "./styles.css";
 import { Permission } from "types/user";
-import PermissionsCard from "../permission-card/PermissionCard";
+import PermissionsCard from "../permission-card";
 import { Role } from "types/role";
 import { GET_ENTITIES } from "services/queries/entityQueries";
 import { Entity } from "types/generic";

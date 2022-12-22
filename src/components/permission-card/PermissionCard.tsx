@@ -13,7 +13,7 @@ import {
   getUniquePermissionsFromRoles,
 } from "utils/permissions";
 import { Entity } from "types/generic";
-import If from "../If/If";
+import If from "../If";
 import { RemovedPermissions } from "constants/permissions";
 import { Group } from "types/group";
 
