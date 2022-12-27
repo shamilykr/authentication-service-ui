@@ -104,7 +104,6 @@ const GroupCard: FC<GroupCardProps> = ({
                 key={group.id}
                 checked={isChecked(group.id)}
                 onChange={(e) => onChange && onChange(e, group)}
-                className="custom-checkbox"
                 icon={<UnCheckedIcon />}
                 checkedIcon={<CheckedIcon />}
               />

@@ -14,7 +14,7 @@ const Filter: FC<FilterProps> = ({
   handleCheckedItems,
 }) => {
   return (
-    <div className="options">
+    <div className="filter-options">
       <FormGroup>
         {itemList.map((item: string | any, index: number) => (
           <FormControlLabel
@@ -45,7 +45,7 @@ const Filter: FC<FilterProps> = ({
                     typeof item === "string" ? item : item.id,
                     checkedItems
                   ) === true
-                    ? "checked"
+                    ? "filter-item-checked"
                     : "unchecked"
                 }
               />

@@ -53,7 +53,7 @@ const RoleForm: FC<RoleFormProps> = ({
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(onSubmitForm)}
-            className="form"
+            className="role-form"
             id="role-form"
           >
             {!loading && (

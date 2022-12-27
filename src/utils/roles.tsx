@@ -21,7 +21,7 @@ export const columns: GridColumns = [
     headerName: "Permissions",
     headerClassName: "user-list-header",
     renderCell: (params) => (
-      <div className="permission-list">
+      <div className="roles-permission-list">
         <TableChipElement
           rowItems={params}
           columnName="permissions"
