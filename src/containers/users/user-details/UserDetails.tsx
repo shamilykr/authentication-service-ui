@@ -70,7 +70,7 @@ const UserDetails = () => {
   };
 
   return (
-    <div className="cntr">
+    <div className="userdetails-cntr">
       <div className="personal-details">
         <div className="details">
           <div style={{ display: "flex" }}>
@@ -98,17 +98,17 @@ const UserDetails = () => {
         <div style={{ display: "flex", marginLeft: "auto" }}>
           <Button
             variant="outlined"
-            id="cancel-button"
+            className="cancel-button"
             onClick={onBackNavigation}
             sx={{ textTransform: "none" }}
           >
             Cancel
           </Button>
           <If condition={isEditVerified}>
-            <div className="submit-buttom-style">
+            <div className="submit-button-style">
               <Button
                 variant="contained"
-                id="submit-button"
+                className="submit-button"
                 onClick={onRedirectToEdit}
                 sx={{ textTransform: "none" }}
               >
@@ -133,13 +133,13 @@ const UserDetails = () => {
           <TabPanel
             value={value}
             index={0}
-            style={{ height: "125%", overflowY: "scroll" }}
+            style={{ height: "125%", overflowY: "auto" }}
           >
             {!loading ? (
               isViewGroupsVerified ? (
                 user?.groups && (user?.groups).length > 0 ? (
-                  <div id="groups-permissions">
-                    <div id="user-groups">
+                  <div className="groups-permissions">
+                    <div className="user-groups">
                       {user?.groups?.map((item: any) => {
                         return (
                           <div style={{ marginTop: 15 }} key={item?.id}>

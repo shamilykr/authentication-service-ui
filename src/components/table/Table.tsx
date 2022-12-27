@@ -88,14 +88,11 @@ const TableList: FC<TableProps> = ({
       setSearchValue("");
     }; // eslint-disable-next-line
   }, []);
-
   function CustomPagination() {
     const [pageValue, setPageValue] = useState(1);
     const [pageCount] = useState(
       count % 8 > 0 ? Math.floor(count / 8) + 1 : Math.floor(count / 8)
     );
-    const apiRef = useGridApiContext();
-    const page = useGridSelector(apiRef, gridPageSelector);
     return (
       <>
         <div className="pagination-count">
@@ -105,7 +102,7 @@ const TableList: FC<TableProps> = ({
           color="primary"
           variant="outlined"
           shape="rounded"
-          page={page + 1 === currentPage ? page + 1 : currentPage}
+          page={currentPage}
           count={pageCount}
           // @ts-expect-error
           renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
@@ -135,8 +132,8 @@ const TableList: FC<TableProps> = ({
               id="go-button"
               onClick={() => {
                 if (pageValue > pageCount) setCurrentPage(pageCount);
-                else setCurrentPage(pageValue);
-                setPageValue(pageValue);
+                else if (pageValue < 1) setCurrentPage(1);
+                else setCurrentPage(Number(pageValue));
                 fetchEntities({
                   page:
                     pageValue > pageCount

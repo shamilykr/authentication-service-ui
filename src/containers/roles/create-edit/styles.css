@@ -1,8 +1,7 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 5px 0px 5px 0px;
-  box-shadow: aliceblue;
+.roleContainer {
+  padding: 30px;
+  background-color: white;
+  height: 83%;
 }
 
 .horizontal-bar {
@@ -25,15 +24,6 @@
   margin-top: 24px;
 }
 
-.access-setting {
-  display: flex;
-  align-items: center;
-  font-size: x-small;
-  padding: 5px 0px 5px 0px;
-  color: rgba(47, 47, 47, 0.6);
-  cursor: pointer;
-}
-
 .create-role {
   font-size: 20px;
   font-weight: bold;
@@ -45,12 +35,7 @@
   width: 50% !important;
 }
 
-.description {
-  margin-top: 20px !important;
-  width: 50% !important;
-}
-
-.form {
+.role-form {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -68,11 +53,6 @@
   margin-bottom: 30px;
 }
 
-.roleContainer {
-  padding: 30px;
-  background-color: white;
-  height: 83%;
-}
 .role-permissions {
   margin-top: 40px;
   font-family: "Manrope";

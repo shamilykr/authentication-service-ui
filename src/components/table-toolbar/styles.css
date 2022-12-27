@@ -27,7 +27,7 @@
 }
 
 #add-button {
-  height: 49px;
+  height: 46px;
   width: 128px;
   background-color: #2653f1;
   font-family: "Manrope";
@@ -36,7 +36,7 @@
 
 .sort-button {
   background-color: white;
-  height: 40px;
+  height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +61,7 @@
 
 .sort-button-enabled {
   background-color: white;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +74,7 @@
 
 .filter-button {
   background-color: white;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@
 
 .filter-count {
   background-color: white;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;

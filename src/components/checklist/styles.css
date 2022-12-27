@@ -1,28 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-#checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #d2d5dd;
-  box-sizing: border-box;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  padding: 24px;
-  width: 100%;
-  height: 76px;
-}
-
 .checkbox-label {
   display: flex;
   align-items: center;
   column-gap: 6px;
 }
 
-#add-items {
+#add-items-checklist {
   margin-top: 10px;
   width: 100%;
   padding-right: 5px;
+  overflow-y: scroll;
 }
 
 #user-groups {
@@ -38,14 +26,6 @@
 #titleChecklist {
   font-size: 16px;
   color: #040404;
-}
-.checklistLabel {
-  text-transform: capitalize;
-  margin-left: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: "Inter";
-  line-height: 20px;
 }
 
 .group-cards-container {
@@ -69,12 +49,6 @@
   line-height: 24px;
 }
 
-.roles-permissions-dropdown {
-  display: flex;
-  align-items: center;
-  column-gap: 23px;
-}
-
 .roles-permissions-tab {
   display: flex;
   justify-content: center;
@@ -88,23 +62,9 @@
   border-radius: 4px;
 }
 
-.roles-title {
-  margin: 16px 0px;
-}
-
-.role-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.individual-permission {
-  font-size: 14px;
-  margin-top: 20px;
-}
-
 #add-items-checklist {
   margin-top: 10px;
   width: 100%;
   padding-right: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }

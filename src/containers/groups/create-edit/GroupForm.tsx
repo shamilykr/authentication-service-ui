@@ -40,7 +40,7 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(onSubmitForm)}
-            className="form"
+            className="group-form"
             id="group-form"
           >
             <FormInputText

@@ -63,7 +63,6 @@ const RoleCardsChecklist: FC<Props> = ({
           value={"all"}
           onChange={handleSelectAll}
           checked={selectAll}
-          className="custom-checkbox"
           icon={<UnCheckedIcon />}
           checkedIcon={<CheckedIcon />}
         />

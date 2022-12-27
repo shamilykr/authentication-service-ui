@@ -8,7 +8,7 @@ export const columns: GridColumns = [
   {
     field: "name",
     headerName: "Group",
-    headerClassName: "user-list-header",
+    headerClassName: "group-list-header",
     headerAlign: "left",
     width: 280,
     sortable: false,
@@ -16,7 +16,7 @@ export const columns: GridColumns = [
   {
     field: "roles",
     headerName: "Roles",
-    headerClassName: "user-list-header",
+    headerClassName: "group-list-header",
     flex: 0.6,
     renderCell: (params) => (
       <div className="role-list">
@@ -33,7 +33,7 @@ export const columns: GridColumns = [
   {
     field: "users",
     headerName: "Members",
-    headerClassName: "user-list-header",
+    headerClassName: "group-list-header",
     flex: 0.5,
     renderCell: (params) => (
       <div className="role-list">

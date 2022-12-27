@@ -1,9 +1,9 @@
-.options {
+.filter-options {
   margin-left: 23px;
   font-family: "Inter" !important;
   margin-top: 10px;
 }
 
-.checked {
+.filter-item-checked {
   color: #2653f1 !important;
 }
