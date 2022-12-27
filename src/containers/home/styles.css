@@ -3,6 +3,7 @@
   width: 100vw;
   overflow: hidden;
 }
+
 .navBar {
   width: 320px;
   height: 85px;
@@ -24,6 +25,7 @@
   display: flex;
   height: 100vh;
 }
+
 .outlet {
   width: 96%;
   margin-left: 30px;

@@ -12,14 +12,14 @@ export const columns: GridColumns = [
     field: "name",
     headerName: "Role",
     width: 280,
-    headerClassName: "user-list-header",
+    headerClassName: "role-list-header",
     headerAlign: "left",
     sortable: false,
   },
   {
     field: "permissions",
     headerName: "Permissions",
-    headerClassName: "user-list-header",
+    headerClassName: "role-list-header",
     renderCell: (params) => (
       <div className="roles-permission-list">
         <TableChipElement

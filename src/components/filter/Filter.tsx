@@ -44,7 +44,7 @@ const Filter: FC<FilterProps> = ({
                   handleCheckedItems(
                     typeof item === "string" ? item : item.id,
                     checkedItems
-                  ) === true
+                  )
                     ? "filter-item-checked"
                     : "unchecked"
                 }

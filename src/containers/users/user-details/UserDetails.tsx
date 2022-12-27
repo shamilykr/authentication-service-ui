@@ -133,7 +133,7 @@ const UserDetails = () => {
           <TabPanel
             value={value}
             index={0}
-            style={{ height: "125%", overflowY: "scroll" }}
+            style={{ height: "125%", overflowY: "auto" }}
           >
             {!loading ? (
               isViewGroupsVerified ? (

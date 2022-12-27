@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import { FC, useState } from "react";
 
+import "./styles.css";
 import { Role } from "types/role";
 import RoleCard from "../role-card";
 import { ReactComponent as DownArrowIcon } from "assets/checkbox-icons/Stroke 1.svg";
@@ -129,15 +130,17 @@ const GroupCard: FC<GroupCardProps> = ({
               <RoleCard role={role} key={role?.id} />
             ))}
           </div>
-          <div className="individual-permission">
-            <span
-              style={{ color: "#2F6FED", cursor: "pointer" }}
-              onClick={() => setOpenModal(true)}
-            >
-              View
-            </span>{" "}
-            individual permissions
-          </div>
+          {group?.permissions.length != 0 && (
+            <div className="individual-permission">
+              <span
+                style={{ color: "#2F6FED", cursor: "pointer" }}
+                onClick={() => setOpenModal(true)}
+              >
+                View
+              </span>{" "}
+              individual permissions
+            </div>
+          )}
         </RoleCards>
       </Container>
       <If condition={openModal}>

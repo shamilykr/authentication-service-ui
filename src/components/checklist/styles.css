@@ -27,14 +27,6 @@
   font-size: 16px;
   color: #040404;
 }
-.checklistLabel {
-  text-transform: capitalize;
-  margin-left: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: "Inter";
-  line-height: 20px;
-}
 
 .group-cards-container {
   display: flex;
@@ -57,12 +49,6 @@
   line-height: 24px;
 }
 
-.roles-permissions-dropdown {
-  display: flex;
-  align-items: center;
-  column-gap: 23px;
-}
-
 .roles-permissions-tab {
   display: flex;
   justify-content: center;
@@ -76,16 +62,9 @@
   border-radius: 4px;
 }
 
-.roles-title {
-  margin: 16px 0px;
-}
-
-.role-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.individual-permission {
-  font-size: 14px;
-  margin-top: 20px;
+#add-items-checklist {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+  overflow-y: auto;
 }

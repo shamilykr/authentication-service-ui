@@ -1,0 +1,29 @@
+.individual-permission {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.checklistLabel {
+  text-transform: capitalize;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Inter";
+  line-height: 20px;
+}
+
+.roles-permissions-dropdown {
+  display: flex;
+  align-items: center;
+  column-gap: 23px;
+}
+
+.roles-title {
+  margin: 16px 0px;
+}
+
+.role-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
