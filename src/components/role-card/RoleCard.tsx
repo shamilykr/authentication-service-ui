@@ -75,7 +75,6 @@ const RoleCard: FC<RoleCardProps> = ({
             <Checkbox
               onChange={(e) => onChange(e, role)}
               checked={checked}
-              className="custom-checkbox"
               icon={<UnCheckedIcon />}
               checkedIcon={<CheckedIcon />}
             />

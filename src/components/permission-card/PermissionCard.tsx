@@ -126,7 +126,6 @@ const PermissionsCard: FC<PermissionCardProps> = ({
             <CheckboxContainer>
               <Checkbox
                 value={"all"}
-                className="custom-checkbox"
                 onChange={(e) => onChangePermissions(e, permission)}
                 checked={IsChecked(permission.id)}
                 icon={<UnCheckedIcon />}

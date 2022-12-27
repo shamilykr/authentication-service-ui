@@ -40,7 +40,6 @@ export const ChecklistComponent: FC<ChecklistProps> = ({
             value={"all"}
             onChange={handleSelectAll}
             checked={selectAll}
-            className="custom-checkbox"
             icon={<UnCheckedIcon />}
             checkedIcon={<CheckedIcon />}
             sx={{ mr: "5px" }}

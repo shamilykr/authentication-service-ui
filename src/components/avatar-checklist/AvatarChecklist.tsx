@@ -36,8 +36,8 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   };
 
   return (
-    <div id="add-items">
-      <div id="titlebar">
+    <div className="user-checklist">
+      <div className="titlebar">
         <SearchBar
           searchLabel="Search Members"
           setItemList={(response) => setItemList(response?.getUsers?.results)}
@@ -46,19 +46,18 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
           customBarStyle={{ border: "1px solid #d2d5dd" }}
           customIconStyle={{ bottom: "7px" }}
         />
-        <div id="selectall-avatar">
+        <div className="selectall-avatar">
           <Checkbox
             value={"all"}
             onChange={handleSelectAll}
             checked={selectAll}
-            className="custom-checkbox"
             icon={<UnCheckedIcon />}
             checkedIcon={<CheckedIcon />}
           />
           <span style={{ marginLeft: "5px" }}> Select All</span>
         </div>
       </div>
-      <div id="component">
+      <div className="component">
         {mapList?.map((item: any) => {
           return (
             <div className="avatar-wrapper" key={item?.id}>

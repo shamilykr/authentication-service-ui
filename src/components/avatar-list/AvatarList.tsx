@@ -2,6 +2,7 @@ import { Avatar } from "@mui/material";
 import { AvatarGroup } from "@mui/material";
 
 import { stringAvatar } from "utils/table";
+import "./styles.css";
 
 const DEFAULT_SIZE = 9;
 

@@ -277,7 +277,7 @@ const CreateOrEditGroup = () => {
   };
 
   return (
-    <div className="access-settings">
+    <div className="create-edit-group-container">
       {!loading && (
         <GroupForm
           name={group?.name as string}
