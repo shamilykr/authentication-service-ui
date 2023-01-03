@@ -1,14 +1,14 @@
 import { FC } from "react";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import BottomFormController from "components/bottom-form-controller";
 
-import "./styles.css";
 import { GroupFormSchema } from "utils/groups";
 import FormInputText from "components/input-text";
+import { RoutePaths } from "constants/routes";
 import { AddEntity, UpdateEntity } from "types/generic";
+import "./styles.css";
 
 interface GroupFormProps {
   name: string;
@@ -31,7 +31,7 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
   };
 
   const onBackNavigation = () => {
-    navigate("/home/groups");
+    navigate(RoutePaths.groupsUrl);
   };
 
   return (

@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
-
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
-import { LOGO_URL } from "../../config";
-import CustomerAuth from "services/auth";
-import "./styles.css";
-import { LOGOUT } from "services/mutations/authMutations";
-import { currentUserAtom } from "states/loginStates";
+
 import { stringAvatar } from "utils/table";
 import Toast from "components/toast";
+import If from "components/if";
+import SideBar from "components/side-bar";
 import { toastMessageAtom } from "states/apiRequestState";
 import {
   IsViewGroupsVerifiedAtom,
@@ -21,9 +18,12 @@ import {
   IsViewEntitiesVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
-import SideBar from "components/side-bar";
 import { groupListAtom } from "states/groupStates";
+import { currentUserAtom } from "states/loginStates";
 import { GET_GROUPS } from "services/queries/groupQueries";
+import CustomerAuth from "services/auth";
+import { LOGOUT } from "services/mutations/authMutations";
+import { GET_CURRENT_USER } from "services/queries/authQueries";
 import { ReactComponent as ArrowIcon } from "assets/sub-header-icons/arrow.svg";
 import {
   VIEW_GROUP_PERMISSION,
@@ -33,12 +33,12 @@ import {
   VIEW_PERMISSIONS_PERMISSION,
 } from "constants/permissions";
 import { useCustomMutation } from "hooks/useMutation";
-import { GET_CURRENT_USER } from "services/queries/authQueries";
 import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
-import If from "components/if";
+import { LOGO_URL } from "../../config";
+import "./styles.css";
 
 const HomePage = () => {
   const [currentUserDetails, setCurrentUserDetails] =
@@ -119,15 +119,16 @@ const HomePage = () => {
     setIsViewRolesVerified(false);
     navigate(RoutePaths.login);
   };
+
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
 
   const handleRedirection = (path: string) => {
-    let redirectUrl = "/home/users";
+    let redirectUrl = RoutePaths.usersUrl;
     redirectUrl =
       path === "groups"
-        ? "/home/groups"
+        ? RoutePaths.groupsUrl
         : path === "roles"
-        ? "/home/roles"
+        ? RoutePaths.rolesUrl
         : redirectUrl;
     navigate(redirectUrl);
   };

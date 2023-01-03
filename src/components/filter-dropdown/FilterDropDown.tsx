@@ -5,12 +5,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { SetterOrUpdater } from "recoil";
 import { Avatar } from "@mui/material";
 
-import "./styles.css";
 import Filter from "components/filter/Filter";
 import { ReactComponent as LeftArrowIcon } from "assets/toolbar-icons/arrow-left.svg";
 import { useFetchEntities } from "hooks/useFetchEntities";
 import { DocumentNode } from "graphql";
 import { statusList } from "constants/filters";
+import "./styles.css";
 
 interface FilterDropdownProps {
   firstFilter?: never[];

@@ -4,35 +4,35 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { GET_USERS } from "services/queries/userQueries";
-import "./styles.css";
 import { DELETE_USER } from "services/mutations/userMutations";
-import { userListAtom } from "states/userStates";
 import TableList from "components/table/Table";
+import DisplayMessage from "components/display-message";
 import { columns } from "utils/user";
-import "../create-edit/styles.css";
+import { userListAtom } from "states/userStates";
+import { groupListAtom } from "states/groupStates";
 import {
   IsViewGroupsVerifiedAtom,
   IsViewUsersVerifiedAtom,
   UserPermissionsAtom,
 } from "states/permissionsStates";
 import {
+  groupFilterAtom,
+  statusFilterAtom,
+} from "states/searchSortFilterStates";
+import {
   CREATE_USER_PERMISSION,
   DELETE_USER_PERMISSION,
   UPDATE_USER_PERMISSION,
 } from "constants/permissions";
-
-import DisplayMessage from "components/display-message";
-import {
-  groupFilterAtom,
-  statusFilterAtom,
-} from "states/searchSortFilterStates";
-import { groupListAtom } from "states/groupStates";
 import { AddEntity, SearchEntity } from "types/generic";
 import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
+import "../create-edit/styles.css";
+import "./styles.css";
+import { RoutePaths } from "constants/routes";
 
 const Users: React.FC = () => {
   const [isAddVerified, setAddVerified] = useState(false);
@@ -63,11 +63,11 @@ const Users: React.FC = () => {
   }, [isViewUsersVerified, getUsers]);
 
   const onEdit = (id: any) => {
-    navigate(`/home/users/add/${id}`);
+    navigate(`${RoutePaths.usersUrl}/add/${id}`);
   };
 
   const onAdd = () => {
-    navigate(`/home/users/add`);
+    navigate(`${RoutePaths.usersUrl}/add`);
   };
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const Users: React.FC = () => {
   const onUserClick = (params: any) => {
     navigate(`./${params.id}`);
   };
+
   if (!isViewUsersVerified && !loading)
     return (
       <div className="denied-table-component">
@@ -98,6 +99,7 @@ const Users: React.FC = () => {
         />
       </div>
     );
+
   return (
     <>
       {!loading ? (

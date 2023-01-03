@@ -1,10 +1,11 @@
 import { Checkbox } from "@mui/material";
 import { FC, useEffect, useState } from "react";
+import styled from "@emotion/styled";
+
 import { Role } from "types/role";
 import RoleCard from "../role-card";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import styled from "@emotion/styled";
 
 interface Props {
   roleList: Role[];

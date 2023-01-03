@@ -3,18 +3,19 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { FieldValues } from "react-hook-form";
 
-import { LOGIN_URL } from "../../../config";
 import { LOGIN, SET_PASSWORD } from "services/mutations/authMutations";
 import CustomerAuth from "services/auth";
-import "./styles.css";
-import LoginPassword from "./loginPassword";
-import PasswordConfirmation from "./PasswordConfirmation";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
+import { IsViewUsersVerifiedAtom } from "states/permissionsStates";
 import Toast from "components/toast";
 import { PASSWORD_SET_MESSAGE } from "constants/messages";
 import { useCustomMutation } from "hooks/useMutation";
-import { IsViewUsersVerifiedAtom } from "states/permissionsStates";
 import { VIEW_USER_PERMISSION } from "constants/permissions";
+import { RoutePaths } from "constants/routes";
+import { LOGIN_URL } from "../../../config";
+import "./styles.css";
+import LoginPassword from "./loginPassword";
+import PasswordConfirmation from "./PasswordConfirmation";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -45,14 +46,14 @@ const Login: React.FC = () => {
           }
         });
       }
-      navigate("/home/users");
+      navigate(RoutePaths.usersUrl);
     } // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
     if (passwordCreatedData)
       setTimeout(() => {
-        navigate("/");
+        navigate(RoutePaths.default);
       }, 1000); // eslint-disable-next-line
   }, [passwordCreatedData]);
 

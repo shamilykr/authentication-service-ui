@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-import "./styles.css";
 import { ReactComponent as UsersIcon } from "assets/sidebar-icons/users.svg";
 import { ReactComponent as GroupsIcon } from "assets/sidebar-icons/groups.svg";
 import { ReactComponent as RolesIcon } from "assets/sidebar-icons/roles.svg";
 import { Entities } from "types/generic";
+import "./styles.css";
 
 const SideBar: FC = () => {
   return (

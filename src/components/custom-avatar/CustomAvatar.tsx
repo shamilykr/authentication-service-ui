@@ -1,10 +1,8 @@
 import { FC } from "react";
 import { Avatar } from "@mui/material";
 
-import "./styles.css";
-
 import { stringSmallAvatar } from "utils/table";
-
+import "./styles.css";
 interface AvatarProps {
   firstName?: string;
   lastName?: string;

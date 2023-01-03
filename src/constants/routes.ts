@@ -16,4 +16,7 @@ export const RoutePaths = {
   editGroup: "groups/edit/:id",
   addRole: "roles/add",
   editRole: "roles/edit/:id",
+  usersUrl: "/home/users",
+  groupsUrl: "/home/groups",
+  rolesUrl: "/home/roles",
 };
