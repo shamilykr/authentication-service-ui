@@ -32,7 +32,7 @@ import { renderAccessDenied } from "utils/generic";
 const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [isEditVerified, setEditVerified] = useState(true);
+  const [isEditVerified, setEditVerified] = useState(false);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
