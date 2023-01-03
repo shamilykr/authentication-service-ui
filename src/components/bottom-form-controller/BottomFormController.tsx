@@ -1,5 +1,6 @@
-import "./styles.css";
 import { Button } from "@mui/material";
+
+import "./styles.css";
 import { BottomControllerProps } from "./types";
 
 const BottomFormController = (props: BottomControllerProps) => {

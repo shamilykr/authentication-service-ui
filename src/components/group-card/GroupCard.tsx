@@ -2,18 +2,18 @@ import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import { FC, useState } from "react";
 
-import "./styles.css";
 import { Role } from "types/role";
-import RoleCard from "../role-card";
 import { ReactComponent as DownArrowIcon } from "assets/checkbox-icons/Stroke 1.svg";
 import { getUniquePermissionsFromRoles } from "utils/permissions";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
-import If from "../if";
 import CustomDialog from "components/custom-dialog";
-import "../checklist/styles.css";
 import { Group } from "types/group";
 import CustomChip from "components/custom-chip";
+import If from "../if";
+import "../checklist/styles.css";
+import RoleCard from "../role-card";
+import "./styles.css";
 interface GroupCardProps {
   group: any;
   currentCheckedItems?: Group[];
@@ -21,6 +21,7 @@ interface GroupCardProps {
   showCheckBox?: Boolean;
   isViewPage?: Boolean;
 }
+
 interface TabProps {
   checked?: boolean;
 }

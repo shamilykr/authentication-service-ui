@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 
-import "./styles.css";
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
 import CustomAvatar from "components/custom-avatar";
 import SearchBar from "../search-bar/SearchBar";
 import { ChecklistProps } from "./types";
+import "./styles.css";
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,

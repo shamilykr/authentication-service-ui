@@ -6,6 +6,11 @@ import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 
 import GroupCard from "components/group-card";
+import CustomAvatar from "components/custom-avatar";
+import TabPanel from "components/tab-panel";
+import PermissionCards from "components/permission-cards";
+import DisplayMessage from "components/display-message";
+import If from "components/if";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
@@ -13,13 +18,7 @@ import {
 } from "states/permissionsStates";
 import { GET_USER } from "services/queries/userQueries";
 import { User } from "types/user";
-import "./styles.css";
-import CustomAvatar from "components/custom-avatar";
-import TabPanel from "components/tab-panel";
-import PermissionCards from "components/permission-cards";
 import { UPDATE_USER_PERMISSION } from "constants/permissions";
-import If from "components/if";
-import DisplayMessage from "components/display-message";
 import { useCustomQuery } from "hooks/useQuery";
 import {
   NO_GROUPS_DESCRIPTION,
@@ -27,7 +26,9 @@ import {
   NO_PERMISSIONS_DESCRIPTION,
   NO_PERMISSIONS_MESSAGE,
 } from "constants/messages";
+import { RoutePaths } from "constants/routes";
 import { renderAccessDenied } from "utils/generic";
+import "./styles.css";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -39,11 +40,12 @@ const UserDetails = () => {
 
   const [user, setUser] = useState<User>();
   const [value, setValue] = useState(0);
+
   const onBackNavigation = (e: React.MouseEvent<HTMLElement>) => {
     navigate(-1);
   };
   const onRedirectToEdit = (e: React.MouseEvent<HTMLElement>) => {
-    navigate(`/home/users/add/${id}`);
+    navigate(`${RoutePaths.usersUrl}/add/${id}`);
   };
 
   useEffect(() => {
@@ -60,11 +62,13 @@ const UserDetails = () => {
   };
 
   const { loading } = useCustomQuery(GET_USER, onCompleted, { id: id });
+
   const getClassName = () => {
     if (user?.status === "ACTIVE") return "active-user-style";
     else if (user?.status === "INACTIVE") return "inactive-user-style";
     else return "pending-style";
   };
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };

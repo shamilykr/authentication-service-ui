@@ -1,22 +1,23 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FieldValues } from "react-hook-form";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import {
   UPDATE_USER,
   UPDATE_USER_GROUPS,
   UPDATE_USER_PERMISSIONS,
 } from "services/mutations/userMutations";
-import UserForm from "./UserForm";
-import "./styles.css";
 import { Permission } from "types/user";
-import { FieldValues } from "react-hook-form";
 import { currentUserAtom } from "states/loginStates";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { UserPermissionsAtom } from "states/permissionsStates";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { USER_UPDATE_SUCCESS_MESSAGE } from "constants/messages";
 import { Group } from "types/group";
 import { useCustomMutation } from "hooks/useMutation";
+import { RoutePaths } from "constants/routes";
+import UserForm from "./UserForm";
+import "./styles.css";
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const EditUser: React.FC = () => {
       setCurrentUserDetails(data.updateUser);
     }
   };
+
   const onUpdateUserPermissionsCompleted = (data: any) => {
     if (currentUserDetails.id === id) {
       setUserPermissions(data.updateUserPermissions);
@@ -41,6 +43,7 @@ const EditUser: React.FC = () => {
     UPDATE_USER,
     onUpdateUserCompleted
   );
+
   const [updateUserGroups, { error: groupUpdateError }] =
     useCustomMutation(UPDATE_USER_GROUPS);
   const [updateUserPermissions, { error: permissionUpdateError }] =
@@ -84,7 +87,7 @@ const EditUser: React.FC = () => {
       },
       onCompleted: () => {
         if (!userUpdateError && !groupUpdateError && !permissionUpdateError) {
-          navigate("/home/users");
+          navigate(RoutePaths.usersUrl);
           setApiSuccess(true);
           setToastMessage(USER_UPDATE_SUCCESS_MESSAGE);
         }

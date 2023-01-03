@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Tooltip } from "@mui/material";
 import { Chip } from "@mui/material";
 
-import "./styles.css";
 import { REFRESH_INVITE_TOKEN } from "services/mutations/authMutations";
+import { GET_USERS } from "services/queries/userQueries";
 import { ReactComponent as RefreshIcon } from "assets/invite-chip-icons/refresh.svg";
 import { ReactComponent as ContentCopyIcon } from "assets/invite-chip-icons/copy.svg";
 import { useCustomMutation } from "hooks/useMutation";
-import { GET_USERS } from "services/queries/userQueries";
+import "./styles.css";
 
 export const StatusChip: React.FC = (props: any) => {
   const { row } = props;

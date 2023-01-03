@@ -3,9 +3,6 @@ import { useRecoilState } from "recoil";
 import { FC, useState } from "react";
 import { Avatar } from "@mui/material";
 
-import { TableToolBarProps } from "./types";
-import "./styles.css";
-import SearchBar from "../search-bar/SearchBar";
 import { ReactComponent as PlusIcon } from "assets/button-icons/plus.svg";
 import { ReactComponent as SortIcon } from "assets/toolbar-icons/sort.svg";
 import { ReactComponent as FilterIcon } from "assets/toolbar-icons/filter.svg";
@@ -13,6 +10,9 @@ import { sortCountAtom } from "states/searchSortFilterStates";
 import { useFetchEntities } from "hooks/useFetchEntities";
 import FilterDropdown from "components/filter-dropdown";
 import { ADD_FILTER, SORT_BY_NAME } from "constants/messages";
+import { TableToolBarProps } from "./types";
+import "./styles.css";
+import SearchBar from "../search-bar/SearchBar";
 
 const TableToolBar: FC<TableToolBarProps> = ({
   field,
@@ -38,11 +38,13 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setFilter(count);
     setAnchorEl(null);
   };
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
     setCurrentFirstFilter(firstFilter as unknown as never[]);
     setCurrentSecondFilter(secondFilter as unknown as never[]);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
     handleCancel();
@@ -71,6 +73,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
     setCount(countValue);
     fetchEntities({ countValue: countValue });
   };
+
   return (
     <div className="table-toolbar">
       <div className="search-sort-filter">

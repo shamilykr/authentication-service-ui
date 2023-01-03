@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
+import { FieldValues } from "react-hook-form";
 
 import { GET_ROLE } from "services/queries/roleQueries";
 import {
@@ -9,11 +10,8 @@ import {
   UPDATE_ROLE,
   UPDATE_ROLE_PERMISSIONS,
 } from "services/mutations/roleMutations";
-import RoleForm from "./RoleForm";
-import "./styles.css";
 import { Permission } from "types/user";
 import PermissionCards from "components/permission-cards";
-import { FieldValues } from "react-hook-form";
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { Role } from "types/role";
 import {
@@ -22,6 +20,9 @@ import {
 } from "constants/messages";
 import { useCustomQuery } from "hooks/useQuery";
 import { useCustomMutation } from "hooks/useMutation";
+import RoleForm from "./RoleForm";
+import "./styles.css";
+import { RoutePaths } from "constants/routes";
 
 const CreateOrEditRole = () => {
   const { id } = useParams();
@@ -63,7 +64,7 @@ const CreateOrEditRole = () => {
           },
         },
         onCompleted: () => {
-          navigate("/home/roles");
+          navigate(RoutePaths.rolesUrl);
           setApiSuccess(true);
           setToastMessage(ROLE_CREATE_SUCCESS_MESSAGE);
         },
@@ -72,7 +73,7 @@ const CreateOrEditRole = () => {
 
   useEffect(() => {
     if (updatedRoleData && updatedRolePermissionsData) {
-      navigate("/home/roles");
+      navigate(RoutePaths.rolesUrl);
       setToastMessage(ROLE_UPDATE_SUCCESS_MESSAGE);
       setApiSuccess(true);
     }

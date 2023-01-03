@@ -8,9 +8,9 @@ import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import { Chip } from "@mui/material";
 
 import { getOverallPermissions } from "utils/permissions";
-import "./styles.css";
 import { EntityPermissionsDetails } from "types/generic";
 import { Permission } from "types/user";
+import "./styles.css";
 
 interface StyledTabsProps {
   permissions: EntityPermissionsDetails[];
