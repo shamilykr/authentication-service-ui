@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { Avatar, Divider } from "@mui/material";
 import { useRecoilState } from "recoil";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useMediaQuery } from "react-responsive";
 
 import { stringAvatar } from "utils/table";
 import Toast from "components/toast";
@@ -25,6 +26,7 @@ import CustomerAuth from "services/auth";
 import { LOGOUT } from "services/mutations/authMutations";
 import { GET_CURRENT_USER } from "services/queries/authQueries";
 import { ReactComponent as ArrowIcon } from "assets/sub-header-icons/arrow.svg";
+import { ReactComponent as SettingsIcon } from "assets/sidebar-icons/settings.svg";
 import {
   VIEW_GROUP_PERMISSION,
   VIEW_ROLE_PERMISSION,
@@ -37,7 +39,8 @@ import { UserActions } from "types/generic";
 import { getHeader } from "utils/routes";
 import { RoutePaths } from "constants/routes";
 import { useCustomLazyQuery } from "hooks/useLazyQuery";
-import { LOGO_URL } from "../../config";
+import Settings from "components/settings";
+import { LOGO_URL, MINI_LOGO_URL } from "../../config";
 import "./styles.css";
 
 const HomePage = () => {
@@ -48,6 +51,9 @@ const HomePage = () => {
   const setGroupList = useSetRecoilState(groupListAtom);
   const [toastMessage, setToastMessage] = useRecoilState(toastMessageAtom);
   const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const setIsViewUsersVerified = useSetRecoilState(IsViewUsersVerifiedAtom);
   const setIsViewGroupsVerified = useSetRecoilState(IsViewGroupsVerifiedAtom);
@@ -76,6 +82,8 @@ const HomePage = () => {
   useEffect(() => {
     getCurrentUser(); // eslint-disable-next-line
   }, []);
+
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
 
   useEffect(() => {
     if (userPermissions) {
@@ -147,6 +155,7 @@ const HomePage = () => {
             {pathnameArray[1]?.charAt(0).toUpperCase() +
               pathnameArray[1].slice(1)}
           </div>
+          ``
           <ArrowIcon className="nav-bar-icon" />
           <div>{getHeader()}</div>
         </div>
@@ -162,6 +171,13 @@ const HomePage = () => {
     setToastMessage("");
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <div className="wrapperContainer">
@@ -169,7 +185,15 @@ const HomePage = () => {
           <div className="sideBar">
             <div className="navBar">
               <div className="navLogo">
-                <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
+                {isDesktopScreen ? (
+                  <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
+                ) : (
+                  <img
+                    alt="logo"
+                    src={MINI_LOGO_URL}
+                    style={{ width: "24%" }}
+                  />
+                )}
               </div>
             </div>
             <div className="nav-user-details">
@@ -178,17 +202,43 @@ const HomePage = () => {
                 <Divider />
                 <If condition={currentUserDetails.firstName}>
                   <div className="userdetails">
-                    <Avatar
-                      {...stringAvatar(
-                        `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                      )}
-                    />
-                    <div className="name-logout">
-                      <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                      <div onClick={onLogout} className="logout">
-                        {UserActions.LOGOUT}
-                      </div>
-                    </div>
+                    {isDesktopScreen ? (
+                      <>
+                        <Avatar
+                          {...stringAvatar(
+                            `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                          )}
+                          className="user-avatar-desktop"
+                        />
+                        <div className="name-logout">
+                          <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                          <div onClick={onLogout} className="logout">
+                            {UserActions.LOGOUT}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <SettingsIcon
+                          id="settings-icon"
+                          onClick={(e: any) => {
+                            handleClick(e);
+                          }}
+                        />
+                        {open && (
+                          <Settings
+                            initials={stringAvatar(
+                              `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                            )}
+                            fullName={`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}
+                            anchorEl={anchorEl}
+                            handleClose={handleClose}
+                            email={currentUserDetails.email}
+                            onLogoutCompleted={onLogoutCompleted}
+                          />
+                        )}
+                      </>
+                    )}
                   </div>
                 </If>
               </div>

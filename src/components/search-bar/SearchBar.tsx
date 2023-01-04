@@ -59,7 +59,7 @@ const SearchBar: FC<SearchBarProps> = ({
         />
       </div>
       <div className="search-icon" style={customIconStyle}>
-        <SearchIcon />
+        <SearchIcon id="search-icon" />
       </div>
     </div>
   );

@@ -1,10 +1,17 @@
 import * as yup from "yup";
 import { GridColumns } from "@mui/x-data-grid";
 import { Avatar } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
+import styled from "@emotion/styled";
 
 import TableChipElement from "components/table-chip-element";
 import StatusChip from "components/status-chip";
 import { stringAvatar } from "utils/table";
+
+export const UserDetails = styled.div<{ desktopScreen: boolean }>`
+  margin-left: ${(props) => !props.desktopScreen && "-5px"};
+  margin-top: ${(props) => !props.desktopScreen && "-3px"};
+`;
 
 export const AddUserformSchema = yup.object({
   firstName: yup.string().required("First name cannot be empty"),
@@ -36,20 +43,22 @@ export const getFullName = (
 
 const GetFullName = (props: any) => {
   const { row } = props;
+  const isDesktopScreen = useMediaQuery({ query: "(min-height: 980px)" });
+
   return (
     <>
       <Avatar
         {...stringAvatar(`${row.firstName} ${row.lastName}`?.toUpperCase())}
         className={row.status !== "INVITED" ? "avatar" : "blurred-avatar"}
       />
-      <div>
+      <UserDetails desktopScreen={isDesktopScreen}>
         <div
           className={row.status !== "INVITED" ? "fullname" : "blurred-fullname"}
         >{`${row.firstName} ${row.lastName}`}</div>
         <div className={row.status !== "INVITED" ? "email" : "blurred-email"}>
           {row.email}
         </div>
-      </div>
+      </UserDetails>
     </>
   );
 };
@@ -58,8 +67,8 @@ export const columns: GridColumns = [
   {
     field: "firstName",
     headerName: "User",
-    width: 320,
-    headerClassName: "user-list-header",
+    flex: 0.3,
+    headerClassName: "user-list-header-name",
     headerAlign: "left",
     renderCell: (params) => (
       <div className="username-column">

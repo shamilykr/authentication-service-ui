@@ -105,7 +105,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
     if (page === null) setCurrentPage(1);
     variables = {
       ...variables,
-      pagination: { offset: page ? page * 8 : 0, limit: 8 },
+      pagination: { offset: page ? page * 10 : 0, limit: 10 },
     };
 
     filterQuery({ variables: variables });

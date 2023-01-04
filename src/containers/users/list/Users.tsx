@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useMediaQuery } from "react-responsive";
 
 import { GET_USERS } from "services/queries/userQueries";
 import { DELETE_USER } from "services/mutations/userMutations";
@@ -46,6 +47,8 @@ const Users: React.FC = () => {
   const [groupList] = useRecoilState(groupListAtom);
   const navigate = useNavigate();
 
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+
   const onComplete = (data: any) => {
     setUserList(data?.getUsers?.results);
     setUsersCount(data?.getUsers?.totalCount);
@@ -58,9 +61,17 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     if (isViewUsersVerified) {
-      getUsers({ variables: { pagination: { limit: 8, offset: 0 } } });
+      getUsers({ variables: { pagination: { limit: 10, offset: 0 } } });
     }
   }, [isViewUsersVerified, getUsers]);
+
+  useEffect(() => {
+    if (isPortrait) {
+      columns[0].flex = 0.4;
+    } else {
+      columns[0].flex = 0.3;
+    }
+  }, [isPortrait]);
 
   const onEdit = (id: any) => {
     navigate(`${RoutePaths.usersUrl}/add/${id}`);

@@ -46,3 +46,14 @@
 #cancel-icon:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  #chip,
+  #blurred-chip {
+    font-size: 14px;
+  }
+
+  #count-chip {
+    font-size: 13px;
+  }
+}

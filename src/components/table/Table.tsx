@@ -1,15 +1,10 @@
-import {
-  DataGrid,
-  GridColumns,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { FC, useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import { useMediaQuery } from "react-responsive";
 
 import { UserPermissionsAtom } from "states/permissionsStates";
 import { TableProps } from "./types";
@@ -67,6 +62,9 @@ const TableList: FC<TableProps> = ({
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: refetchQuery, field: field },
   });
+
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+
   useEffect(() => {
     if (userPermissions)
       userPermissions.forEach((item: any) => {
@@ -91,8 +89,23 @@ const TableList: FC<TableProps> = ({
   function CustomPagination() {
     const [pageValue, setPageValue] = useState(1);
     const [pageCount] = useState(
-      count % 8 > 0 ? Math.floor(count / 8) + 1 : Math.floor(count / 8)
+      count % 10 > 0 ? Math.floor(count / 10) + 1 : Math.floor(count / 10)
     );
+    const onClickGo = () => {
+      if (!isNaN(pageValue)) {
+        if (pageValue > pageCount) setCurrentPage(pageCount);
+        else if (pageValue < 1) setCurrentPage(1);
+        else setCurrentPage(Number(pageValue));
+        fetchEntities({
+          page:
+            pageValue > pageCount
+              ? pageCount - 1
+              : pageValue < 1
+              ? 0
+              : pageValue - 1,
+        });
+      }
+    };
     return (
       <>
         <div className="pagination-count">
@@ -128,22 +141,7 @@ const TableList: FC<TableProps> = ({
             />
           </div>
           <div>
-            <Button
-              id="go-button"
-              onClick={() => {
-                if (pageValue > pageCount) setCurrentPage(pageCount);
-                else if (pageValue < 1) setCurrentPage(1);
-                else setCurrentPage(Number(pageValue));
-                fetchEntities({
-                  page:
-                    pageValue > pageCount
-                      ? pageCount - 1
-                      : pageValue < 1
-                      ? 0
-                      : pageValue - 1,
-                });
-              }}
-            >
+            <Button id="go-button" onClick={onClickGo}>
               Go
             </Button>
           </div>
@@ -205,6 +203,9 @@ const TableList: FC<TableProps> = ({
             isViewFilterVerified={isViewFilterVerified}
           />
           <DataGrid
+            columnVisibilityModel={{
+              groups: isPortrait ? false : true,
+            }}
             rows={rows}
             columns={final_columns}
             style={{
@@ -214,7 +215,7 @@ const TableList: FC<TableProps> = ({
             disableSelectionOnClick
             onRowClick={handleRowClick}
             disableColumnMenu
-            pageSize={8}
+            pageSize={10}
             rowsPerPageOptions={[5]}
             components={{
               Pagination: CustomPagination,

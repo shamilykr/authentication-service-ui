@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { GridRowId } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useMediaQuery } from "react-responsive";
 
 import "./styles.css";
 import { DELETE_GROUP } from "services/mutations/groupMutations";
@@ -36,6 +37,8 @@ const GroupList: React.FC = () => {
   const [userPermissions] = useRecoilState(UserPermissionsAtom);
   const [groupList, setGroupList] = useRecoilState(groupListAtom);
 
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+
   const onGetGroupsComplete = (data: any) => {
     setGroupList(data?.getGroups?.results);
     setGroupCount(data?.getGroups?.totalCount);
@@ -67,6 +70,16 @@ const GroupList: React.FC = () => {
       }
     });
   }, [userPermissions]);
+
+  useEffect(() => {
+    if (isPortrait) {
+      columns[0].flex = 0.3;
+      columns[2].flex = 0.35;
+    } else {
+      columns[0].flex = 0.5;
+      columns[2].flex = 0.5;
+    }
+  }, [isPortrait]);
 
   const setItemList = (data: any) => {
     setGroupList(data?.getGroups?.results);

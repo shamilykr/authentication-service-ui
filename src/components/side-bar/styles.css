@@ -12,7 +12,7 @@
   margin: 10px 6px 0px 7px;
   display: flex;
   align-items: center;
-  padding: 5px 10px 5px 20px;
+  padding: 6px 0px 5px 23px;
   border-radius: 6px;
 }
 
@@ -24,8 +24,8 @@
 .text-link .sidebar-icon {
   filter: invert(54%) sepia(7%) saturate(502%) hue-rotate(191deg)
     brightness(93%) contrast(86%);
-  margin-right: 10px;
-  margin-left: -4px;
+  margin-right: 7px;
+  margin-left: -1px;
 }
 
 .text-link:hover .sidebar-icon {
@@ -36,8 +36,8 @@
 .active-text-link .sidebar-icon {
   filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(120deg)
     brightness(104%) contrast(107%);
-  margin-right: 10px;
-  margin-left: -4px;
+  margin-right: 7px;
+  margin-left: -1px;
 }
 
 .active-text-link {
@@ -50,5 +50,5 @@
   margin: 10px 9px 0px 7px;
   display: flex;
   align-items: center;
-  padding: 5px 10px 5px 20px;
+  padding: 6px 0px 5px 23px;
 }

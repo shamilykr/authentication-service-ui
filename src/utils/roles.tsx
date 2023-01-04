@@ -11,7 +11,7 @@ export const columns: GridColumns = [
   {
     field: "name",
     headerName: "Role",
-    width: 280,
+    flex: 0.3,
     headerClassName: "role-list-header",
     headerAlign: "left",
     sortable: false,

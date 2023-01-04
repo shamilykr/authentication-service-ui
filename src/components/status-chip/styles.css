@@ -45,3 +45,16 @@
   display: flex;
   align-items: center;
 }
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  .active-user,
+  .inactive-user,
+  .pending {
+    font-size: 14px !important;
+    height: 29px !important;
+  }
+
+  .refresh-token-icon {
+    width: 16px;
+  }
+}

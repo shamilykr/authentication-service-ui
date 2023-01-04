@@ -9,6 +9,7 @@ import { ReactComponent as DeleteIcon } from "assets/table-actions-icons/trash.s
 import { apiRequestAtom, toastMessageAtom } from "states/apiRequestState";
 import { useCustomMutation } from "hooks/useMutation";
 import { paginationAtom } from "states/searchSortFilterStates";
+import "./styles.css";
 import DialogBox from "../dialog-box";
 import { ActionsCellProps } from "./types";
 

@@ -73,7 +73,7 @@ const RoleCards = styled.div<{ roles: string }>`
   border-top: none;
 `;
 
-const DialogContent = styled.div`
+export const DialogContent = styled.div`
   width: 90%;
   display: flex;
   flex-wrap: wrap;

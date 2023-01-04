@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { FC, useState } from "react";
 import { Avatar } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
 
 import { ReactComponent as PlusIcon } from "assets/button-icons/plus.svg";
 import { ReactComponent as SortIcon } from "assets/toolbar-icons/sort.svg";
@@ -52,6 +53,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const [currentFirstFilter, setCurrentFirstFilter] = useState([]);
   const [currentSecondFilter, setCurrentSecondFilter] = useState([]);
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
 
   const handleCancel = () => {
     if (
@@ -87,7 +89,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
           onClick={onSort}
         >
           <SortIcon id={count > 0 ? "sort-icon-enabled" : "sort-filter-icon"} />
-          {SORT_BY_NAME}
+          {!isPortrait && SORT_BY_NAME}
         </div>
 
         {field === "firstName" && (
@@ -96,7 +98,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
             onClick={handleClick}
           >
             <FilterIcon id="sort-filter-icon" />
-            {ADD_FILTER}
+            {!isPortrait && ADD_FILTER}
             {filter > 0 && (
               <Avatar
                 sx={{

@@ -116,11 +116,9 @@ const theme = createTheme({
           },
           "& .MuiDataGrid-cellContent": {
             marginLeft: "30px !important",
-            fontSize: "16px",
           },
           "& .MuiDataGrid-row": {
             maxHeight: "none !important",
-            minHeight: "77.87px !important",
             borderBottom: "1px solid #D9D9D9 !important",
           },
           "& .MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft":
@@ -137,7 +135,6 @@ const theme = createTheme({
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: "#E9EDF2",
             position: "relative",
-            minHeight: "94px !important",
             top: "-2px",
             cursor: "default",
           },

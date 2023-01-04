@@ -24,3 +24,9 @@
 .css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar {
   background-color: #2f6fed !important;
 }
+
+@media screen and (max-width: 1310px) {
+  .group-list-header div {
+    margin-top: 1px;
+  }
+}

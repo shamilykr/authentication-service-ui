@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import { ReactComponent as UsersIcon } from "assets/sidebar-icons/users.svg";
 import { ReactComponent as GroupsIcon } from "assets/sidebar-icons/groups.svg";
@@ -8,6 +9,7 @@ import { Entities } from "types/generic";
 import "./styles.css";
 
 const SideBar: FC = () => {
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
   return (
     <nav>
       <div className="sideBarContainer">
@@ -18,7 +20,7 @@ const SideBar: FC = () => {
           }
         >
           <UsersIcon className="sidebar-icon" />
-          {Entities.USERS}
+          {isDesktopScreen && Entities.USERS}
         </NavLink>
         <NavLink
           to="/home/groups"
@@ -27,7 +29,7 @@ const SideBar: FC = () => {
           }
         >
           <GroupsIcon className="sidebar-icon" />
-          {Entities.GROUPS}
+          {isDesktopScreen && Entities.GROUPS}
         </NavLink>
 
         <NavLink
@@ -37,7 +39,7 @@ const SideBar: FC = () => {
           }
         >
           <RolesIcon className="sidebar-icon" />
-          {Entities.ROLES}
+          {isDesktopScreen && Entities.ROLES}
         </NavLink>
       </div>
     </nav>
