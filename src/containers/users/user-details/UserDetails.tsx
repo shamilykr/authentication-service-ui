@@ -76,28 +76,30 @@ const UserDetails = () => {
   return (
     <div className="userdetails-cntr">
       <div className="personal-details">
-        <div className="details">
-          <div style={{ display: "flex" }}>
-            {!loading && (
-              <CustomAvatar
-                firstName={user?.firstName || ""}
-                lastName={user?.lastName || ""}
-                email={user?.email || ""}
+        <div className="personal-details-inner">
+          <div className="details">
+            <div style={{ display: "flex" }}>
+              {!loading && (
+                <CustomAvatar
+                  firstName={user?.firstName || ""}
+                  lastName={user?.lastName || ""}
+                  email={user?.email || ""}
+                />
+              )}
+              <Chip
+                label={
+                  user?.status &&
+                  user?.status.charAt(0) + user?.status.toLowerCase().slice(1)
+                }
+                className={getClassName()}
               />
-            )}
-            <Chip
-              label={
-                user?.status &&
-                user?.status.charAt(0) + user?.status.toLowerCase().slice(1)
-              }
-              className={getClassName()}
-            />
+            </div>
           </div>
-        </div>
-        <Divider flexItem orientation="vertical" />
-        <div className="contact">
-          <div className="contact-number">Contact Number</div>
-          <div>{user?.phone || "-"}</div>
+          <Divider flexItem orientation="vertical" />
+          <div className="contact">
+            <div className="contact-number">Contact Number</div>
+            <div>{user?.phone || "-"}</div>
+          </div>
         </div>
         <div style={{ display: "flex", marginLeft: "auto" }}>
           <Button
