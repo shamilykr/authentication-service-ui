@@ -131,7 +131,7 @@ const GroupCard: FC<GroupCardProps> = ({
               <RoleCard role={role} key={role?.id} />
             ))}
           </div>
-          {group?.permissions.length != 0 && (
+          {group?.permissions.length !== 0 && (
             <div className="individual-permission">
               <span
                 style={{ color: "#2F6FED", cursor: "pointer" }}
