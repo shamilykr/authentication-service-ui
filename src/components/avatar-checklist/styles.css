@@ -29,11 +29,24 @@
 }
 
 .user-checklist .selectall-avatar {
-  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 2px;
   font-size: 14px;
   color: grey;
-  margin-top: 3%;
 }
 .user-checklist .custom-checkbox-item {
   margin-right: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .user-checklist .titlebar {
+    display: block;
+  }
+
+  .user-checklist .selectall-avatar {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
 }

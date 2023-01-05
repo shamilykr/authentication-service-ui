@@ -346,7 +346,7 @@ const CreateOrEditGroup = () => {
           <div className="add-members">
             {isViewUsersVerified ? (
               <Grid container spacing={1} width="100%">
-                <Grid item xs={10} lg={5}>
+                <Grid item sm={5.5}>
                   <AvatarChecklistComponent
                     mapList={allUsers}
                     currentCheckedItems={users}
@@ -358,10 +358,10 @@ const CreateOrEditGroup = () => {
                 <Divider
                   orientation="vertical"
                   flexItem
-                  sx={{ marginRight: 2 }}
+                  className="vertical-divider"
                 />
-                <Grid item xs={10} lg={6.7}>
-                  <div className="select-member-wrapper">Select Members</div>
+                <Grid item sm={6} sx={{ marginLeft: 2 }}>
+                  <div className="select-member-wrapper">Selected Members</div>
                   <div className="selected-members">
                     {users.map((user, index) => (
                       <div

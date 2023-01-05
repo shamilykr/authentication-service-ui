@@ -108,7 +108,7 @@ const UserDetails = () => {
             onClick={onBackNavigation}
             sx={{ textTransform: "none" }}
           >
-            Cancel
+            Back
           </Button>
           <If condition={isEditVerified}>
             <div className="submit-button-style">

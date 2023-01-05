@@ -7,6 +7,7 @@ import CustomAvatar from "components/custom-avatar";
 import SearchBar from "../search-bar/SearchBar";
 import { ChecklistProps } from "./types";
 import "./styles.css";
+import { useMediaQuery } from "react-responsive";
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,
@@ -16,6 +17,8 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   searchQuery,
 }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
+
+  const isTabletScreen = useMediaQuery({ query: "(max-width: 940px)" });
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) setSelectAll(true);
@@ -39,12 +42,12 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
     <div className="user-checklist">
       <div className="titlebar">
         <SearchBar
-          searchLabel="Search Members"
+          searchLabel={isTabletScreen ? "Search" : "Search Members"}
           setItemList={(response) => setItemList(response?.getUsers?.results)}
           searchQuery={searchQuery}
           customSearchStyle={{ width: "70%" }}
           customBarStyle={{ border: "1px solid #d2d5dd" }}
-          customIconStyle={{ bottom: "7px" }}
+          customIconStyle={{ bottom: isTabletScreen ? "9px" : "7px" }}
         />
         <div className="selectall-avatar">
           <Checkbox
@@ -54,7 +57,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
             icon={<UnCheckedIcon />}
             checkedIcon={<CheckedIcon />}
           />
-          <span style={{ marginLeft: "5px" }}> Select All</span>
+          <div style={{ display: "flex", marginLeft: "5px" }}> Select All</div>
         </div>
       </div>
       <div className="component">

@@ -7,7 +7,7 @@
   font-weight: bold;
   color: #0a0d14;
   white-space: nowrap;
-  width: 204px;
+  width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: "Manrope";
@@ -20,4 +20,10 @@
   font-size: 14px;
   line-height: 20px;
   margin-left: 15px;
+}
+
+@media screen and (max-width: 900px) {
+  .custom-fullname {
+    width: 145px;
+  }
 }
