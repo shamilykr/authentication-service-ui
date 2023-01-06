@@ -141,6 +141,9 @@ const theme = createTheme({
           ". &.MuiSvgIcon-root-MuiSvgIcon": {
             color: "#039be5 !important",
           },
+          "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+            outline: "none !important",
+          },
         },
       },
     },

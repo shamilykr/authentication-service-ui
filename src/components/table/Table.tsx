@@ -89,7 +89,7 @@ const TableList: FC<TableProps> = ({
   function CustomPagination() {
     const [pageValue, setPageValue] = useState(1);
     const [pageCount] = useState(
-      count % 10 > 0 ? Math.floor(count / 10) + 1 : Math.floor(count / 10)
+      count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15)
     );
     const onClickGo = () => {
       if (!isNaN(pageValue)) {
@@ -215,7 +215,7 @@ const TableList: FC<TableProps> = ({
             disableSelectionOnClick
             onRowClick={handleRowClick}
             disableColumnMenu
-            pageSize={10}
+            pageSize={15}
             rowsPerPageOptions={[5]}
             components={{
               Pagination: CustomPagination,

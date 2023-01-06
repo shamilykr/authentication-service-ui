@@ -25,7 +25,6 @@ const ActionsCell: FC<ActionsCellProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [entityId, setEntityId] = useState<GridRowId>("");
-  const [entityName, setEntityName] = useState<string>("");
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [currentPage] = useRecoilState(paginationAtom);
@@ -33,7 +32,6 @@ const ActionsCell: FC<ActionsCellProps> = ({
   const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);
     setEntityId(id);
-    setEntityName(name);
   };
   const handleClose = () => {
     setOpen(false);
@@ -106,7 +104,6 @@ const ActionsCell: FC<ActionsCellProps> = ({
           refetchQuery={refetchQuery}
           entity={entity}
           entityId={entityId}
-          entityName={entityName}
           onConfirm={onConfirmDelete}
           handleClose={handleClose}
         />

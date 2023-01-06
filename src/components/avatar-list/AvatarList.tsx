@@ -9,9 +9,8 @@ const AvatarList = (avatarList: any) => {
   const { row } = avatarList;
   const isPortrait = useMediaQuery({ orientation: "portrait" });
   let DEFAULT_SIZE = 9;
-  if (isPortrait) {
-    DEFAULT_SIZE = 3;
-  }
+  if (isPortrait) DEFAULT_SIZE = 3;
+
   return (
     <div className="avatar-list">
       <AvatarGroup max={DEFAULT_SIZE} spacing={22}>

@@ -12,14 +12,13 @@ import { DialogProps } from "./types";
 
 const StyledDialog = styled(Dialog)`
   .MuiBackdrop-root {
-    background-color: #5e77993b;
+    background-color: #5e7799;
     opacity: 0.4 !important;
   }
 `;
 
 const DialogBox: React.FC<DialogProps> = ({
   entity,
-  entityName,
   onConfirm,
   handleClose,
 }) => {
@@ -53,6 +52,7 @@ const DialogBox: React.FC<DialogProps> = ({
       <DialogActions sx={{ mt: "27px" }}>
         <Button
           onClick={handleClose}
+          id="delete-button"
           sx={{
             textTransform: "none",
             fontFamily: "Manrope",
@@ -60,6 +60,9 @@ const DialogBox: React.FC<DialogProps> = ({
             height: "45px",
             border: "1px solid #2653F1",
             color: "#2653F1",
+            "&:hover": {
+              color: "#2653F1",
+            },
           }}
         >
           No, keep it

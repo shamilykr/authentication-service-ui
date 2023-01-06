@@ -5,6 +5,7 @@ import { FieldValues } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useMediaQuery } from "react-responsive";
 
 import { GET_ROLES } from "services/queries/roleQueries";
 import {
@@ -64,6 +65,11 @@ const CreateOrEditGroup = () => {
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
+
+  const isTabletScreen = useMediaQuery({
+    minWidth: "768px",
+    maxWidth: "1180px",
+  });
 
   const [updateGroup, { data: updatedGroupData }] =
     useCustomMutation(UPDATE_GROUP);
@@ -282,7 +288,7 @@ const CreateOrEditGroup = () => {
     <div className="create-edit-group-container">
       {!loading && (
         <GroupForm
-          name={group?.name as string}
+          name={(group?.name as string) || ""}
           createGroup={onCreateGroup}
           editGroup={onEditGroup}
         />
@@ -314,7 +320,10 @@ const CreateOrEditGroup = () => {
           <TabPanel
             value={value}
             index={0}
-            style={{ height: "128%", overflowY: "auto" }}
+            style={{
+              height: isTabletScreen ? "114%" : "128%",
+              overflowY: "auto",
+            }}
           >
             <div className="roles-checklist">
               {isViewRolesVerified ? (
@@ -331,7 +340,11 @@ const CreateOrEditGroup = () => {
         ) : (
           <CircularProgress />
         )}
-        <TabPanel value={value} index={1}>
+        <TabPanel
+          value={value}
+          index={1}
+          style={{ overflow: "auto", height: isTabletScreen ? "118%" : "135%" }}
+        >
           {isViewRolesVerified ? (
             <PermissionCards
               userSelectedPermissions={userSelectedPermissions}

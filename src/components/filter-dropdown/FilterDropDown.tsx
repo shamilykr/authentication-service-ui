@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { SetterOrUpdater } from "recoil";
 import { Avatar } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
 
 import Filter from "components/filter/Filter";
 import { ReactComponent as LeftArrowIcon } from "assets/toolbar-icons/arrow-left.svg";
@@ -47,6 +48,8 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
 }) => {
   const [viewFirstFilter, setViewFirstFilter] = useState(true);
   const [viewSecondFilter, setViewSecondFilter] = useState(false);
+  const isPortrait = useMediaQuery({ orientation: "portrait" });
+
   const handleClose = () => {
     let totalLength = 0; // eslint-disable-next-line
     currentFilters.map((item: never[]) => {
@@ -119,6 +122,11 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
       sx={{ minHeight: "100%" }}
       PaperProps={{
         elevation: 0,
+        sx: {
+          "&:before": {
+            visibility: isPortrait ? "hidden" : "visible",
+          },
+        },
       }}
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}

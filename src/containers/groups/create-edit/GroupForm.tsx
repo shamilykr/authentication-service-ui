@@ -21,8 +21,13 @@ const GroupForm: FC<GroupFormProps> = ({ name, createGroup, editGroup }) => {
 
   const { id } = useParams();
 
+  const initialValues = {
+    name: name,
+  };
+
   const methods = useForm({
     resolver: yupResolver(GroupFormSchema),
+    defaultValues: initialValues,
   });
   const { handleSubmit } = methods;
 

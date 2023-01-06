@@ -1,6 +1,6 @@
 .create-edit-group-container {
   font-size: large;
-  padding: 17px 8px 30px 30px;
+  padding: 17px 32px 30px 30px;
   font-weight: 500;
   height: 90%;
   background-color: white;
@@ -75,6 +75,17 @@
   margin-left: 8px;
 }
 
+@media screen and (max-height: 820px) {
+  .create-edit-group-container {
+    padding: 17px 30px 30px 30px !important;
+  }
+}
+
+@media screen and (max-height: 1180px) and (max-width: 820px) {
+  .create-edit-group-container {
+    padding: 17px 0px 30px 30px !important;
+  }
+}
 @media screen and (max-width: 1200px) {
   .select-member-wrapper {
     margin-top: 60px;

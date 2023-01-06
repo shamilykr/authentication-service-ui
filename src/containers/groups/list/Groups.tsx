@@ -72,13 +72,8 @@ const GroupList: React.FC = () => {
   }, [userPermissions]);
 
   useEffect(() => {
-    if (isPortrait) {
-      columns[0].flex = 0.3;
-      columns[2].flex = 0.35;
-    } else {
-      columns[0].flex = 0.5;
-      columns[2].flex = 0.5;
-    }
+    columns[0].flex = isPortrait ? 0.3 : 0.5;
+    columns[2].flex = isPortrait ? 0.35 : 0.5;
   }, [isPortrait]);
 
   const setItemList = (data: any) => {

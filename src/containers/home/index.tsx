@@ -130,6 +130,11 @@ const HomePage = () => {
 
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
 
+  const navLogo = {
+    image: isDesktopScreen ? LOGO_URL : MINI_LOGO_URL,
+    width: isDesktopScreen ? "170px" : "24%",
+  };
+
   const handleRedirection = (path: string) => {
     let redirectUrl = RoutePaths.usersUrl;
     redirectUrl =
@@ -155,7 +160,6 @@ const HomePage = () => {
             {pathnameArray[1]?.charAt(0).toUpperCase() +
               pathnameArray[1].slice(1)}
           </div>
-          ``
           <ArrowIcon className="nav-bar-icon" />
           <div>{getHeader()}</div>
         </div>
@@ -185,15 +189,11 @@ const HomePage = () => {
           <div className="sideBar">
             <div className="navBar">
               <div className="navLogo">
-                {isDesktopScreen ? (
-                  <img alt="logo" src={LOGO_URL} style={{ width: "170px" }} />
-                ) : (
-                  <img
-                    alt="logo"
-                    src={MINI_LOGO_URL}
-                    style={{ width: "24%" }}
-                  />
-                )}
+                <img
+                  alt="logo"
+                  src={navLogo.image}
+                  style={{ width: navLogo.width }}
+                />
               </div>
             </div>
             <div className="nav-user-details">
@@ -201,45 +201,43 @@ const HomePage = () => {
               <div>
                 <Divider />
                 <If condition={currentUserDetails.firstName}>
-                  <div className="userdetails">
-                    {isDesktopScreen ? (
-                      <>
-                        <Avatar
-                          {...stringAvatar(
+                  {isDesktopScreen ? (
+                    <div className="userdetails">
+                      <Avatar
+                        {...stringAvatar(
+                          `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
+                        )}
+                        className="user-avatar-desktop"
+                      />
+                      <div className="name-logout">
+                        <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
+                        <div onClick={onLogout} className="logout">
+                          {UserActions.LOGOUT}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="userdetails-tablet">
+                      <SettingsIcon
+                        id="settings-icon"
+                        onClick={(e: any) => {
+                          handleClick(e);
+                        }}
+                      />
+                      {open && (
+                        <Settings
+                          initials={stringAvatar(
                             `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
                           )}
-                          className="user-avatar-desktop"
+                          fullName={`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}
+                          anchorEl={anchorEl}
+                          handleClose={handleClose}
+                          email={currentUserDetails.email}
+                          onLogoutCompleted={onLogoutCompleted}
                         />
-                        <div className="name-logout">
-                          <div className="username">{`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}</div>
-                          <div onClick={onLogout} className="logout">
-                            {UserActions.LOGOUT}
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <SettingsIcon
-                          id="settings-icon"
-                          onClick={(e: any) => {
-                            handleClick(e);
-                          }}
-                        />
-                        {open && (
-                          <Settings
-                            initials={stringAvatar(
-                              `${currentUserDetails.firstName} ${currentUserDetails.lastName}`?.toUpperCase()
-                            )}
-                            fullName={`${currentUserDetails.firstName} ${currentUserDetails.lastName}`}
-                            anchorEl={anchorEl}
-                            handleClose={handleClose}
-                            email={currentUserDetails.email}
-                            onLogoutCompleted={onLogoutCompleted}
-                          />
-                        )}
-                      </>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </If>
               </div>
             </div>

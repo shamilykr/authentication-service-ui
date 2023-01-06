@@ -21,10 +21,6 @@ const Container = styled.div`
   gap: 22px;
   margin-top: 20px;
   height: 100%;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const PermissionCards: React.FC<PermissionCardsProps> = ({

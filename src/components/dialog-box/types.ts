@@ -6,7 +6,6 @@ export interface DialogProps {
   refetchQuery: DocumentNode;
   entity: string;
   entityId: GridRowId;
-  entityName: string;
   onConfirm: () => void;
   handleClose: () => void;
 }

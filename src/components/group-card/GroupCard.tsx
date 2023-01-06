@@ -96,6 +96,10 @@ const GroupCard: FC<GroupCardProps> = ({
       currentCheckedItems?.some((item) => item.id === id) || isViewPage
     );
   };
+
+  const isManyRoles = () => {
+    if (group?.roles?.length !== 1) return "s";
+  };
   return (
     <>
       <Container>
@@ -114,13 +118,22 @@ const GroupCard: FC<GroupCardProps> = ({
           </div>
           <div className="roles-permissions-dropdown">
             <RolesPermissionsTab checked={isChecked(group.id)}>
-              {`${group?.roles?.length} Roles & ${
+              {`${group?.roles?.length} Role`}
+              {isManyRoles()}{" "}
+              {`& ${
                 getUniquePermissionsFromRoles(group?.roles).length
-              } Permissions`}
+              } Permission`}
+              {getUniquePermissionsFromRoles(group?.roles).length !== 1 && "s"}
             </RolesPermissionsTab>
             <StyledDownArrowIcon
               onClick={() => setShowRoles(!showRoles)}
               roles={showRoles.toString()}
+              style={{
+                visibility:
+                  group?.permissions.length === 0 && group?.roles.length === 0
+                    ? "hidden"
+                    : "visible",
+              }}
             />
           </div>
         </CheckBoxComponent>

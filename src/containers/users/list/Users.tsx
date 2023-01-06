@@ -61,16 +61,12 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     if (isViewUsersVerified) {
-      getUsers({ variables: { pagination: { limit: 10, offset: 0 } } });
+      getUsers({ variables: { pagination: { limit: 15, offset: 0 } } });
     }
   }, [isViewUsersVerified, getUsers]);
 
   useEffect(() => {
-    if (isPortrait) {
-      columns[0].flex = 0.4;
-    } else {
-      columns[0].flex = 0.3;
-    }
+    columns[0].flex = isPortrait ? 0.4 : 0.3;
   }, [isPortrait]);
 
   const onEdit = (id: any) => {

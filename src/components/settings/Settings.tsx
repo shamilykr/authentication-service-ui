@@ -5,13 +5,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import Logout from "@mui/icons-material/Logout";
 import { FC } from "react";
-import { useMediaQuery } from "react-responsive";
 
 import "./styles.css";
 import { UserDetails } from "utils/user";
 import { useCustomMutation } from "hooks/useMutation";
 import { LOGOUT } from "services/mutations/authMutations";
-
 
 interface SettingsProps {
   fullName: string;
@@ -31,7 +29,6 @@ const Settings: FC<SettingsProps> = ({
   onLogoutCompleted,
 }) => {
   const [logout] = useCustomMutation(LOGOUT, onLogoutCompleted);
-  const isDesktopScreen = useMediaQuery({ query: "{max-width: 1180px, max-height: 820px}" });
 
   const onLogout = () => {
     logout();

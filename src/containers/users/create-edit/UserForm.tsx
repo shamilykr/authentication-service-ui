@@ -5,6 +5,7 @@ import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useMediaQuery } from "react-responsive";
 
 import {
   IsViewEntitiesVerifiedAtom,
@@ -59,6 +60,11 @@ const UserForm = (props: UserProps) => {
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
+
+  const isTabletScreen = useMediaQuery({
+    minWidth: "768px",
+    maxWidth: "1180px",
+  });
 
   const onGetGroupsComplete = (data: any) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
@@ -191,7 +197,7 @@ const UserForm = (props: UserProps) => {
           </form>
         </FormProvider>
         <div>
-          <Box sx={{ height: "100%" }}>
+          <Box sx={{ height: "102%" }}>
             <Box sx={{ display: "flex" }}>
               <Tabs
                 value={value}
@@ -221,7 +227,14 @@ const UserForm = (props: UserProps) => {
             ) : (
               <CircularProgress sx={{ top: "208% !important" }} />
             )}
-            <TabPanel value={value} index={1}>
+            <TabPanel
+              value={value}
+              index={1}
+              style={{
+                overflow: "auto",
+                height: isTabletScreen ? "50%" : "73%",
+              }}
+            >
               {isViewEntitiesVerified ? (
                 <PermissionCards
                   userSelectedPermissions={userSelectedPermissions}
