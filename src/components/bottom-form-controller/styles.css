@@ -4,7 +4,7 @@
   width: 100%;
   background: white;
   left: 0px;
-  padding: 22.5px 60px;
+  padding: 28px 60px;
   display: flex;
   border-top: 1px solid #d2d5dd;
   z-index: 1;
@@ -23,10 +23,4 @@
   font-size: 14px !important;
   width: 121px;
   font-family: "Inter" !important;
-}
-
-@media screen and (min-width: 1180px) and (max-height: 820px) {
-  .bottom-wrapper {
-    padding: 24.5px 60px;
-  }
 }

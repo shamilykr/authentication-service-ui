@@ -49,16 +49,16 @@
 .userdetails {
   display: flex;
   align-items: center;
-  margin-bottom: 27px;
-  margin-top: 27px;
+  margin-bottom: 27.5px;
+  margin-top: 27.5px;
   margin-left: 20px;
 }
 
 .userdetails-tablet {
   display: flex;
   align-items: center;
-  margin-bottom: 34.5px;
-  margin-top: 34.5px;
+  margin-bottom: 36px;
+  margin-top: 36px;
   align-content: flex-start;
   flex-direction: column;
 }
