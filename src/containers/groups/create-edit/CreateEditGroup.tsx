@@ -5,7 +5,6 @@ import { FieldValues } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { Box, Tab, Tabs, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from "react-responsive";
 
 import { GET_ROLES } from "services/queries/roleQueries";
 import {
@@ -65,11 +64,6 @@ const CreateOrEditGroup = () => {
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
-
-  const isTabletScreen = useMediaQuery({
-    minWidth: "768px",
-    maxWidth: "1180px",
-  });
 
   const [updateGroup, { data: updatedGroupData }] =
     useCustomMutation(UPDATE_GROUP);
@@ -321,7 +315,7 @@ const CreateOrEditGroup = () => {
             value={value}
             index={0}
             style={{
-              height: isTabletScreen ? "114%" : "128%",
+              height: "calc(100vh - 400px)",
               overflowY: "auto",
             }}
           >
@@ -343,7 +337,7 @@ const CreateOrEditGroup = () => {
         <TabPanel
           value={value}
           index={1}
-          style={{ overflow: "auto", height: isTabletScreen ? "118%" : "135%" }}
+          style={{ overflowY: "scroll", height: "calc(100vh - 400px)" }}
         >
           {isViewRolesVerified ? (
             <PermissionCards

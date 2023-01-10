@@ -1,7 +1,6 @@
 .roleContainer {
   padding: 30px;
   background-color: white;
-  height: 83%;
 }
 
 .horizontal-bar {
@@ -58,11 +57,14 @@
   font-family: "Manrope";
   font-weight: 600;
   line-height: 20px;
-  height: 85%;
-  overflow: auto;
 }
 
-@media screen and (max-height: 768px) {
+.permission-cards-cntr {
+  height: calc(100vh - 410px);
+  overflow-y: scroll;
+}
+
+/* @media screen and (max-height: 768px) {
   .role-permissions {
     height: 76%;
   }
@@ -72,4 +74,4 @@
   .role-permissions {
     height: 75%;
   }
-}
+} */

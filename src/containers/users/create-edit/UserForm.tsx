@@ -5,7 +5,6 @@ import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { Box, Tab, Tabs } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useMediaQuery } from "react-responsive";
 
 import {
   IsViewEntitiesVerifiedAtom,
@@ -60,11 +59,6 @@ const UserForm = (props: UserProps) => {
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
-
-  const isTabletScreen = useMediaQuery({
-    minWidth: "768px",
-    maxWidth: "1180px",
-  });
 
   const onGetGroupsComplete = (data: any) => {
     const groups = data?.getGroups?.results?.map((group: Group) => group);
@@ -232,7 +226,7 @@ const UserForm = (props: UserProps) => {
               index={1}
               style={{
                 overflow: "auto",
-                height: isTabletScreen ? "50%" : "73%",
+                height: id ? "calc(100vh - 390px)" : "calc(100vh - 470px)",
               }}
             >
               {isViewEntitiesVerified ? (

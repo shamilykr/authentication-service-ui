@@ -172,14 +172,9 @@
   }
 }
 
-@media screen and (max-width: 768px) and (max-height: 1024px) {
+@media screen and (max-height: 1180px) and (max-width: 820px),
+  (max-width: 1180px) and (max-height: 820px) {
   .table-component {
-    height: 92%;
-  }
-}
-
-@media screen and (min-width: 820px) and (min-height: 1180px) {
-  .table-component {
-    height: 93%;
+    height: calc(100% - 79px);
   }
 }
