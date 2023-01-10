@@ -27,7 +27,10 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   };
 
   useEffect(() => {
-    if (mapList?.length === currentCheckedItems?.length) {
+    if (
+      mapList?.length === currentCheckedItems?.length &&
+      mapList.length !== 0
+    ) {
       setSelectAll(true);
     } else setSelectAll(false);
   }, [mapList, currentCheckedItems]);
