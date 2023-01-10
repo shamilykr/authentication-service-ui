@@ -9,7 +9,7 @@ import { Entities } from "types/generic";
 import "./styles.css";
 
 const SideBar: FC = () => {
-  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1200px)" });
   return (
     <nav>
       <div className="sideBarContainer">

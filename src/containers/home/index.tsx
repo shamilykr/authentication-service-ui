@@ -83,7 +83,7 @@ const HomePage = () => {
     getCurrentUser(); // eslint-disable-next-line
   }, []);
 
-  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1240px)" });
+  const isDesktopScreen = useMediaQuery({ query: "(min-width: 1200px)" });
 
   useEffect(() => {
     if (userPermissions) {

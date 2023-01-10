@@ -52,6 +52,7 @@
   margin-bottom: 27.5px;
   margin-top: 27.5px;
   margin-left: 20px;
+  max-height: 45px;
 }
 
 .userdetails-tablet {
@@ -150,6 +151,7 @@
   filter: invert(54%) sepia(7%) saturate(502%) hue-rotate(191deg)
     brightness(93%) contrast(86%);
   margin: 5px 0px 0px 0px;
+  cursor: pointer;
 }
 
 @media screen and (max-height: 820px) {
@@ -166,7 +168,7 @@
   }
 }
 
-@media screen and (max-width: 1240px) {
+@media screen and (max-width: 1200px) {
   .sideBar {
     width: 80px;
   }

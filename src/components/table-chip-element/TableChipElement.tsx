@@ -57,8 +57,8 @@ const TableChipElement: FC<TableChipElementProps> = ({
             key="click-to-see-more"
             id={row.status !== "INVITED" ? "count-chip" : "blurred-count-chip"}
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              e.stopPropagation();
-              if (isPortrait || isTabletScreen) setOpenModal(true);
+              if (isPortrait || isTabletScreen) e.stopPropagation();
+              setOpenModal(true);
             }}
           />
         </Tooltip>
