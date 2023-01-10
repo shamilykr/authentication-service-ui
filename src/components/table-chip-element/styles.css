@@ -24,6 +24,7 @@
   color: white;
   border-radius: 6px;
   font-family: "Manrope";
+  cursor: default;
 }
 
 #blurred-count-chip {
@@ -34,6 +35,7 @@
   border-radius: 6px;
   font-family: "Manrope";
   opacity: 0.5;
+  cursor: default;
 }
 
 #cancel-icon {

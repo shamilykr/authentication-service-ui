@@ -53,7 +53,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
 
   const [currentFirstFilter, setCurrentFirstFilter] = useState([]);
   const [currentSecondFilter, setCurrentSecondFilter] = useState([]);
-  const isPortrait = useMediaQuery({ orientation: "portrait" });
+  const isPortrait = useMediaQuery({ query: "(max-width: 980px)" });
 
   const handleCancel = () => {
     if (

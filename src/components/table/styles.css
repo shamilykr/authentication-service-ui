@@ -48,10 +48,6 @@
   box-shadow: 2px 2px 0px rgb(0 0 0 / 14%);
 }
 
-.MuiDataGrid-cell:focus {
-  outline: none !important;
-}
-
 .css-3q9hkm-MuiInputBase-root-MuiOutlinedInput-root {
   width: 37px;
   height: 31px;
@@ -172,13 +168,13 @@
   }
 }
 
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 980px) {
   .table-component {
     height: calc(100vh - 190px);
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 980px) and (max-width: 1180px) and (max-height: 820px) {
   .table-component {
     height: calc(100vh - 178px);
   }
