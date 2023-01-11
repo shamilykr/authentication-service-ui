@@ -64,10 +64,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
               icon={<UnCheckedIcon />}
               checkedIcon={<CheckedIcon />}
             />
-            <div style={{ display: "flex", marginLeft: "5px" }}>
-              {" "}
-              Select All
-            </div>
+            <div style={{ display: "flex", marginLeft: "5px" }}>Select All</div>
           </div>
         )}
       </div>
