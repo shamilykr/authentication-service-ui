@@ -48,10 +48,10 @@ const Roles: React.FC = () => {
   );
 
   useEffect(() => {
-    if (isViewRolesVerified && roleCount === 0) {
-      getRoles();
+    if (isViewRolesVerified) {
+      getRoles({ variables: { pagination: { limit: 15, offset: 0 } } });
     }
-  }, [isViewRolesVerified, getRoles, roleCount]);
+  }, [isViewRolesVerified, getRoles]);
 
   useEffect(() => {
     userPermissions.forEach((item: any) => {

@@ -20,6 +20,9 @@
   font-size: 14px;
   line-height: 20px;
   margin-left: 15px;
+  max-width: 154px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 900px) {
