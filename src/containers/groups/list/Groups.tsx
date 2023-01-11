@@ -50,10 +50,10 @@ const GroupList: React.FC = () => {
   );
 
   useEffect(() => {
-    if (isViewGroupsVerified && groupCount === 0) {
-      getGroups();
+    if (isViewGroupsVerified) {
+      getGroups({ variables: { pagination: { limit: 15, offset: 0 } } });
     }
-  }, [isViewGroupsVerified, getGroups, groupCount]);
+  }, [isViewGroupsVerified, getGroups]);
 
   const onAddGroup = () => {
     navigate("add");

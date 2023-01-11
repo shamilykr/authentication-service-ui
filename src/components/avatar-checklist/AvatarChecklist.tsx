@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { useMediaQuery } from "react-responsive";
+import { useRecoilValue } from "recoil";
 
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
@@ -8,6 +9,7 @@ import CustomAvatar from "components/custom-avatar";
 import SearchBar from "../search-bar/SearchBar";
 import { ChecklistProps } from "./types";
 import "./styles.css";
+import { searchAtom } from "states/searchSortFilterStates";
 
 export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   mapList,
@@ -17,6 +19,7 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   searchQuery,
 }) => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
+  const searchValue = useRecoilValue(searchAtom);
 
   const isTabletScreen = useMediaQuery({ query: "(max-width: 940px)" });
 
@@ -27,7 +30,10 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
   };
 
   useEffect(() => {
-    if (mapList?.length === currentCheckedItems?.length) {
+    if (
+      mapList?.length === currentCheckedItems?.length &&
+      mapList.length !== 0
+    ) {
       setSelectAll(true);
     } else setSelectAll(false);
   }, [mapList, currentCheckedItems]);
@@ -49,16 +55,18 @@ export const AvatarChecklistComponent: FC<ChecklistProps> = ({
           customBarStyle={{ border: "1px solid #d2d5dd" }}
           customIconStyle={{ bottom: isTabletScreen ? "9px" : "7px" }}
         />
-        <div className="selectall-avatar">
-          <Checkbox
-            value={"all"}
-            onChange={handleSelectAll}
-            checked={selectAll}
-            icon={<UnCheckedIcon />}
-            checkedIcon={<CheckedIcon />}
-          />
-          <div style={{ display: "flex", marginLeft: "5px" }}> Select All</div>
-        </div>
+        {!searchValue && (
+          <div className="selectall-avatar">
+            <Checkbox
+              value={"all"}
+              onChange={handleSelectAll}
+              checked={selectAll}
+              icon={<UnCheckedIcon />}
+              checkedIcon={<CheckedIcon />}
+            />
+            <div style={{ display: "flex", marginLeft: "5px" }}>Select All</div>
+          </div>
+        )}
       </div>
       <div className="component">
         {mapList?.map((item: any) => {
