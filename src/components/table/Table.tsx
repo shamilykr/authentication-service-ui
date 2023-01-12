@@ -129,6 +129,7 @@ const TableList: FC<TableProps> = ({
           <div id="pagination-text">Go to Page</div>
           <div>
             <TextField
+              type="number"
               defaultValue={currentPage}
               onChange={(e: any) => {
                 setPageValue(e.target.value);
