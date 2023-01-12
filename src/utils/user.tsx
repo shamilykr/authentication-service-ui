@@ -12,23 +12,39 @@ export const UserDetails = styled.div<{ desktopScreen: boolean }>`
   margin-left: ${(props) => !props.desktopScreen && "-5px"};
   margin-top: ${(props) => !props.desktopScreen && "-3px"};
 `;
+const phoneRegExp = /^\d{10}$/;
 
 export const AddUserformSchema = yup.object({
-  firstName: yup.string().required("First name cannot be empty"),
+  firstName: yup
+    .string()
+    .required("First name cannot be empty")
+    .max(40, "First name must not exceed 40 characters"),
   lastName: yup
     .string()
     .required("Last name cannot be empty")
-    .matches(/^[A-Za-z]+$/, "Must be a name"),
-  email: yup.string().email("Invalid email").required("Email cannot be empty"),
+    .matches(/^[A-Za-z]+$/, "Must be a name")
+    .max(40, "Last name must not exceed 40 characters"),
+  email: yup
+    .string()
+    .email("Invalid email")
+    .required("Email cannot be empty")
+    .max(40),
   phone: yup
-    .number()
+    .string()
     .required("Phone number cannot be empty")
+    .matches(phoneRegExp, "Invalid phone number")
     .typeError("Must be a number"),
 });
 
 export const EditUserformSchema = yup.object({
-  firstName: yup.string().min(1, "First name cannot be empty"),
-  lastName: yup.string().min(1, "Last name cannot be empty"),
+  firstName: yup
+    .string()
+    .min(1, "First name cannot be empty")
+    .max(40, "First name must not exceed 40 characters"),
+  lastName: yup
+    .string()
+    .min(1, "Last name cannot be empty")
+    .max(40, "Last name must not exceed 40 characters"),
 });
 
 export const getFullName = (

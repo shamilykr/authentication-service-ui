@@ -46,5 +46,8 @@ export const columns: GridColumns = [
 ];
 
 export const GroupFormSchema = yup.object({
-  name: yup.string().min(2, "Group name must have atleast two characters"),
+  name: yup
+    .string()
+    .min(2, "Group name must have atleast two characters")
+    .max(40, "Group name must not exceed 40 characters"),
 });

@@ -4,7 +4,10 @@ import { GridColumns } from "@mui/x-data-grid";
 import TableChipElement from "components/table-chip-element";
 
 export const RoleFormSchema = yup.object({
-  name: yup.string().min(2, "Role name must have atleast two characters"),
+  name: yup
+    .string()
+    .min(2, "Role name must have atleast two characters")
+    .max(40, "Role name must not exceed 40 characters"),
 });
 
 export const columns: GridColumns = [
