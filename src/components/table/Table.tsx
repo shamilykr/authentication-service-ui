@@ -2,7 +2,7 @@ import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { FC, useEffect, useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Stack } from "@mui/material";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { useMediaQuery } from "react-responsive";
 
@@ -219,6 +219,16 @@ const TableList: FC<TableProps> = ({
             rowsPerPageOptions={[5]}
             components={{
               Pagination: CustomPagination,
+              NoRowsOverlay: () => (
+                <Stack
+                  height="100%"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  No {buttonLabel.slice(3, buttonLabel.length).toLowerCase()}s
+                  to show
+                </Stack>
+              ),
             }}
           />
         </>

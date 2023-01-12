@@ -9,26 +9,9 @@ import { useMediaQuery } from "react-responsive";
 import Filter from "components/filter/Filter";
 import { ReactComponent as LeftArrowIcon } from "assets/toolbar-icons/arrow-left.svg";
 import { useFetchEntities } from "hooks/useFetchEntities";
-import { DocumentNode } from "graphql";
 import { statusList } from "constants/filters";
 import "./styles.css";
-
-interface FilterDropdownProps {
-  firstFilter?: never[];
-  setFirstFilter?: SetterOrUpdater<never[]>;
-  secondFilter?: never[];
-  setSecondFilter?: SetterOrUpdater<never[]>;
-  isViewFilterVerified?: boolean;
-  searchQuery: DocumentNode;
-  setItemList: any;
-  field: string;
-  filterList?: never[];
-  open: boolean;
-  anchorEl: any;
-  onApply: (count: number) => void;
-  filterName: string[];
-  currentFilters: any;
-}
+import { FilterDropdownProps } from "./types";
 
 const FilterDropdown: FC<FilterDropdownProps> = ({
   firstFilter,
@@ -56,7 +39,6 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
       totalLength = totalLength + item.length;
     });
     onApply(totalLength);
-    handleCancel();
   };
   const switchFilter = (first: boolean, second: boolean) => {
     setViewFirstFilter(first);

@@ -66,7 +66,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
       }
     }
     let sort = {};
-    if (count !== 0 || countValue !== 0) {
+    if (countValue !== 0) {
       const countParams = countValue !== 0 ? countValue : count;
       let direction = {
         field: usersFetchProps.userParams.field,
@@ -74,6 +74,7 @@ export const useFetchEntities = (usersFetchProps: usersFetchProps) => {
       };
       sort = { ...sort, ...direction };
     }
+
     let operands = [];
     if (checkedStatus.length > 0) {
       let status = {

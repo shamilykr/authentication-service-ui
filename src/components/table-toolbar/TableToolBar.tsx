@@ -71,7 +71,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
   });
 
   const onSort = () => {
-    const countValue = count === 2 ? 1 : 2;
+    const countValue = count === 0 ? 1 : count === 1 ? 2 : 0;
     setCount(countValue);
     fetchEntities({ countValue: countValue });
   };

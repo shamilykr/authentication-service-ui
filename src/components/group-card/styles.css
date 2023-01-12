@@ -10,6 +10,9 @@
   font-weight: 600;
   font-family: "Inter";
   line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
 }
 
 .roles-permissions-dropdown {

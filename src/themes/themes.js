@@ -97,12 +97,16 @@ const theme = createTheme({
             minHeight: "49px !important",
             backgroundColor: "#f4f8fb94",
             borderRadius: "0% !important",
+            cursor: "default",
           },
           "& .MuiDataGrid-columnHeaderTitle": {
             fontSize: "16px",
             color: "#0A0D14",
             fontFamily: "Manrope",
             fontWeight: "600 !important",
+          },
+          "& .MuiDataGrid-columnHeader:focus": {
+            outline: "none",
           },
           "& .MuiDataGrid-renderingZone": {
             maxHeight: "none !important",
@@ -229,6 +233,13 @@ const theme = createTheme({
           position: "relative",
           left: "50%",
           top: "45%",
+        },
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          maxWidth: "calc(100vh - -200px) !important",
         },
       },
     },
