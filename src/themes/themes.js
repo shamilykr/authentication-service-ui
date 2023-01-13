@@ -148,6 +148,10 @@ const theme = createTheme({
           "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
             outline: "none !important",
           },
+          "& .MuiDataGrid-actionsCell": {
+            minWidth: "40%",
+            justifyContent: "center",
+          },
         },
       },
     },

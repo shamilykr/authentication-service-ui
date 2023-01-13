@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { GridActionsCellItem, GridRowId } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { ReactComponent as EditIcon } from "assets/table-actions-icons/edit.svg";
 import { ReactComponent as LineIcon } from "assets/table-actions-icons/line.svg";
@@ -12,6 +12,7 @@ import { paginationAtom } from "states/searchSortFilterStates";
 import "./styles.css";
 import DialogBox from "../dialog-box";
 import { ActionsCellProps } from "./types";
+import { currentUserAtom } from "states/loginStates";
 
 const ActionsCell: FC<ActionsCellProps> = ({
   isEditVerified,
@@ -28,6 +29,7 @@ const ActionsCell: FC<ActionsCellProps> = ({
   const setApiSuccess = useSetRecoilState(apiRequestAtom);
   const setToastMessage = useSetRecoilState(toastMessageAtom);
   const [currentPage] = useRecoilState(paginationAtom);
+  const currentUserDetails = useRecoilValue(currentUserAtom);
 
   const openConfirmPopup = (id: GridRowId, name: string) => {
     setOpen(true);
@@ -79,7 +81,7 @@ const ActionsCell: FC<ActionsCellProps> = ({
           />
         </Tooltip>
       )}
-      {isDeleteVerified && (
+      {isDeleteVerified && currentUserDetails.id !== params.id && (
         <Tooltip title="Delete" arrow placement="top">
           <GridActionsCellItem
             icon={<DeleteIcon className="delete" />}

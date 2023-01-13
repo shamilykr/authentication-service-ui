@@ -337,7 +337,7 @@ const CreateOrEditGroup = () => {
         <TabPanel
           value={value}
           index={1}
-          style={{ overflowY: "scroll", height: "calc(100vh - 400px)" }}
+          style={{ overflowY: "auto", height: "calc(100vh - 400px)" }}
         >
           {isViewRolesVerified ? (
             <PermissionCards

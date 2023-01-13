@@ -88,7 +88,7 @@ const TableList: FC<TableProps> = ({
     }; // eslint-disable-next-line
   }, []);
   function CustomPagination() {
-    const [pageValue, setPageValue] = useState(1);
+    const [pageValue, setPageValue] = useState(currentPage);
     const [pageCount] = useState(
       count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15)
     );

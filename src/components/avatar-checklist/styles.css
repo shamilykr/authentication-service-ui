@@ -21,7 +21,7 @@
   row-gap: 16px;
   width: 100%;
   height: calc(100vh - 480px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .user-checklist .component::-webkit-scrollbar {
