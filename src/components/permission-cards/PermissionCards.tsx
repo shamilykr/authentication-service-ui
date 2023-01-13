@@ -21,6 +21,7 @@ const Container = styled.div`
   gap: 22px;
   margin-top: 20px;
   height: 100%;
+  overflow-y: auto;
 `;
 
 const PermissionCards: React.FC<PermissionCardsProps> = ({

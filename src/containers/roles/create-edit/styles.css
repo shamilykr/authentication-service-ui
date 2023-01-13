@@ -61,5 +61,4 @@
 
 .permission-cards-cntr {
   height: calc(100vh - 410px);
-  overflow-y: auto;
 }

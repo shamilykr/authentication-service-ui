@@ -47,14 +47,3 @@
     brightness(99%) contrast(87%);
   opacity: 0.5;
 }
-
-@media screen and (max-width: 1310px) and (max-height: 820px) {
-  .edit,
-  .delete,
-  .blurred-delete,
-  .blurred-edit,
-  .edit-line,
-  .blurred-edit-line {
-    width: 55% !important;
-  }
-}
