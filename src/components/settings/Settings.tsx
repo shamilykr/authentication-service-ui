@@ -51,7 +51,7 @@ const Settings: FC<SettingsProps> = ({
             content: '""',
             display: "block",
             position: "absolute",
-            top: "109px",
+            top: "100px",
             left: "-5px",
             width: 10,
             height: 10,

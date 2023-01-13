@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Checkbox } from "@mui/material";
 import SquareIcon from "@mui/icons-material/Square";
+import { useSetRecoilState } from "recoil";
 
 import { ReactComponent as UnCheckedIcon } from "assets/checkbox-icons/uncheckedicon.svg";
 import { ReactComponent as CheckedIcon } from "assets/checkbox-icons/checkedicon.svg";
@@ -13,6 +14,7 @@ import {
 import If from "../if";
 import { RemovedPermissions } from "constants/permissions";
 import { PermissionCardProps } from "./types";
+import { submitAtom } from "states/submitStates";
 
 const Container = styled.div<{ show: boolean }>`
   display: ${(props) => (props.show ? "flex" : "none")};
@@ -55,6 +57,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
 }) => {
   const [rolePermissions, setRolePermissions] = useState<Permission[]>([]);
   const [groupPermissions, setGroupPermissions] = useState<Permission[]>([]);
+  const setSubmitButton = useSetRecoilState(submitAtom);
 
   const onChangePermissions = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -79,6 +82,7 @@ const PermissionsCard: FC<PermissionCardProps> = ({
           )
         );
     }
+    setSubmitButton(true);
   };
 
   useEffect(() => {

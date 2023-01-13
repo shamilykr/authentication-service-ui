@@ -25,6 +25,7 @@ import { renderAccessDenied } from "utils/generic";
 import { useCustomQuery } from "hooks/useQuery";
 import { RoutePaths } from "constants/routes";
 import "./styles.css";
+import { submitAtom } from "states/submitStates";
 
 interface UserProps {
   isEdit?: boolean;
@@ -52,6 +53,7 @@ const UserForm = (props: UserProps) => {
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
+  const setSubmitButton = useSetRecoilState(submitAtom);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
@@ -128,6 +130,7 @@ const UserForm = (props: UserProps) => {
       }
       if (group) removeGroup(group);
     }
+    setSubmitButton(true);
   };
 
   const onBackNavigation = () => {

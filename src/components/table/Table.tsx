@@ -110,7 +110,7 @@ const TableList: FC<TableProps> = ({
     return (
       <>
         <div className="pagination-count">
-          Total {`${count}`} item{count > 1 && `s`}
+          Total {`${count}`} item{count !== 1 && `s`}
         </div>
         <Pagination
           color="primary"

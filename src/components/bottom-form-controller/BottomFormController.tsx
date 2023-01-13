@@ -1,7 +1,9 @@
 import { Button } from "@mui/material";
+import { useRecoilValue } from "recoil";
 
 import "./styles.css";
 import { BottomControllerProps } from "./types";
+import { submitAtom } from "states/submitStates";
 
 const BottomFormController = (props: BottomControllerProps) => {
   const {
@@ -11,6 +13,7 @@ const BottomFormController = (props: BottomControllerProps) => {
     onCancel,
     secondaryButtonLabel,
   } = props;
+  const isSubmitButtonEnabled = useRecoilValue(submitAtom);
   return (
     <div className="bottom-wrapper">
       <Button
@@ -28,6 +31,7 @@ const BottomFormController = (props: BottomControllerProps) => {
           onClick={onSubmit}
           form={formId}
           sx={{ textTransform: "none" }}
+          disabled={!isSubmitButtonEnabled}
         >
           {primarybuttonLabel}
         </Button>
