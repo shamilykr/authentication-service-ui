@@ -9,9 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   IsViewEntitiesVerifiedAtom,
   IsViewGroupsVerifiedAtom,
-  UserPermissionsAtom,
 } from "states/permissionsStates";
-import { currentUserAtom } from "states/loginStates";
 import FormInputText from "components/input-text";
 import ChecklistComponent from "components/checklist";
 import TabPanel from "components/tab-panel";
@@ -54,8 +52,6 @@ const UserForm = (props: UserProps) => {
   const [allGroups, setAllGroups] = useState<Group[]>([]);
   const [isViewGroupsVerified] = useRecoilState(IsViewGroupsVerifiedAtom);
   const [isViewEntitiesVerified] = useRecoilState(IsViewEntitiesVerifiedAtom);
-  const [currentUserDetails] = useRecoilState(currentUserAtom);
-  const setCurrentUserPermissions = useSetRecoilState(UserPermissionsAtom);
   const [userSelectedPermissions, setUserSelectedPermissions] = useState<
     Permission[]
   >([]);
@@ -103,9 +99,6 @@ const UserForm = (props: UserProps) => {
   const onSubmitForm = (inputs: FieldValues) => {
     if (updateUser) {
       updateUser(inputs, userGroups, userSelectedPermissions);
-      if (user?.id === currentUserDetails.id) {
-        setCurrentUserPermissions(userSelectedPermissions);
-      }
     } else if (createUser)
       createUser(inputs, userGroups, userSelectedPermissions);
   };

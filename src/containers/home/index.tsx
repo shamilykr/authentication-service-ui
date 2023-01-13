@@ -93,7 +93,7 @@ const HomePage = () => {
         }
         if (item?.name.includes(VIEW_GROUP_PERMISSION)) {
           setIsViewGroupsVerified(true);
-          getGroups();
+          if (window.location.hash === "#/home/users") getGroups();
         }
         if (item?.name.includes(VIEW_ROLE_PERMISSION)) {
           setIsViewRolesVerified(true);

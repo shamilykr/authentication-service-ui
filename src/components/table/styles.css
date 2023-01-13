@@ -84,6 +84,7 @@
 .go-to-page {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .css-16zo66t-MuiButtonBase-root-MuiButton-root {

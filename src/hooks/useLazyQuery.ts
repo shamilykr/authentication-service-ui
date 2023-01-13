@@ -19,7 +19,7 @@ export const useCustomLazyQuery = (
       setToastMessage(error.message);
       setApiSuccess(false);
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   return { lazyQuery, loading, data, error };
 };
