@@ -132,6 +132,7 @@ const theme = createTheme({
           "& .MuiDataGrid-virtualScroller": {
             fontFamily: "Manrope",
             marginTop: "57px !important",
+            overflowX: "hidden",
           },
           "& .MuiDataGrid-iconSeparator": {
             display: "none",

@@ -1,8 +1,6 @@
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
+import { DataGrid } from "@mui/x-data-grid";
 import { FC, useEffect, useState } from "react";
-import { Button, TextField, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { useMediaQuery } from "react-responsive";
 
@@ -23,8 +21,8 @@ import {
   ACCESS_DENIED_DESCRIPTION,
   ACCESS_DENIED_MESSAGE,
 } from "constants/messages";
-import ActionsCell from "components/actions-cell";
-import If from "components/if";
+import CustomPagination from "components/custom-pagination";
+import { getFinalColumns } from "utils/table";
 
 const TableList: FC<TableProps> = ({
   field,
@@ -59,7 +57,7 @@ const TableList: FC<TableProps> = ({
   const setCount = useSetRecoilState(sortCountAtom);
   const setSearchValue = useSetRecoilState(searchAtom);
 
-  const [currentPage, setCurrentPage] = useRecoilState(paginationAtom);
+  const setCurrentPage = useSetRecoilState(paginationAtom);
   const fetchEntities = useFetchEntities({
     userParams: { setList: setItemList, query: refetchQuery, field: field },
   });
@@ -87,104 +85,6 @@ const TableList: FC<TableProps> = ({
       setSearchValue("");
     }; // eslint-disable-next-line
   }, []);
-  function CustomPagination() {
-    const [pageValue, setPageValue] = useState(currentPage);
-    const [pageCount] = useState(
-      count % 15 > 0 ? Math.floor(count / 15) + 1 : Math.floor(count / 15)
-    );
-    const onClickGo = () => {
-      if (!isNaN(pageValue)) {
-        if (pageValue > pageCount) setCurrentPage(pageCount);
-        else if (pageValue < 1) setCurrentPage(1);
-        else setCurrentPage(Number(pageValue));
-        fetchEntities({
-          page:
-            pageValue > pageCount
-              ? pageCount - 1
-              : pageValue < 1
-              ? 0
-              : pageValue - 1,
-        });
-      }
-    };
-    return (
-      <>
-        <div className="pagination-count">
-          Total {`${count}`} item{count !== 1 && `s`}
-        </div>
-        <Pagination
-          color="primary"
-          variant="outlined"
-          shape="rounded"
-          page={currentPage}
-          count={pageCount}
-          // @ts-expect-error
-          renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-          onChange={(event, value) => {
-            setPageValue(value);
-            setCurrentPage(value);
-            fetchEntities({ page: value - 1 });
-          }}
-        />
-        <div className="go-to-page">
-          <If condition={count > 15}>
-            <div id="pagination-text">Go to Page</div>
-            <div>
-              <TextField
-                type="number"
-                defaultValue={currentPage}
-                onChange={(e: any) => {
-                  setPageValue(e.target.value);
-                }}
-                inputProps={{
-                  min: 0,
-                  style: { textAlign: "center", padding: 0 },
-                }}
-                sx={{ ml: "9px", mr: "9px" }}
-              />
-            </div>
-            <div>
-              <Button id="go-button" onClick={onClickGo}>
-                Go
-              </Button>
-            </div>
-          </If>
-        </div>
-      </>
-    );
-  }
-
-  const action_column: GridColumns = [
-    {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
-      headerClassName: "table-list-header",
-      flex: field === "name" ? 0.3 : 0.23,
-      cellClassName: "actions",
-      headerAlign: "center",
-
-      getActions: (params) => {
-        return [
-          <>
-            <ActionsCell
-              deleteMutation={deleteMutation}
-              entity={buttonLabel.slice(4, buttonLabel.length)}
-              isDeleteVerified={isDeleteVerified}
-              isEditVerified={isEditVerified}
-              onEdit={onEdit}
-              refetchQuery={refetchQuery}
-              params={params}
-              fetchEntities={fetchEntities}
-            />
-          </>,
-        ];
-      },
-    },
-  ];
-  let final_columns;
-  if (!isEditVerified && !isDeleteVerified) final_columns = columns;
-  else final_columns = [...columns, ...action_column];
 
   return (
     <div className="table-component">
@@ -211,7 +111,17 @@ const TableList: FC<TableProps> = ({
               groups: isPortrait ? false : true,
             }}
             rows={rows}
-            columns={final_columns}
+            columns={getFinalColumns(
+              field,
+              columns,
+              deleteMutation,
+              buttonLabel,
+              isDeleteVerified,
+              isEditVerified,
+              onEdit,
+              refetchQuery,
+              fetchEntities
+            )}
             style={{
               borderRadius: "0px 0px 5px 5px",
               cursor: field === "name" ? "default" : "pointer",
@@ -222,7 +132,9 @@ const TableList: FC<TableProps> = ({
             pageSize={15}
             rowsPerPageOptions={[5]}
             components={{
-              Pagination: CustomPagination,
+              Pagination: () => (
+                <CustomPagination fetchEntities={fetchEntities} count={count} />
+              ),
               NoRowsOverlay: () => (
                 <Stack
                   height="100%"
