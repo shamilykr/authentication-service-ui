@@ -132,7 +132,7 @@ const TableToolBar: FC<TableToolBarProps> = ({
       {filterList && (
         <FilterDropdown
           field={field}
-          searchQuery={searchQuery}
+          filterQuery={searchQuery}
           setItemList={setItemList}
           filterList={filterList}
           firstFilter={firstFilter}

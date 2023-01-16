@@ -6,6 +6,7 @@ import { TextField, Button } from "@mui/material";
 
 import { paginationAtom } from "states/searchSortFilterStates";
 import { ApiParams } from "utils/table";
+import "./styles.css";
 
 interface CustomPaginationProps {
   fetchEntities: ({ searchText, countValue, page }: ApiParams) => void;

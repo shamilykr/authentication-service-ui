@@ -57,15 +57,17 @@ const TableChipElement: FC<TableChipElementProps> = ({
             key="click-to-see-more"
             id={row.status !== "INVITED" ? "count-chip" : "blurred-count-chip"}
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              if (isPortrait || isTabletScreen) e.stopPropagation();
-              setOpenModal(true);
+              if (isPortrait || isTabletScreen) {
+                e.stopPropagation();
+                setOpenModal(true);
+              }
             }}
           />
         </Tooltip>
       )}
       <If condition={openModal}>
         <CustomDialog
-          title="Permissions"
+          title={columnName.charAt(0).toUpperCase() + columnName.slice(1)}
           handleClose={() => setOpenModal(false)}
         >
           <DialogContent>

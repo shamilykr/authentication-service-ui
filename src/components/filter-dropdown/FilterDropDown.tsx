@@ -18,7 +18,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
   setFirstFilter,
   secondFilter,
   setSecondFilter,
-  searchQuery,
+  filterQuery,
   setItemList,
   field,
   filterList,
@@ -85,7 +85,7 @@ const FilterDropdown: FC<FilterDropdownProps> = ({
     handleClose();
   };
   const fetchEntities = useFetchEntities({
-    userParams: { setList: setItemList, query: searchQuery, field: field },
+    userParams: { setList: setItemList, query: filterQuery, field: field },
   });
 
   const handleSave = () => {

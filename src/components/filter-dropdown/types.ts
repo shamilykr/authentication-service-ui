@@ -7,7 +7,7 @@ export interface FilterDropdownProps {
   secondFilter?: never[];
   setSecondFilter?: SetterOrUpdater<never[]>;
   isViewFilterVerified?: boolean;
-  searchQuery: DocumentNode;
+  filterQuery: DocumentNode;
   setItemList: any;
   field: string;
   filterList?: never[];
