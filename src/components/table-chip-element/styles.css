@@ -1,0 +1,61 @@
+#chip {
+  margin: 5px 10px 5px 0px;
+  font-size: 16px;
+  background: #eaf1fd;
+  border-radius: 6px;
+  font-family: "Manrope";
+  color: #000000;
+}
+
+#blurred-chip {
+  margin: 5px 10px 5px 0px;
+  font-size: 16px;
+  background: #eaf1fd;
+  border-radius: 6px;
+  font-family: "Manrope";
+  color: #000000;
+  opacity: 0.5;
+}
+
+#count-chip {
+  margin: 5px 10px 5px 0px;
+  font-size: 16px;
+  background: #2f6fed;
+  color: white;
+  border-radius: 6px;
+  font-family: "Manrope";
+  cursor: default;
+}
+
+#blurred-count-chip {
+  margin: 5px 10px 5px 0px;
+  font-size: 16px;
+  background: #2f6fed;
+  color: white;
+  border-radius: 6px;
+  font-family: "Manrope";
+  opacity: 0.5;
+  cursor: default;
+}
+
+#cancel-icon {
+  width: 20px;
+  color: #67686cbf;
+  margin-top: 8px;
+  color: #67686c94;
+}
+
+#cancel-icon:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  #chip,
+  #blurred-chip {
+    font-size: 14px;
+  }
+
+  #count-chip {
+    font-size: 13px;
+  }
+}

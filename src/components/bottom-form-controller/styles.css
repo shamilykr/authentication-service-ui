@@ -1,0 +1,26 @@
+.bottom-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  left: 0px;
+  padding: 28px 60px;
+  display: flex;
+  border-top: 1px solid #d2d5dd;
+  z-index: 1;
+}
+
+.bottom-wrapper .submit-button-style {
+  margin-left: 20px;
+}
+
+.bottom-wrapper .cancel-button {
+  font-size: 14px !important;
+  font-family: "Inter" !important;
+}
+
+.bottom-wrapper .submit-button {
+  font-size: 14px !important;
+  width: 121px;
+  font-family: "Inter" !important;
+}

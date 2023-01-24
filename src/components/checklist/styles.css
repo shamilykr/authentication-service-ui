@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+}
+
+#add-items-checklist {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+  overflow-y: auto;
+}
+
+#user-groups {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+}
+
+#user-groups::-webkit-scrollbar {
+  display: none;
+}
+
+#titleChecklist {
+  font-size: 16px;
+  color: #040404;
+}
+
+.group-cards-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 100%;
+}
+
+#titlebar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#selectall {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Manrope" !important;
+  line-height: 24px;
+}
+
+.roles-permissions-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px 12px;
+  height: 28px;
+  background: #eaf1fd;
+  border-radius: 4px;
+}

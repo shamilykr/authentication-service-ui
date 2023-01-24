@@ -1,0 +1,32 @@
+.rolesvalue {
+  color: #2d2d2d;
+  padding: 4px 6px;
+  margin: 0 6px 6px 0;
+  background: rgba(196, 196, 196, 0.3);
+  border-radius: 6px;
+  font-size: 12px !important;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.role-list {
+  margin-left: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.group-list-header div {
+  margin-left: 7px;
+}
+
+.css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar {
+  background-color: #2f6fed !important;
+}
+
+@media screen and (max-width: 1310px) {
+  .group-list-header div {
+    margin-top: 1px;
+  }
+}

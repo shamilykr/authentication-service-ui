@@ -1,0 +1,163 @@
+.table-toolbar {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 35px;
+  border-bottom: none;
+  background-color: #e9edf2;
+}
+
+.search-button {
+  display: flex;
+}
+
+.legend-title {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 25px;
+  margin-left: 35px;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#add-button {
+  height: 46px;
+  width: 128px;
+  background-color: #2653f1;
+  font-family: "Manrope";
+  font-size: 16px;
+}
+
+.sort-button {
+  background-color: white;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  cursor: pointer;
+  margin-right: 18px;
+  width: 152px;
+}
+
+.search-sort-filter {
+  display: flex;
+  align-items: center;
+}
+
+#sort-filter-icon {
+  margin-right: 6px;
+}
+
+#sort-icon-enabled {
+  margin-right: 6px;
+}
+
+.sort-button-enabled {
+  background-color: white;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  cursor: pointer;
+  margin-right: 18px;
+  width: 152px;
+  border: 1px solid #2653f1;
+}
+
+.filter-button {
+  background-color: white;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  cursor: pointer;
+  margin-right: 18px;
+  min-width: 125px;
+}
+
+.filter-count {
+  background-color: white;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  cursor: pointer;
+  margin-right: 18px;
+  width: 157px;
+  border: 1px solid #2653f1;
+}
+
+.css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-family: "Inter" !important;
+  font-weight: 400 !important;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #1a191c;
+  margin-left: 11px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  height: 419px;
+  overflow: auto;
+}
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  .sort-button,
+  .sort-button-enabled {
+    font-size: 14px;
+    height: 38px !important;
+  }
+
+  .filter-button {
+    width: 129px !important;
+    font-size: 14px;
+    height: 38px !important;
+  }
+
+  #add-button {
+    height: 42px !important;
+    width: 122px !important;
+    font-size: 14px !important;
+  }
+
+  .table-toolbar {
+    padding-bottom: 26px !important;
+  }
+
+  .filter-count {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .sort-button,
+  .sort-button-enabled {
+    height: 40px;
+    border-radius: 11px;
+    width: 43px;
+  }
+
+  .filter-button,
+  .filter-count {
+    height: 42px;
+    border-radius: 12px;
+    min-width: 45px;
+    max-width: 75px;
+  }
+
+  #sort-filter-icon {
+    margin-right: 0px !important;
+  }
+}

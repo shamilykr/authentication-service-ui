@@ -1,0 +1,13 @@
+.user-avatar-tablet {
+  font-size: 1rem !important;
+  width: 33px !important;
+  height: 33px !important;
+  margin: 0px -4px 0px -7px;
+}
+
+.css-1xhx2nm-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  min-width: 180px !important;
+  height: 128px !important;
+  width: fit-content !important;
+  margin: -3px 0px 0px 42px !important;
+}

@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+.user-checklist {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+}
+
+.user-checklist .titlebar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.user-checklist .avatar-wrapper {
+  display: flex;
+}
+
+.user-checklist .component {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 100%;
+  height: calc(100vh - 480px);
+  overflow-y: auto;
+}
+
+.user-checklist .component::-webkit-scrollbar {
+  display: none;
+}
+
+.user-checklist .selectall-avatar {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 2px;
+  font-size: 14px;
+  color: grey;
+}
+.user-checklist .custom-checkbox-item {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .user-checklist .titlebar {
+    display: block;
+  }
+
+  .user-checklist .component {
+    height: calc(100vh - 515px);
+  }
+
+  .user-checklist .selectall-avatar {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+}

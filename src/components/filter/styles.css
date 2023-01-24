@@ -1,0 +1,15 @@
+.filter-options {
+  margin-left: 23px;
+  font-family: "Inter" !important;
+  margin-top: 10px;
+}
+
+.filter-item-checked {
+  color: #2653f1 !important;
+}
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  .css-ahj2mt-MuiTypography-root {
+    font-size: 15px !important;
+  }
+}

@@ -1,0 +1,75 @@
+.search {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: 20px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  color: #4a4a4a6e;
+  bottom: 11px;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 9px 11px 9px 17px;
+  width: 436px;
+  height: 31px;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.css-1le28he-MuiInputBase-root {
+  font-family: "Manrope" !important;
+  position: relative;
+  left: 32px;
+  font-size: 16px !important;
+}
+
+.css-ngazp5-MuiInputBase-input {
+  margin-left: 30px !important;
+}
+
+.css-1le28he-MuiInputBase-root {
+  width: 100%;
+}
+
+@media screen and (max-width: 1310px) and (max-height: 820px) {
+  .search-bar {
+    width: 300px;
+    height: 25px;
+  }
+
+  #search-icon {
+    width: 14px;
+    margin-top: 10px;
+    position: relative;
+    top: 4px;
+  }
+
+  .css-yz9k0d-MuiInputBase-input {
+    font-size: 15px !important;
+  }
+}
+
+@media screen and (max-width: 820px) and (max-height: 1310px) and (min-height: 1024px) {
+  .search-bar {
+    width: 245px;
+    height: 25px;
+  }
+
+  #search-icon {
+    width: 14px;
+    margin-top: 10px;
+    position: relative;
+    top: 4px;
+  }
+
+  .css-yz9k0d-MuiInputBase-input {
+    font-size: 15px !important;
+  }
+}

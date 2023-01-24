@@ -1,0 +1,109 @@
+.table-component {
+  height: 90%;
+  background-color: white;
+}
+
+.denied-table-component {
+  height: 96.5%;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.table-list-header {
+  font-size: 16px;
+  font-weight: bolder !important;
+  height: 60px !important;
+}
+
+.disabled-styles:hover {
+  cursor: not-allowed;
+  color: #67686cbf !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell {
+  border: none !important;
+  min-height: 50px !important;
+}
+
+.css-3q9hkm-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 37px;
+  height: 31px;
+  background-color: white;
+  font-family: "Inter" !important;
+  font-size: 15px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root {
+  background-color: white !important;
+  margin: 0px 5px !important;
+}
+
+.css-c4e03a-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  color: #2f6fed !important;
+  border-color: #2f6fed !important;
+}
+
+.css-204u17-MuiDataGrid-main {
+  border: 1px solid #d9d9d9 !important;
+}
+
+.css-16zo66t-MuiButtonBase-root-MuiButton-root {
+  font-size: 14px;
+}
+
+.css-14301sb-MuiDataGrid-root
+  .MuiDataGrid-columnHeader--sorted
+  .MuiDataGrid-iconButtonContainer,
+.css-14301sb-MuiDataGrid-root
+  .MuiDataGrid-columnHeader--filtered
+  .MuiDataGrid-iconButtonContainer {
+  display: none;
+}
+
+.MuiDataGrid-row {
+  min-height: 77.87px !important;
+}
+
+.MuiDataGrid-footerContainer {
+  min-height: 94px !important;
+}
+
+.MuiDataGrid-cellContent {
+  font-size: 16px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 1180px) and (max-height: 820px) {
+  .MuiDataGrid-columnHeaderTitle {
+    font-size: 14px !important;
+  }
+
+  .MuiDataGrid-columnHeaders {
+    height: 53px !important;
+  }
+
+  .MuiDataGrid-row {
+    min-height: 61.87px !important;
+  }
+
+  .MuiDataGrid-cellContent {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .table-component {
+    height: calc(100vh - 190px);
+  }
+}
+
+@media screen and (min-width: 980px) and (max-width: 1180px) and (max-height: 820px) {
+  .table-component {
+    height: calc(100vh - 178px);
+  }
+}

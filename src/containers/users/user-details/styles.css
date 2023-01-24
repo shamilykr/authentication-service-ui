@@ -1,0 +1,118 @@
+.userdetails-cntr {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 90%;
+  overflow-y: hidden;
+}
+.userdetails-cntr .group-details {
+  margin-top: 40px;
+  height: 87%;
+}
+
+.userdetails-cntr .personal-details {
+  display: flex;
+  width: 100%;
+}
+.userdetails-cntr .personal-details-inner {
+  display: flex;
+  flex-direction: row;
+}
+
+.userdetails-cntr .groups-permissions {
+  display: flex;
+  flex-direction: column;
+}
+
+.userdetails-cntr .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.userdetails-cntr .contact {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+.userdetails-cntr .contact-number {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #727782;
+}
+
+.userdetails-cntr .cancel-button {
+  font-size: 14px !important;
+  font-family: "Inter" !important;
+}
+
+.userdetails-cntr .submit-button-style {
+  margin-left: 20px;
+}
+
+.userdetails-cntr .submit-button {
+  font-size: 14px !important;
+  width: 121px;
+  font-family: "Inter" !important;
+}
+
+.userdetails-cntr .user-groups {
+  margin-top: 10px;
+  width: 100%;
+  padding-right: 5px;
+}
+
+.userdetails-cntr .user-permissions {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 18px !important;
+  align-items: flex-start;
+  margin-left: 10px;
+}
+
+.userdetails-cntr .pending-style {
+  background-color: rgba(244, 148, 3, 0.1) !important;
+  margin-right: 13px;
+  color: #f69a40 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
+  opacity: 0.8;
+}
+
+.userdetails-cntr .active-user-style {
+  background-color: rgba(10, 170, 161, 0.1) !important;
+  margin-right: 13px;
+  color: #0aaaa1 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
+}
+
+.userdetails-cntr .inactive-user-style {
+  background-color: rgba(207, 19, 34, 0.1) !important;
+  margin-right: 13px;
+  color: #cf1322 !important;
+  font-size: 15px !important;
+  font-family: "Manrope" !important;
+  font-weight: bold !important;
+  border-radius: 42px !important;
+  width: 84px !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .userdetails-cntr .contact {
+    margin-left: 47px;
+    margin-top: 10px;
+  }
+  .userdetails-cntr .personal-details-inner {
+    flex-direction: column;
+  }
+}

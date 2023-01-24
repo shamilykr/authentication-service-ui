@@ -1,0 +1,32 @@
+.custom-avatar {
+  display: flex;
+}
+.custom-fullname {
+  font-size: 14px;
+  margin-left: 15px;
+  font-weight: bold;
+  color: #0a0d14;
+  white-space: nowrap;
+  width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Manrope";
+}
+
+.custom-email {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 15px;
+  max-width: 154px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 900px) {
+  .custom-fullname {
+    width: 145px;
+  }
+}
